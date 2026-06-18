@@ -63,4 +63,4 @@ schema 變更皆走 spec + sign-off(`repeat` spec 02、`tube` spec 03、`model` 
 
 - **Airplane**(`aerospace` 題目)— by **Poly by Google**,來源 [poly.pizza](https://poly.pizza/),授權 **CC-BY**。
 
-**已知待辦**:各題目 annotation 公司/代號待人工查證;build 的 three.js chunk(>500kB)可後續 code-split。
+**已知待辦**:公司**代號**已查證(`companies.csv`);公司↔元件**對應**仍 AI 起草、可再校;build 的 three.js chunk(>500kB)可後續 code-split。

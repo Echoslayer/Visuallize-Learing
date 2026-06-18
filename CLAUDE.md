@@ -28,7 +28,8 @@
   已建:`schema.ts`、`GeometryFactory.tsx`、`Scene.tsx`、`SceneRoot.tsx`、`materials.ts`(只留顏色)、
   `selection.ts`、`explode.ts`、`Annotation.tsx`、`config.ts`(視覺旋鈕集中,見 ADR-0009)。
   之後:`kit/`(階段二 primitive 積木)。
-- `src/ui/` — UI 殼。已建:`Controls.tsx`(拆解/重置/語言)、`Tuning.tsx`(leva 調參,**僅 DEV、僅 App**)。
+- `src/ui/` — UI 殼。已建:`Controls.tsx`(拆解/重置/語言)、`TopicSwitcher.tsx`(左側題目切換,`?topic=` 導航)、
+  `Credits.tsx`(借用模型 CC-BY 標註)、`Tuning.tsx`(leva 調參,**僅 DEV、僅 App**)。
 - **視覺數值一律走 `engine/config.ts`**,別在元件硬寫;調好 bake 進 `DEFAULT_CONFIG`。
 - `src/gallery/` — 畫廊路由(`/?view=gallery`),每個零件單獨一格供截圖。
 - `src/content/` — 題目資料 JSON(元件結構 + `annotation.title`,**不含公司**);換議題只動這裡。
