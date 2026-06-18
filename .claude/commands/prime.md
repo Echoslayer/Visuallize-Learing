@@ -5,7 +5,7 @@
 ## Read
 - `docs/plan/CONTEXT.md` — 專案緣起、核心原則（「幾何是程式碼」、engine/content 分離、模型選型）。
 - `docs/plan/PLAN.md` — 執行計劃、查核點、自我驗證迴圈、迭代方法論、停止條件。
-- `docs/reference/` — 若有參考截圖，看一眼視覺目標。
+- `docs/references/` — 若有參考截圖，看一眼視覺目標。
 
 ## Run
 - `ls -R src/ 2>/dev/null` 了解現有 `engine/`、`ui/`、`content/`、`gallery/` 結構（若已存在）。

@@ -42,7 +42,7 @@
 pnpm typecheck      # 0 error
 pnpm lint           # 0 error
 pnpm build          # exit 0
-pnpm shoot <route>  # 產出截圖；之後用 Read 讀回，對照 Acceptance + docs/reference/
+pnpm shoot <route>  # 產出截圖；之後用 Read 讀回，對照 Acceptance + docs/references/
 ```
 
 ## Notes

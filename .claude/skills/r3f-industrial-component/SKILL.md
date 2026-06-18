@@ -41,4 +41,4 @@ description: 在本專案用 React Three Fiber 程式生成「可拆解的工業
 
 ## 完成定義
 
-在 `gallery/` 加一格單獨渲染 → 跑 `/verify` → 讀回截圖對照 spec 與 `docs/reference/` → 全綠才 commit。
+在 `gallery/` 加一格單獨渲染 → 跑 `/verify` → 讀回截圖對照 spec 與 `docs/references/` → 全綠才 commit。

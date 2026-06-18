@@ -83,7 +83,7 @@ specs/
   backlog.md             # 階段二待辦佇列
   shots/                 # 自查截圖
 docs/
-  reference/             # 人類從原影片擷取的參考截圖，供視覺校準（agent 不自行下載）
+  references/            # 人類從原影片擷取的參考截圖，供視覺校準（agent 不自行下載；gitignored）
   plan/                  # CONTEXT.md（緣起/原則）、PLAN.md（本檔）
 ```
 
@@ -184,7 +184,7 @@ docs/
 3. **建置**：`pnpm build` 必須 exit 0。
 4. **視覺自查**：`pnpm shoot <gallery-route>` 起 headless 截圖到 `.agent/shots/`，
    然後用 Read 工具**讀回那張 PNG**，逐條對照當前查核點的「驗收」描述。看起來不對 → 算失敗。
-   - **比例/質感類驗收**：若 `docs/reference/` 有對應參考截圖，一併讀進來對照，
+   - **比例/質感類驗收**：若 `docs/references/` 有對應參考截圖，一併讀進來對照，
      讓畫面往參考圖的比例與質感靠（非像素級比對，是視覺方向校準）。
 5. **判定**：
    - 全部通過 → `git add -A && git commit -m "C{n}: ..."`，進入下一個查核點。
@@ -195,7 +195,7 @@ docs/
 
 `package.json` scripts 需含：`dev`、`build`、`typecheck`、`lint`、`shoot`（皆以 `pnpm <script>` 執行）。
 
-參考截圖放在 `docs/reference/`（由人類從原影片擷取）。agent **不得**自行抓取或下載外部影像。
+參考截圖放在 `docs/references/`（由人類從原影片擷取）。agent **不得**自行抓取或下載外部影像。
 
 ---
 
@@ -241,7 +241,7 @@ docs/
 3. 若用到新材質，先登錄到 `materials.ts`。
 4. 做成**參數化元件**（`<ServerRack rows={6} />`），不要寫死。
 5. 把零件加進對應 `content/*.json`，設好 `id`/`explode`/`annotation`。
-6. 在 `gallery/` 加一格單獨渲染它，跑 `/verify`（含讀回截圖對照 spec 與 `docs/reference/`）。
+6. 在 `gallery/` 加一格單獨渲染它，跑 `/verify`（含讀回截圖對照 spec 與 `docs/references/`）。
 7. 過了再串進場景的拆解與標註，commit。
 
 ### 8.2 新增一個題目/場景 — `/add-topic`
