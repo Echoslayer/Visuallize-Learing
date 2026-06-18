@@ -25,8 +25,9 @@
 ## 專案結構
 
 - `src/engine/` — 與題目無關、可重用。**不得出現任何題目字眼。**
-  已建:`schema.ts`、`GeometryFactory.tsx`、`Scene.tsx`、`SceneRoot.tsx`、`materials.ts`、`selection.ts`、`explode.ts`。
-  之後:`Annotation.tsx`(C5)、`kit/`(階段二)。
+  已建:`schema.ts`、`GeometryFactory.tsx`、`Scene.tsx`、`SceneRoot.tsx`、`materials.ts`、`selection.ts`、`explode.ts`、`Annotation.tsx`。
+  之後:`kit/`(階段二 primitive 積木)。
+- `src/ui/` — UI 殼。已建:`Controls.tsx`(拆解/重置/語言)。
 - `src/gallery/` — 畫廊路由(`/?view=gallery`),每個零件單獨一格供截圖。
 - `src/content/` — 題目資料 JSON;換議題只動這裡。
 - `tools/shoot.mjs` — 截圖 harness;`pnpm shoot "?view=gallery" <name>`。
@@ -43,10 +44,10 @@
 
 ## 現在該做什麼
 
-- 階段一:依序 C0→C6（PLAN.md §6），每點過 `/verify` 才 commit。
-- **進度:C0–C4 ✅(骨架+harness、資料驅動渲染、統一材質柔影、點選高亮、拆解動畫)。下一步 C5**(浮動標籤,drei `<Html>` + 中英)。
+- **階段一 C0–C6 全部 ✅ 完成(DoD 達成)** —— 完整垂直切片,engine/content 分離守住。
+- **現在:等人類確認後才開始階段二**(加元件 `/add-component`、加題目 `/add-topic`,先寫 `specs/`)。
 - 採互動式節奏:**每個查核點完成後停下,給人類看截圖再續**(本專案不用 ADW 自動化,見 ADR-0004)。
-- 階段一 DoD 達成後**停下等人類確認**，不要自行開始階段二。
+- 待辦:annotation 內容查證(人類)、build chunk code-split。
 
 ## 決策紀錄
 

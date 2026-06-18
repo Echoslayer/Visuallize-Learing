@@ -7,6 +7,7 @@ interface SelectionState {
   selectedId: string | null
   exploded: boolean
   lang: Lang
+  resetNonce: number // 遞增以觸發場景內相機復位(DOM 按鈕無法直接碰 OrbitControls)
   select: (id: string) => void
   clear: () => void
   toggleExploded: () => void
@@ -18,9 +19,11 @@ export const useSelection = create<SelectionState>((set) => ({
   selectedId: null,
   exploded: false,
   lang: 'zh',
+  resetNonce: 0,
   select: (id) => set({ selectedId: id }),
   clear: () => set({ selectedId: null }),
   toggleExploded: () => set((s) => ({ exploded: !s.exploded })),
   setLang: (lang) => set({ lang }),
-  resetView: () => set({ selectedId: null, exploded: false }),
+  resetView: () =>
+    set((s) => ({ selectedId: null, exploded: false, resetNonce: s.resetNonce + 1 })),
 }))

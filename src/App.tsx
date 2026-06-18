@@ -1,5 +1,6 @@
 import { SceneRoot } from './engine/SceneRoot'
 import { Scene } from './engine/Scene'
+import { Controls } from './ui/Controls'
 import aiServer from './content/ai-server.json'
 import type { SceneContent } from './engine/schema'
 
@@ -12,6 +13,7 @@ export default function App() {
       <SceneRoot camera={content.camera}>
         <Scene content={content} />
       </SceneRoot>
+      <Controls />
     </div>
   )
 }

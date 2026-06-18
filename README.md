@@ -52,7 +52,9 @@ docs/adr/        # 架構決策紀錄
 
 ## 狀態
 
-🟢 **C0–C5 完成** — 骨架 + 自查 harness;資料驅動 primitive;統一材質 + 柔影 + OrbitControls;
-點選高亮;拆解動畫;**浮動標籤**(drei `<Html>`,公司/代號 + 中英,隨相機追蹤)。
-下一步 **C6**(階段一最後):最小 UI 殼(拆解/收合、重置視角、中/EN 三顆按鈕)。
+🎉 **階段一完成(C0–C6)** — 一個 AI 伺服器機櫃的完整垂直切片:旋轉 / 點選高亮 / 拆解動畫 /
+浮動標籤(中英)/ 最小 UI 殼,**全由 `content/ai-server.json` 驅動**,engine 不含任何題目字眼。
+階段二(加元件 / 加題目)待人類確認後再開始(`/add-component`、`/add-topic`)。
 查核點進度見 [`PLAN.md §6`](docs/plan/PLAN.md)。
+
+**已知待辦**:annotation 公司/代號內容待人工查證;build 的 three.js chunk(>500kB)可後續 code-split。

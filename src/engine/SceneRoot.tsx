@@ -1,10 +1,21 @@
-import { Canvas } from '@react-three/fiber'
+import { Canvas, useThree } from '@react-three/fiber'
 import { Environment, Lightformer, OrbitControls } from '@react-three/drei'
+import { useEffect } from 'react'
 import type { ReactNode } from 'react'
 import type { CameraSpec } from './schema'
 import { useSelection } from './selection'
 
 const DEFAULT_CAMERA: CameraSpec = { position: [4, 3, 5], target: [0, 0, 0] }
+
+// 監聽 resetNonce,復位 OrbitControls 到初始相機(position0/target0)。
+function CameraController() {
+  const resetNonce = useSelection((s) => s.resetNonce)
+  const controls = useThree((s) => s.controls) as { reset?: () => void } | null
+  useEffect(() => {
+    if (resetNonce > 0) controls?.reset?.()
+  }, [resetNonce, controls])
+  return null
+}
 
 /**
  * 引擎的場景外殼:Canvas + 統一柔影打光 + OrbitControls + 依 schema 設定相機。與題目無關。
@@ -59,6 +70,7 @@ export function SceneRoot({
       {children}
 
       <OrbitControls target={camera.target} makeDefault enableDamping={false} />
+      <CameraController />
     </Canvas>
   )
 }
