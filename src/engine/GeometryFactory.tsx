@@ -1,6 +1,7 @@
 import { RoundedBox } from '@react-three/drei'
 import { animated, useSpring } from '@react-spring/three'
 import type { ThreeEvent } from '@react-three/fiber'
+import { Annotation } from './Annotation'
 import { explodeOffset } from './explode'
 import { materialProps } from './materials'
 import { useSelection } from './selection'
@@ -18,6 +19,7 @@ export function GeometryFactory({ part }: { part: Part }) {
   const select = useSelection((s) => s.select)
   const selected = useSelection((s) => s.selectedId === part.id)
   const exploded = useSelection((s) => s.exploded)
+  const lang = useSelection((s) => s.lang)
 
   // hooks 必須無條件呼叫 → 在 early return 之前算好 spring
   const base = part.transform.position
@@ -91,9 +93,18 @@ export function GeometryFactory({ part }: { part: Part }) {
       return null
   }
 
+  // 標籤錨點:零件右側外緣一小段(展開時各盤往右散開,卡片不互相重疊)。
+  const halfW = geometry.shape === 'box' ? (geometry.args[0] ?? 2) / 2 : 1
+  const anchor: Vec3 = [halfW + 0.4, 0, 0]
+  const annotation = part.annotation
+  const showAnnotation = (selected || exploded) && annotation !== null
+
   return (
     <animated.group position={pos} rotation={transform.rotation}>
       {inner}
+      {showAnnotation && annotation && (
+        <Annotation data={annotation} lang={lang} anchor={anchor} />
+      )}
     </animated.group>
   )
 }
