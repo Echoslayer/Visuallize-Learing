@@ -1,0 +1,70 @@
+{
+  "topic": "wind",
+  "title": { "zh": "風力發電機供應鏈", "en": "Wind Turbine Supply Chain" },
+  "camera": { "position": [4.5, 2.6, 6], "target": [0, 2, 0] },
+  "parts": [
+    {
+      "id": "tower",
+      "kind": "primitive",
+      "geometry": { "shape": "cylinder", "args": [0.12, 0.2, 3.0, 20] },
+      "transform": { "position": [0, 1.5, 0] },
+      "material": "metal-light",
+      "explode": { "vector": [0, 0, 0], "magnitude": 0 },
+      "annotation": {
+        "title": { "zh": "塔架", "en": "Tower" },
+        "companies": [{ "name": "世紀鋼", "ticker": "9958" }]
+      }
+    },
+    {
+      "id": "nacelle",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.8, 0.4, 0.45], "bevel": 0.04 },
+      "transform": { "position": [0, 3.15, -0.05] },
+      "material": "metal-dark",
+      "explode": { "vector": [0, 0.6, -1], "magnitude": 0.9 },
+      "annotation": {
+        "title": { "zh": "機艙 / 齒輪箱", "en": "Nacelle" },
+        "companies": [{ "name": "上緯投控", "ticker": "3708" }]
+      }
+    },
+    {
+      "id": "hub",
+      "kind": "primitive",
+      "geometry": { "shape": "cone", "args": [0.17, 0.35, 16] },
+      "transform": { "position": [0, 3.15, 0.38], "rotation": [1.571, 0, 0] },
+      "material": "metal-dark",
+      "explode": { "vector": [0, 0, 1], "magnitude": 1.4 },
+      "annotation": null
+    },
+    {
+      "id": "blade-0",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.13, 1.5, 0.04], "bevel": 0.02 },
+      "transform": { "position": [0, 3.9, 0.35] },
+      "material": "metal-light",
+      "explode": { "vector": [0, 1, 0.6], "magnitude": 1.0 },
+      "annotation": {
+        "title": { "zh": "葉片", "en": "Blade" },
+        "companies": [{ "name": "永冠", "ticker": "1589" }]
+      }
+    },
+    {
+      "id": "blade-1",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.13, 1.5, 0.04], "bevel": 0.02 },
+      "transform": { "position": [-0.65, 2.78, 0.35], "rotation": [0, 0, 2.094] },
+      "material": "metal-light",
+      "explode": { "vector": [-0.866, -0.5, 0.6], "magnitude": 1.0 },
+      "annotation": null
+    },
+    {
+      "id": "blade-2",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.13, 1.5, 0.04], "bevel": 0.02 },
+      "transform": { "position": [0.65, 2.78, 0.35], "rotation": [0, 0, 4.189] },
+      "material": "metal-light",
+      "explode": { "vector": [0.866, -0.5, 0.6], "magnitude": 1.0 },
+      "annotation": null
+    }
+  ]
+}

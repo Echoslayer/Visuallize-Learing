@@ -55,7 +55,7 @@ docs/adr/        # 架構決策紀錄
 🎉 **階段一完成(C0–C6)** — AI 伺服器機櫃垂直切片:旋轉 / 點選 / 拆解 / 標籤(中英)/ UI 殼,
 全由 JSON 驅動,engine 不含題目字眼。
 
-🔧 **階段二進行中** — 題目:`?topic=ai-server`(預設)、`grid`(變壓器)、`datacenter`(機房陣列)、`pipeline`(製程管線)。
+🔧 **階段二進行中** — 題目:`?topic=ai-server`(預設)、`grid`(變壓器)、`datacenter`(機房陣列)、`pipeline`(製程管線)、`wind`(風力發電機)。
 純內容題目 = 一份 JSON,engine 不動;schema 變更走 spec + sign-off:`repeat`(陣列展開,spec 02)、`tube`(管線 TubeGeometry,spec 03)。
 純函式邏輯附 `pnpm check` 斷言(無框架,見 [ADR-0010])。Backlog 見 `.agent/backlog.md`。
 
