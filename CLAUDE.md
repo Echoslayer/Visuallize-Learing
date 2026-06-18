@@ -51,11 +51,19 @@
 - 採互動式節奏:**每個查核點完成後停下,給人類看截圖再續**(本專案不用 ADW 自動化,見 ADR-0004)。
 - 待辦:annotation 內容查證(人類)、build chunk code-split。
 
-## 測試
+## 測試(見 [ADR-0010](docs/adr/0010-no-test-framework.md))
 
 不做 TDD、不引測試框架(vitest 等)——這是視覺/宣告式 R3F 程式,**截圖 harness(§7)就是測試層**。
-唯一例外:`tools/check-explode.ts`(純數學 + 除零邊界),`pnpm check`,無框架。想加單元測試前先問:
-這是邏輯還是畫面?畫面 → 截圖驗;純函式有邊界 → 比照 check-explode 加一個 assert,別搬框架。
+唯一例外:`tools/check-explode.ts`(純數學 + 除零邊界),`pnpm check`,無框架。想加測試前先問:
+這是邏輯還是畫面?畫面 → 截圖驗;純函式有邊界 → 比照 check-explode 加一個 `node:assert`。
+
+**升級階梯**(真需要才往上爬):純函式 assert → Node 內建 `node:test`(stdlib)→ vitest(只有要 jsdom/元件測試)。
+
+**邊界——命中任一就回 ADR-0010 重新評估**:
+① engine 出現非視覺演算法(schema 驗證、repeat/layout 展開器、資料轉換);② 出現後端/API/資料管線;
+③ 單人變多人;④ 純函式 self-check 超過 ~5–6 個(→ 改用 `node:test` 一次跑);
+⑤ 反覆出現截圖抓不到的非視覺 bug;⑥ 變正式產品且數據 correctness 關鍵。
+**在這些之前,加測試框架就是 over-design。**
 
 ## 決策紀錄
 

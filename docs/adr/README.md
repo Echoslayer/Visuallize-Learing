@@ -17,3 +17,4 @@
 | [0007](0007-procedural-environment-deterministic.md) | 程序化棚拍環境 + 決定性截圖(不抓外部 HDR) | Accepted |
 | [0008](0008-harness-drivable-runtime-state.md) | 自查 harness 可驅動的執行期狀態(query 參數 + DEV store handle) | Accepted |
 | [0009](0009-tuning-config-leva.md) | 視覺參數集中到 config + leva DEV 調參面板(不做產品設置頁) | Accepted |
+| [0010](0010-no-test-framework.md) | 不引入測試框架 / TDD;截圖 harness 為測試層(含重新評估觸發條件) | Accepted |
