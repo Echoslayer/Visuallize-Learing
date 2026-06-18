@@ -4,6 +4,7 @@ import type { ThreeEvent } from '@react-three/fiber'
 import { useMemo } from 'react'
 import { CatmullRomCurve3, Vector3 } from 'three'
 import { Annotation } from './Annotation'
+import { FlowParticles } from './FlowParticles'
 import { ModelPart } from './ModelPart'
 import { useConfig } from './config'
 import { explodeOffset } from './explode'
@@ -120,6 +121,11 @@ export function GeometryFactory({ part }: { part: Part }) {
           {mat}
         </mesh>
       )
+      break
+    }
+    case 'flow': {
+      // 流動粒子:自帶持續動畫,非單一可選取 mesh。
+      inner = <FlowParticles geometry={geometry} material={part.material} />
       break
     }
     default:

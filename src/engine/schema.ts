@@ -6,7 +6,7 @@ export type LocalizedText = Record<Lang, string>
 
 export type Vec3 = [number, number, number]
 
-export type GeometryShape = 'box' | 'cylinder' | 'cone' | 'tube'
+export type GeometryShape = 'box' | 'cylinder' | 'cone' | 'tube' | 'flow'
 
 /**
  * args 直接對應 three 幾何體建構子參數:
@@ -20,8 +20,10 @@ export interface Geometry {
   shape: GeometryShape
   args?: number[] // box/cylinder/cone 用;tube 不帶
   bevel?: number
-  path?: Vec3[] // tube:路徑控制點(≥2)
-  radius?: number // tube:管半徑(預設 0.1)
+  path?: Vec3[] // tube/flow:路徑控制點(≥2)
+  radius?: number // tube:管半徑;flow:粒子球半徑(預設 0.1)
+  count?: number // flow:粒子數(預設 8)
+  speed?: number // flow:每秒跑完路徑的比例(預設 0.2)
 }
 
 export interface Transform {

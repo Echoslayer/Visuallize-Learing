@@ -19,3 +19,4 @@
 | [0009](0009-tuning-config-leva.md) | 視覺參數集中到 config + leva DEV 調參面板(不做產品設置頁) | Accepted |
 | [0010](0010-no-test-framework.md) | 不引入測試框架 / TDD;截圖 harness 為測試層(含重新評估觸發條件) | Accepted |
 | [0011](0011-companies-csv.md) | 公司資料移到 CSV(edge list,組合層 join,多對多) | Accepted |
+| [0012](0012-flow-motion-nondeterministic.md) | flow 持續運動 + 動畫場景截圖非決定性(0007 受控例外) | Accepted |

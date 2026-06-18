@@ -1,0 +1,90 @@
+{
+  "topic": "semiconductor",
+  "title": { "zh": "半導體 / 晶圓產線供應鏈", "en": "Semiconductor Wafer Line" },
+  "camera": { "position": [2, 4.2, 9.5], "target": [0, 1, 0] },
+  "parts": [
+    {
+      "id": "conveyor",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [9, 0.2, 1.0], "bevel": 0.03 },
+      "transform": { "position": [0, 0.5, 0] },
+      "material": "metal-dark",
+      "explode": { "vector": [0, 0, 0], "magnitude": 0 },
+      "annotation": null
+    },
+    {
+      "id": "design",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.85, 1.0, 0.85], "bevel": 0.04 },
+      "transform": { "position": [-3.6, 1.1, 0] },
+      "material": "metal-light",
+      "explode": { "vector": [0, 1, 0], "magnitude": 0.5 },
+      "annotation": { "title": { "zh": "IC 設計", "en": "IC Design" } }
+    },
+    {
+      "id": "wafer",
+      "kind": "primitive",
+      "geometry": { "shape": "cylinder", "args": [0.42, 0.42, 1.0, 22] },
+      "transform": { "position": [-2.16, 1.1, 0] },
+      "material": "metal-light",
+      "explode": { "vector": [0, 1, 0], "magnitude": 0.6 },
+      "annotation": { "title": { "zh": "矽晶圓", "en": "Silicon Wafer" } }
+    },
+    {
+      "id": "equip",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.85, 1.0, 0.85], "bevel": 0.04 },
+      "transform": { "position": [-0.72, 1.1, 0] },
+      "material": "metal-dark",
+      "explode": { "vector": [0, 1, 0], "magnitude": 0.7 },
+      "annotation": { "title": { "zh": "設備 / 材料", "en": "Equipment & Materials" } }
+    },
+    {
+      "id": "foundry",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [1.05, 1.25, 0.95], "bevel": 0.05 },
+      "transform": { "position": [0.72, 1.22, 0] },
+      "material": "metal-light",
+      "explode": { "vector": [0, 1, 0], "magnitude": 0.85 },
+      "annotation": { "title": { "zh": "晶圓代工", "en": "Foundry" } }
+    },
+    {
+      "id": "osat",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.85, 1.0, 0.85], "bevel": 0.04 },
+      "transform": { "position": [2.16, 1.1, 0] },
+      "material": "metal-dark",
+      "explode": { "vector": [0, 1, 0], "magnitude": 0.6 },
+      "annotation": { "title": { "zh": "封裝測試", "en": "Packaging & Test" } }
+    },
+    {
+      "id": "downstream",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.8, 0.9, 0.8], "bevel": 0.04 },
+      "transform": { "position": [3.6, 1.05, 0] },
+      "material": "metal-light",
+      "explode": { "vector": [0, 1, 0], "magnitude": 0.5 },
+      "annotation": { "title": { "zh": "下游應用", "en": "Downstream" } }
+    },
+    {
+      "id": "wafer-flow",
+      "kind": "primitive",
+      "geometry": {
+        "shape": "flow",
+        "path": [
+          [-4, 0.75, 0.4],
+          [4, 0.75, 0.4],
+          [4, 0.75, -0.4],
+          [-4, 0.75, -0.4]
+        ],
+        "radius": 0.09,
+        "count": 12,
+        "speed": 0.12
+      },
+      "transform": { "position": [0, 0, 0] },
+      "material": "accent",
+      "explode": { "vector": [0, 0, 0], "magnitude": 0 },
+      "annotation": null
+    }
+  ]
+}

@@ -25,9 +25,9 @@
 ## 專案結構
 
 - `src/engine/` — 與題目無關、可重用。**不得出現任何題目字眼。**
-  已建:`schema.ts`、`GeometryFactory.tsx`、`Scene.tsx`、`SceneRoot.tsx`、`materials.ts`(只留顏色)、
-  `selection.ts`、`explode.ts`、`Annotation.tsx`、`config.ts`(視覺旋鈕集中,見 ADR-0009)。
-  之後:`kit/`(階段二 primitive 積木)。
+  已建:`schema.ts`、`GeometryFactory.tsx`(box/cylinder/cone/tube/flow + model)、`Scene.tsx`、`SceneRoot.tsx`、
+  `materials.ts`、`selection.ts`、`explode.ts`、`Annotation.tsx`、`ModelPart.tsx`、`FlowParticles.tsx`(持續流動,見 ADR-0012)、`config.ts`(ADR-0009)。
+  之後:`kit/`(primitive 積木)。
 - `src/ui/` — UI 殼。已建:`Controls.tsx`(拆解/重置/語言)、`TopicSwitcher.tsx`(左側題目切換,`?topic=` 導航)、
   `Credits.tsx`(借用模型 CC-BY 標註)、`Tuning.tsx`(leva 調參,**僅 DEV、僅 App**)。
 - **視覺數值一律走 `engine/config.ts`**,別在元件硬寫;調好 bake 進 `DEFAULT_CONFIG`。

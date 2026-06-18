@@ -55,9 +55,10 @@ docs/adr/        # 架構決策紀錄
 🎉 **階段一完成(C0–C6)** — AI 伺服器機櫃垂直切片:旋轉 / 點選 / 拆解 / 標籤(中英)/ UI 殼,
 全由 JSON 驅動,engine 不含題目字眼。
 
-🎉 **階段二 backlog 全數完成** — 6 題目:`?topic=ai-server`(預設)、`grid`(變壓器)、`datacenter`(機房陣列)、`pipeline`(製程管線)、`wind`(風力發電機)、`aerospace`(航太/飛機)。
-引擎驗證過 box/cylinder/cone/tube + repeat + rotation + model(GLB)全形態,engine/content 分離全程守住。
-schema 變更皆走 spec + sign-off(`repeat` spec 02、`tube` spec 03、`model` spec 05)。純函式附 `pnpm check` 斷言(見 [ADR-0010])。
+🎉 **7 題目**:`?topic=ai-server`(預設)、`grid`(變壓器)、`datacenter`(機房陣列)、`pipeline`(製程管線)、`wind`(風力發電機)、`aerospace`(航太/飛機)、`semiconductor`(**半導體晶圓產線,含流動動畫**)。
+引擎支援 box/cylinder/cone/tube + repeat + rotation + model(GLB)+ **flow(持續流動粒子)**;engine/content 分離全程守住。
+schema 變更皆走 spec + sign-off(`repeat` 02、`tube` 03、`model` 05、`flow` 06)。純函式附 `pnpm check` 斷言(見 [ADR-0010])。
+供應鏈題目可先用 `/research-supply-chain` 做功課(`docs/supply-chains/`)再建模。
 
 ## 素材出處 / Credits
 

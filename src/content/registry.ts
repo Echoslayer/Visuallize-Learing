@@ -4,6 +4,7 @@ import datacenter from './datacenter.json'
 import pipeline from './pipeline.json'
 import wind from './wind.json'
 import aerospace from './aerospace.json'
+import semiconductor from './semiconductor.json'
 import { companiesFor } from './companies'
 import type { LocalizedText, SceneContent } from '../engine/schema'
 
@@ -15,6 +16,7 @@ export const TOPICS: Record<string, SceneContent> = {
   pipeline: pipeline as unknown as SceneContent,
   wind: wind as unknown as SceneContent,
   aerospace: aerospace as unknown as SceneContent,
+  semiconductor: semiconductor as unknown as SceneContent,
 }
 
 export const DEFAULT_TOPIC = 'ai-server'
