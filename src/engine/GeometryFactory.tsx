@@ -148,12 +148,9 @@ export function GeometryFactory({ part, center }: { part: Part; center: Vec3 }) 
       return null
   }
 
-  // 公司卡:點選 → 該 part 的節點卡;展開 / 「股票」按鈕 → 節點自身的卡。錨在元件中心(無引線)。
-  const card = selected
-    ? (part.card ?? part.annotation)
-    : exploded || showAllCards
-      ? part.annotation
-      : null
+  // 公司卡:只由「股票」按鈕 / 展開控制;點選不再自己冒卡(避免關掉股票後點選又顯示)。
+  // 錨在元件中心(無引線)。
+  const card = exploded || showAllCards ? part.annotation : null
   const cardAnchor: Vec3 = [0, 0, 0] // 元件中心
 
   // 名牌:顯示名(已在組合層解析:label → 父名 → 節點 title);點選或「全部顯示」時出現。
