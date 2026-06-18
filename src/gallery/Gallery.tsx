@@ -1,16 +1,35 @@
+import { useEffect } from 'react'
 import { SceneRoot } from '../engine/SceneRoot'
 import { Scene } from '../engine/Scene'
+import { useSelection } from '../engine/selection'
 import aiServer from '../content/ai-server.json'
 import type { SceneContent } from '../engine/schema'
 
 const content = aiServer as unknown as SceneContent
 
+/** 讀 URL query 把狀態灌進 store(?exploded=1&lang=en&part=id),供截圖自查分別取狀態。 */
+function useQueryState() {
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search)
+    if (q.get('exploded') === '1') useSelection.setState({ exploded: true })
+    const lang = q.get('lang')
+    if (lang === 'en' || lang === 'zh') useSelection.setState({ lang })
+    const part = q.get('part')
+    if (part) useSelection.setState({ selectedId: part })
+    // DEV:暴露 store 給自查 harness 驅動(toggle 展開/收合驗證無漂移)。
+    if (import.meta.env.DEV) {
+      ;(window as unknown as { __selection?: typeof useSelection }).__selection =
+        useSelection
+    }
+  }, [])
+}
+
 /**
- * 元件畫廊:供 shoot.mjs 截圖自查。
- * C1:渲染由 schema 驅動的完整場景,證明資料驅動可運作。
- * 之後會用 query 參數(?part=...&exploded=1&lang=en)挑選單一零件與狀態。
+ * 元件畫廊:供 shoot.mjs 截圖自查。渲染由 schema 驅動的完整場景。
+ * 狀態由 URL query 控制(展開/語言/選取)。
  */
 export function Gallery() {
+  useQueryState()
   return (
     <div style={{ position: 'fixed', inset: 0, background: '#dadee4' }}>
       <SceneRoot camera={content.camera}>

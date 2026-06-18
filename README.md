@@ -52,7 +52,7 @@ docs/adr/        # 架構決策紀錄
 
 ## 狀態
 
-🟢 **C0–C3 完成** — 骨架 + 自查 harness;資料驅動 primitive;統一材質 + 柔影 + OrbitControls;
-點選零件 → emissive 高亮(zustand store,點空白清除)。
-下一步 **C4**:拆解動畫(`@react-spring/three` 補間)。
+🟢 **C0–C4 完成** — 骨架 + 自查 harness;資料驅動 primitive;統一材質 + 柔影 + OrbitControls;
+點選高亮;**拆解動畫**(`@react-spring/three` 補間,收合零漂移)。
+下一步 **C5**:浮動標籤(drei `<Html>`,顯示公司/代號 + 中英)。
 查核點進度見 [`PLAN.md §6`](docs/plan/PLAN.md)。
