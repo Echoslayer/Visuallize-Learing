@@ -58,7 +58,9 @@ docs/adr/        # 架構決策紀錄
 🎉 **7 題目**:`?topic=ai-server`(預設)、`grid`(變壓器)、`datacenter`(機房陣列)、`pipeline`(製程管線)、`wind`(風力發電機)、`aerospace`(航太/飛機)、`semiconductor`(**半導體晶圓產線,含流動動畫**)。
 引擎支援 box/cylinder/cone/tube + repeat + rotation + model(GLB)+ **flow(持續流動粒子)**;engine/content 分離全程守住。
 schema 變更皆走 spec + sign-off(`repeat` 02、`tube` 03、`model` 05、`flow` 06)。純函式附 `pnpm check` 斷言(見 [ADR-0010])。
-供應鏈題目可先用 `/research-supply-chain` 做功課(`docs/supply-chains/`)再建模。
+供應鏈題目走三段管線(見 [ADR-0013](docs/adr/0013-supply-chain-pipeline-abstraction.md)):
+`/research-supply-chain`(事實 → `docs/supply-chains/`)→ `/design-demo`(設計取捨,套 `object-abstraction` skill)→ `/add-topic`(建模)。
+模型細節層次跟著**供應鏈意義**走(鏈上有對應的部位就建,只略過無意義造型細節)。
 
 ## 素材出處 / Credits
 
