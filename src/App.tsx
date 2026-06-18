@@ -2,11 +2,11 @@ import { lazy, Suspense } from 'react'
 import { SceneRoot } from './engine/SceneRoot'
 import { Scene } from './engine/Scene'
 import { Controls } from './ui/Controls'
-import aiServer from './content/ai-server.json'
-import type { SceneContent } from './engine/schema'
+import { getTopic } from './content/registry'
 
 // 內容載入發生在組合層(App/Gallery),不在 engine——維持 engine 與題目無關。
-const content = aiServer as unknown as SceneContent
+// 題目由 ?topic= 決定(預設 ai-server)。
+const content = getTopic(new URLSearchParams(window.location.search).get('topic'))
 
 // DEV 才載入的 leva 調參面板;正式版 import.meta.env.DEV 為常數 false → 不載入此 chunk。
 const Tuning = lazy(() => import('./ui/Tuning'))

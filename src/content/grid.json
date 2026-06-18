@@ -1,0 +1,109 @@
+{
+  "topic": "grid",
+  "title": { "zh": "重電 / 變壓器供應鏈", "en": "Power Transformer Supply Chain" },
+  "camera": { "position": [4.5, 2.8, 5.5], "target": [0, 1.1, 0] },
+  "parts": [
+    {
+      "id": "base",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [1.9, 0.18, 1.3], "bevel": 0.03 },
+      "transform": { "position": [0, 0.09, 0] },
+      "material": "metal-dark",
+      "explode": { "vector": [0, 0, 0], "magnitude": 0 },
+      "annotation": null
+    },
+    {
+      "id": "tank",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [1.5, 1.2, 1.0], "bevel": 0.05 },
+      "transform": { "position": [0, 0.85, 0] },
+      "material": "metal-dark",
+      "explode": { "vector": [0, 0, 0], "magnitude": 0 },
+      "annotation": {
+        "title": { "zh": "油箱本體", "en": "Tank" },
+        "companies": [{ "name": "華城", "ticker": "1519" }]
+      }
+    },
+    {
+      "id": "lid",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [1.5, 0.14, 1.0], "bevel": 0.02 },
+      "transform": { "position": [0, 1.52, 0] },
+      "material": "metal-dark",
+      "explode": { "vector": [0, 1, 0], "magnitude": 0.6 },
+      "annotation": null
+    },
+    {
+      "id": "core",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.5, 0.95, 0.5], "bevel": 0.02 },
+      "transform": { "position": [0, 0.9, 0] },
+      "material": "metal-light",
+      "explode": { "vector": [-0.9, 1, 0.2], "magnitude": 1.9 },
+      "annotation": {
+        "title": { "zh": "鐵芯 / 矽鋼片", "en": "Core" },
+        "companies": [{ "name": "中鋼", "ticker": "2002" }]
+      }
+    },
+    {
+      "id": "bushing-1",
+      "kind": "primitive",
+      "geometry": { "shape": "cone", "args": [0.13, 0.55, 16] },
+      "transform": { "position": [-0.45, 1.86, 0.1] },
+      "material": "metal-light",
+      "explode": { "vector": [0, 1, 0.3], "magnitude": 0.9 },
+      "annotation": null
+    },
+    {
+      "id": "bushing-2",
+      "kind": "primitive",
+      "geometry": { "shape": "cone", "args": [0.13, 0.55, 16] },
+      "transform": { "position": [0, 1.86, 0.1] },
+      "material": "metal-light",
+      "explode": { "vector": [0, 1, 0.3], "magnitude": 0.9 },
+      "annotation": {
+        "title": { "zh": "高壓套管 / 礙子", "en": "HV Bushing" },
+        "companies": [{ "name": "士電", "ticker": "1503" }]
+      }
+    },
+    {
+      "id": "bushing-3",
+      "kind": "primitive",
+      "geometry": { "shape": "cone", "args": [0.13, 0.55, 16] },
+      "transform": { "position": [0.45, 1.86, 0.1] },
+      "material": "metal-light",
+      "explode": { "vector": [0, 1, 0.3], "magnitude": 0.9 },
+      "annotation": null
+    },
+    {
+      "id": "fin-1",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.08, 1.0, 0.85], "bevel": 0.01 },
+      "transform": { "position": [0.82, 0.85, 0] },
+      "material": "metal-dark",
+      "explode": { "vector": [1, 0.2, 0], "magnitude": 1.1 },
+      "annotation": null
+    },
+    {
+      "id": "fin-2",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.08, 1.0, 0.85], "bevel": 0.01 },
+      "transform": { "position": [0.92, 0.85, 0] },
+      "material": "metal-dark",
+      "explode": { "vector": [1, 0.2, 0], "magnitude": 1.1 },
+      "annotation": {
+        "title": { "zh": "散熱器", "en": "Radiator" },
+        "companies": [{ "name": "中興電", "ticker": "1513" }]
+      }
+    },
+    {
+      "id": "fin-3",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.08, 1.0, 0.85], "bevel": 0.01 },
+      "transform": { "position": [1.02, 0.85, 0] },
+      "material": "metal-dark",
+      "explode": { "vector": [1, 0.2, 0], "magnitude": 1.1 },
+      "annotation": null
+    }
+  ]
+}

@@ -52,9 +52,10 @@ docs/adr/        # 架構決策紀錄
 
 ## 狀態
 
-🎉 **階段一完成(C0–C6)** — 一個 AI 伺服器機櫃的完整垂直切片:旋轉 / 點選高亮 / 拆解動畫 /
-浮動標籤(中英)/ 最小 UI 殼,**全由 `content/ai-server.json` 驅動**,engine 不含任何題目字眼。
-階段二(加元件 / 加題目)待人類確認後再開始(`/add-component`、`/add-topic`)。
-查核點進度見 [`PLAN.md §6`](docs/plan/PLAN.md)。
+🎉 **階段一完成(C0–C6)** — AI 伺服器機櫃垂直切片:旋轉 / 點選 / 拆解 / 標籤(中英)/ UI 殼,
+全由 JSON 驅動,engine 不含題目字眼。
 
-**已知待辦**:annotation 公司/代號內容待人工查證;build 的 three.js chunk(>500kB)可後續 code-split。
+🔧 **階段二進行中** — 多題目:`?topic=ai-server`(預設)、`?topic=grid`(重電/變壓器)。
+**新題目 = 一份 JSON + 註冊一筆,engine 一行未改**(已驗證)。Backlog 見 [`.agent/backlog.md`]。
+
+**已知待辦**:各題目 annotation 公司/代號待人工查證;build 的 three.js chunk(>500kB)可後續 code-split。

@@ -2,10 +2,9 @@ import { useEffect } from 'react'
 import { SceneRoot } from '../engine/SceneRoot'
 import { Scene } from '../engine/Scene'
 import { useSelection } from '../engine/selection'
-import aiServer from '../content/ai-server.json'
-import type { SceneContent } from '../engine/schema'
+import { getTopic } from '../content/registry'
 
-const content = aiServer as unknown as SceneContent
+const content = getTopic(new URLSearchParams(window.location.search).get('topic'))
 
 /** 讀 URL query 把狀態灌進 store(?exploded=1&lang=en&part=id),供截圖自查分別取狀態。 */
 function useQueryState() {
