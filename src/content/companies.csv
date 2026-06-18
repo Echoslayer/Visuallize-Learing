@@ -16,7 +16,7 @@ ai-server,tray-power,2301,光寶科
 grid,tank,1519,華城
 grid,tank,1513,中興電
 grid,core,2002,中鋼
-grid,core,2049,上銀
+grid,core,1609,大亞
 grid,bushing-2,1503,士電
 grid,bushing-2,1514,亞力
 grid,fin-2,1513,中興電
@@ -32,12 +32,11 @@ pipeline,tank-1,2013,中鋼構
 pipeline,pipe-top,2017,官田鋼
 pipeline,pipe-top,2007,燁興
 pipeline,valve,1590,亞德客-KY
-pipeline,valve,2049,上銀
 wind,tower,9958,世紀鋼
 wind,tower,2002,中鋼
 wind,nacelle,3708,上緯投控
 wind,nacelle,1503,士電
-wind,blade-0,1589,永冠
+wind,blade-0,1589,永冠-KY
 wind,blade-0,3708,上緯投控
 aerospace,airframe,2634,漢翔
 aerospace,airframe,2645,長榮航太
