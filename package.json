@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "typecheck": "tsc -b",
     "shoot": "node tools/shoot.mjs",
-    "check": "node tools/check-explode.ts"
+    "check": "node tools/check-explode.ts && node tools/check-expand.ts"
   },
   "dependencies": {
     "@react-spring/three": "^10.1.1",

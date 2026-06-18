@@ -46,6 +46,12 @@ export interface ModelRef {
   node?: string
 }
 
+// 陣列展開:把一個 part 重複成 count 份,每份相對前一份位移 step(單軸,見 spec 02)。
+export interface Repeat {
+  count: number // 總份數(含原件);count <= 1 視為不重複
+  step: Vec3 // 每份相對前一份的位移
+}
+
 export interface Part {
   id: string
   kind: 'primitive' | 'model'
@@ -55,6 +61,7 @@ export interface Part {
   material: string
   explode: Explode
   annotation: Annotation | null
+  repeat?: Repeat // 選用;無此欄 = 原樣一份(向後相容)
 }
 
 export interface CameraSpec {

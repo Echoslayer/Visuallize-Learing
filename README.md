@@ -55,7 +55,8 @@ docs/adr/        # 架構決策紀錄
 🎉 **階段一完成(C0–C6)** — AI 伺服器機櫃垂直切片:旋轉 / 點選 / 拆解 / 標籤(中英)/ UI 殼,
 全由 JSON 驅動,engine 不含題目字眼。
 
-🔧 **階段二進行中** — 多題目:`?topic=ai-server`(預設)、`?topic=grid`(重電/變壓器)。
-**新題目 = 一份 JSON + 註冊一筆,engine 一行未改**(已驗證)。Backlog 見 [`.agent/backlog.md`]。
+🔧 **階段二進行中** — 多題目:`?topic=ai-server`(預設)、`grid`(重電/變壓器)、`datacenter`(機房陣列)。
+純內容題目 = 一份 JSON,engine 不動;`datacenter` 引入 schema `repeat`(陣列展開,spec 02)——
+**4 個 part 渲染成 12 台機櫃**。純函式邏輯附 `pnpm check` 斷言(無框架,見 [ADR-0010])。Backlog 見 `.agent/backlog.md`。
 
 **已知待辦**:各題目 annotation 公司/代號待人工查證;build 的 three.js chunk(>500kB)可後續 code-split。
