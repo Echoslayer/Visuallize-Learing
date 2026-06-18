@@ -221,6 +221,7 @@ docs/
 | `/add-component <名稱>` | §8.1 加元件：寫 spec → 實作 → gallery 一格 → `/verify` |
 | `/add-topic <名稱>` | §8.2 加題目：只動 content JSON → gallery 頁 → `/verify` |
 | `/verify [route]` | 跑 §7 自查迴圈（typecheck→lint→build→shoot→讀回截圖），輸出結構化結果 |
+| `/update-docs [scope]` | 同步活文件（README/CLAUDE/log）並按需新增 ADR（不可改寫舊 ADR） |
 
 **原則 3：閉環（close the loop）。** 每份 spec 的 Validation Commands 是「完成」的唯一定義。
 `/verify` 依序執行、**遇到第一個失敗就停**並回報（仿 TAC `/test` 的結構化 JSON：

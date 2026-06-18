@@ -15,3 +15,4 @@
 | [0005](0005-toolchain-versioning.md) | 鎖 react19+fiber9;vite/ts/eslint 跟隨官方範本 | Accepted |
 | [0006](0006-minimal-query-routing.md) | 極簡 query 路由,不引 react-router | Accepted |
 | [0007](0007-procedural-environment-deterministic.md) | 程序化棚拍環境 + 決定性截圖(不抓外部 HDR) | Accepted |
+| [0008](0008-harness-drivable-runtime-state.md) | 自查 harness 可驅動的執行期狀態(query 參數 + DEV store handle) | Accepted |

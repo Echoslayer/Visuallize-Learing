@@ -25,8 +25,8 @@
 ## 專案結構
 
 - `src/engine/` — 與題目無關、可重用。**不得出現任何題目字眼。**
-  已建:`schema.ts`、`GeometryFactory.tsx`、`Scene.tsx`、`SceneRoot.tsx`、`materials.ts`、`selection.ts`。
-  之後:`explode.ts`(C4)、`Annotation.tsx`(C5)、`kit/`(階段二)。
+  已建:`schema.ts`、`GeometryFactory.tsx`、`Scene.tsx`、`SceneRoot.tsx`、`materials.ts`、`selection.ts`、`explode.ts`。
+  之後:`Annotation.tsx`(C5)、`kit/`(階段二)。
 - `src/gallery/` — 畫廊路由(`/?view=gallery`),每個零件單獨一格供截圖。
 - `src/content/` — 題目資料 JSON;換議題只動這裡。
 - `tools/shoot.mjs` — 截圖 harness;`pnpm shoot "?view=gallery" <name>`。
@@ -37,13 +37,14 @@
 - `/prime` — 開工前建立上下文。
 - `/verify [route]` — 跑自我驗證迴圈（typecheck→lint→build→shoot→讀回截圖）。**沒過不准 commit。**
 - `/commit` — 格式化 commit（階段一 `C{n}: ...`；階段二含 spec 檔名）。
+- `/update-docs [scope]` — 同步活文件(README/CLAUDE/log)與按需新增 ADR。
 - `/add-component <name>` / `/add-topic <name>` — 階段二迭代（先寫 `specs/` 規格）。
 - 建 3D 工業元件時,skill `r3f-industrial-component` 會自動載入配方。
 
 ## 現在該做什麼
 
 - 階段一:依序 C0→C6（PLAN.md §6），每點過 `/verify` 才 commit。
-- **進度:C0–C3 ✅(骨架+harness、資料驅動渲染、統一材質柔影、點選高亮)。下一步 C4**(拆解動畫,`@react-spring/three`)。
+- **進度:C0–C4 ✅(骨架+harness、資料驅動渲染、統一材質柔影、點選高亮、拆解動畫)。下一步 C5**(浮動標籤,drei `<Html>` + 中英)。
 - 採互動式節奏:**每個查核點完成後停下,給人類看截圖再續**(本專案不用 ADW 自動化,見 ADR-0004)。
 - 階段一 DoD 達成後**停下等人類確認**，不要自行開始階段二。
 
