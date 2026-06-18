@@ -44,7 +44,8 @@
 - `/verify [route]` — 跑自我驗證迴圈（typecheck→lint→build→shoot→讀回截圖）。**沒過不准 commit。**
 - `/commit` — 格式化 commit（階段一 `C{n}: ...`；階段二含 spec 檔名）。
 - `/update-docs [scope]` — 同步活文件(README/CLAUDE/log)與按需新增 ADR。
-- `/add-component <name>` / `/add-topic <name>` — 階段二迭代（先寫 `specs/` 規格）。
+- `/research-supply-chain <產業>` — 先做功課:查證產業供應鏈實際運作,產出研究文件到 `docs/supply-chains/`,作為建模依據。
+- `/add-component <name>` / `/add-topic <name>` — 階段二迭代（先寫 `specs/` 規格;題目建模可參考 `docs/supply-chains/` 研究）。
 - 建 3D 工業元件時,skill `r3f-industrial-component` 會自動載入配方。
 
 ## 現在該做什麼
