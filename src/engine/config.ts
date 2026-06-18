@@ -13,13 +13,13 @@ export interface Config {
 }
 
 export const DEFAULT_CONFIG: Config = {
-  labelDistance: 1.25,
-  labelOpacity: 0.92,
-  ambient: 0.25,
-  hemisphere: 0.85,
-  directional: 1.0,
-  metalness: 0.15,
-  roughness: 0.6,
+  labelDistance: 1.95,
+  labelOpacity: 0.5,
+  ambient: 1.05,
+  hemisphere: 0.45,
+  directional: 1.3,
+  metalness: 0.35,
+  roughness: 0.35,
 }
 
 interface ConfigStore extends Config {
