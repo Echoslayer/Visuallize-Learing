@@ -27,6 +27,7 @@ export interface Geometry {
 export interface Transform {
   position: Vec3
   rotation?: Vec3
+  scale?: number | Vec3 // 選用;借來的 model 常需縮放(spec 05)。預設 1。
 }
 
 export interface Company {
@@ -47,6 +48,7 @@ export interface Explode {
 export interface ModelRef {
   url: string
   node?: string
+  attribution?: string // CC-BY 等需要的作者標註,UI 顯示
 }
 
 // 陣列展開:把一個 part 重複成 count 份,每份相對前一份位移 step(單軸,見 spec 02)。

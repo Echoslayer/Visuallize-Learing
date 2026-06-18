@@ -4,6 +4,7 @@ import type { ThreeEvent } from '@react-three/fiber'
 import { useMemo } from 'react'
 import { CatmullRomCurve3, Vector3 } from 'three'
 import { Annotation } from './Annotation'
+import { ModelPart } from './ModelPart'
 import { useConfig } from './config'
 import { explodeOffset } from './explode'
 import { materialColor } from './materials'
@@ -46,7 +47,6 @@ export function GeometryFactory({ part }: { part: Part }) {
   )
 
   const { geometry, transform, id } = part
-  if (!geometry) return null
 
   const onClick = (e: ThreeEvent<MouseEvent>) => {
     e.stopPropagation() // 只選最前面那塊,不穿透被遮擋的零件
@@ -71,8 +71,14 @@ export function GeometryFactory({ part }: { part: Part }) {
   )
 
   let inner: React.ReactNode
-  switch (geometry.shape) {
-    case 'box': {
+  if (part.kind === 'model' && part.model) {
+    // 借來的有機模型:整隻一件,不細分。
+    inner = <ModelPart model={part.model} id={id} onClick={onClick} />
+  } else if (!geometry) {
+    return null
+  } else
+    switch (geometry.shape) {
+      case 'box': {
       const args = (geometry.args ?? []) as [number, number, number]
       inner =
         geometry.bevel && geometry.bevel > 0 ? (
@@ -121,14 +127,14 @@ export function GeometryFactory({ part }: { part: Part }) {
   }
 
   // 標籤拉到零件右側外一段距離(可由 config 調),用引線連回零件,避免遮擋。
-  const halfW = geometry.shape === 'box' ? (geometry.args?.[0] ?? 2) / 2 : 1
+  const halfW = geometry?.shape === 'box' ? (geometry.args?.[0] ?? 2) / 2 : 1
   const lineStart: Vec3 = [halfW + 0.05, 0, 0]
   const anchor: Vec3 = [halfW + labelDistance, 0, 0]
   const annotation = part.annotation
   const showAnnotation = (selected || exploded) && annotation !== null
 
   return (
-    <animated.group position={pos} rotation={transform.rotation}>
+    <animated.group position={pos} rotation={transform.rotation} scale={transform.scale}>
       {inner}
       {showAnnotation && annotation && (
         <>

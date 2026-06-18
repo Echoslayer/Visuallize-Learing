@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react'
 import { SceneRoot } from './engine/SceneRoot'
 import { Scene } from './engine/Scene'
 import { Controls } from './ui/Controls'
+import { Credits } from './ui/Credits'
 import { getTopic } from './content/registry'
 
 // 內容載入發生在組合層(App/Gallery),不在 engine——維持 engine 與題目無關。
@@ -18,6 +19,7 @@ export default function App() {
         <Scene content={content} />
       </SceneRoot>
       <Controls />
+      <Credits content={content} />
       {import.meta.env.DEV && (
         <Suspense fallback={null}>
           <Tuning />

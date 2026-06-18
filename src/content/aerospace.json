@@ -1,0 +1,31 @@
+{
+  "topic": "aerospace",
+  "title": { "zh": "航太 / 國防供應鏈", "en": "Aerospace & Defense Supply Chain" },
+  "camera": { "position": [5, 3, 6], "target": [0, 1, 0] },
+  "parts": [
+    {
+      "id": "apron",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [4.5, 0.12, 3.2], "bevel": 0.03 },
+      "transform": { "position": [0, 0.06, 0] },
+      "material": "metal-dark",
+      "explode": { "vector": [0, 0, 0], "magnitude": 0 },
+      "annotation": null
+    },
+    {
+      "id": "airframe",
+      "kind": "model",
+      "model": {
+        "url": "/models/airplane.glb",
+        "attribution": "Airplane by Poly by Google (poly.pizza) · CC-BY"
+      },
+      "transform": { "position": [-0.33, 0.9, 0.1], "scale": 0.006 },
+      "material": "metal-light",
+      "explode": { "vector": [0, 1, 0], "magnitude": 1.0 },
+      "annotation": {
+        "title": { "zh": "機體結構", "en": "Airframe" },
+        "companies": [{ "name": "漢翔", "ticker": "2634" }]
+      }
+    }
+  ]
+}

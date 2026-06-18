@@ -55,8 +55,12 @@ docs/adr/        # 架構決策紀錄
 🎉 **階段一完成(C0–C6)** — AI 伺服器機櫃垂直切片:旋轉 / 點選 / 拆解 / 標籤(中英)/ UI 殼,
 全由 JSON 驅動,engine 不含題目字眼。
 
-🔧 **階段二進行中** — 題目:`?topic=ai-server`(預設)、`grid`(變壓器)、`datacenter`(機房陣列)、`pipeline`(製程管線)、`wind`(風力發電機)。
-純內容題目 = 一份 JSON,engine 不動;schema 變更走 spec + sign-off:`repeat`(陣列展開,spec 02)、`tube`(管線 TubeGeometry,spec 03)。
-純函式邏輯附 `pnpm check` 斷言(無框架,見 [ADR-0010])。Backlog 見 `.agent/backlog.md`。
+🎉 **階段二 backlog 全數完成** — 6 題目:`?topic=ai-server`(預設)、`grid`(變壓器)、`datacenter`(機房陣列)、`pipeline`(製程管線)、`wind`(風力發電機)、`aerospace`(航太/飛機)。
+引擎驗證過 box/cylinder/cone/tube + repeat + rotation + model(GLB)全形態,engine/content 分離全程守住。
+schema 變更皆走 spec + sign-off(`repeat` spec 02、`tube` spec 03、`model` spec 05)。純函式附 `pnpm check` 斷言(見 [ADR-0010])。
+
+## 素材出處 / Credits
+
+- **Airplane**(`aerospace` 題目)— by **Poly by Google**,來源 [poly.pizza](https://poly.pizza/),授權 **CC-BY**。
 
 **已知待辦**:各題目 annotation 公司/代號待人工查證;build 的 three.js chunk(>500kB)可後續 code-split。

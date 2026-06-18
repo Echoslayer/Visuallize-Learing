@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { SceneRoot } from '../engine/SceneRoot'
 import { Scene } from '../engine/Scene'
+import { Credits } from '../ui/Credits'
 import { useSelection } from '../engine/selection'
 import { getTopic } from '../content/registry'
 
@@ -34,6 +35,7 @@ export function Gallery() {
       <SceneRoot camera={content.camera}>
         <Scene content={content} />
       </SceneRoot>
+      <Credits content={content} />
     </div>
   )
 }
