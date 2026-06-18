@@ -39,9 +39,11 @@ const btnActive: CSSProperties = {
 export function Controls() {
   const exploded = useSelection((s) => s.exploded)
   const showAllNames = useSelection((s) => s.showAllNames)
+  const showAllCards = useSelection((s) => s.showAllCards)
   const lang = useSelection((s) => s.lang)
   const toggleExploded = useSelection((s) => s.toggleExploded)
   const toggleAllNames = useSelection((s) => s.toggleAllNames)
+  const toggleAllCards = useSelection((s) => s.toggleAllCards)
   const setLang = useSelection((s) => s.setLang)
   const resetView = useSelection((s) => s.resetView)
 
@@ -62,6 +64,13 @@ export function Controls() {
         onClick={toggleAllNames}
       >
         {t('名稱', 'Names')}
+      </button>
+      <button
+        data-action="cards"
+        style={showAllCards ? btnActive : btn}
+        onClick={toggleAllCards}
+      >
+        {t('股票', 'Stocks')}
       </button>
       <button data-action="reset" style={btn} onClick={resetView}>
         {t('重置視角', 'Reset')}

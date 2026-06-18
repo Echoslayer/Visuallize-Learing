@@ -40,6 +40,7 @@ export function GeometryFactory({ part, center }: { part: Part; center: Vec3 }) 
   const selected = useSelection((s) => s.selectedId === part.id)
   const exploded = useSelection((s) => s.exploded)
   const showAllNames = useSelection((s) => s.showAllNames)
+  const showAllCards = useSelection((s) => s.showAllCards)
   const lang = useSelection((s) => s.lang)
   const metalness = useConfig((s) => s.metalness)
   const roughness = useConfig((s) => s.roughness)
@@ -147,8 +148,12 @@ export function GeometryFactory({ part, center }: { part: Part; center: Vec3 }) 
       return null
   }
 
-  // 公司卡:點選 → 該 part 的節點卡;展開 → 節點自身的卡。錨在元件中心(無引線),展開時跟著大元件移到中心。
-  const card = selected ? (part.card ?? part.annotation) : exploded ? part.annotation : null
+  // 公司卡:點選 → 該 part 的節點卡;展開 / 「股票」按鈕 → 節點自身的卡。錨在元件中心(無引線)。
+  const card = selected
+    ? (part.card ?? part.annotation)
+    : exploded || showAllCards
+      ? part.annotation
+      : null
   const cardAnchor: Vec3 = [0, 0, 0] // 元件中心
 
   // 名牌:顯示名(已在組合層解析:label → 父名 → 節點 title);點選或「全部顯示」時出現。
