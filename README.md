@@ -52,7 +52,7 @@ docs/adr/        # 架構決策紀錄
 
 ## 狀態
 
-🟢 **C0–C2 完成** — 骨架 + 自查 harness;`GeometryFactory` 資料驅動生成 primitive;
-統一材質登錄表 + 程序化 Environment 柔影 + OrbitControls(霧白 airy 質感,對齊參考產品)。
-下一步 **C3**:點選零件 → 高亮(zustand store)。
+🟢 **C0–C3 完成** — 骨架 + 自查 harness;資料驅動 primitive;統一材質 + 柔影 + OrbitControls;
+點選零件 → emissive 高亮(zustand store,點空白清除)。
+下一步 **C4**:拆解動畫(`@react-spring/three` 補間)。
 查核點進度見 [`PLAN.md §6`](docs/plan/PLAN.md)。

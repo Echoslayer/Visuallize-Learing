@@ -2,6 +2,7 @@ import { Canvas } from '@react-three/fiber'
 import { Environment, Lightformer, OrbitControls } from '@react-three/drei'
 import type { ReactNode } from 'react'
 import type { CameraSpec } from './schema'
+import { useSelection } from './selection'
 
 const DEFAULT_CAMERA: CameraSpec = { position: [4, 3, 5], target: [0, 0, 0] }
 
@@ -16,8 +17,14 @@ export function SceneRoot({
   camera?: CameraSpec
   children: ReactNode
 }) {
+  const clear = useSelection((s) => s.clear)
   return (
-    <Canvas shadows camera={{ position: camera.position, fov: 50 }} dpr={[1, 2]}>
+    <Canvas
+      shadows
+      camera={{ position: camera.position, fov: 50 }}
+      dpr={[1, 2]}
+      onPointerMissed={() => clear()}
+    >
       {/* 霧白棚拍底:讓柔影清楚可見(對齊參考產品的 airy 質感)。 */}
       <color attach="background" args={['#dadee4']} />
 
