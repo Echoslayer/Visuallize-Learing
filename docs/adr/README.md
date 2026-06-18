@@ -21,3 +21,4 @@
 | [0011](0011-companies-csv.md) | 公司資料移到 CSV(edge list,組合層 join,多對多) | Accepted |
 | [0012](0012-flow-motion-nondeterministic.md) | flow 持續運動 + 動畫場景截圖非決定性(0007 受控例外) | Accepted |
 | [0013](0013-supply-chain-pipeline-abstraction.md) | 供應鏈題目三段管線 + 物件抽象判準(細節跟供應鏈意義) | Accepted |
+| [0014](0014-radial-explode-labels-partof.md) | 詳細模型互動:全域放射拆解 + 元件名牌 + partOf 分組繼承 | Accepted |

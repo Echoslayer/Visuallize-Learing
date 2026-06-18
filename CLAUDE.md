@@ -26,8 +26,11 @@
 
 - `src/engine/` — 與題目無關、可重用。**不得出現任何題目字眼。**
   已建:`schema.ts`、`GeometryFactory.tsx`(box/cylinder/cone/tube/flow + model)、`Scene.tsx`、`SceneRoot.tsx`、
-  `materials.ts`、`selection.ts`、`explode.ts`、`Annotation.tsx`、`ModelPart.tsx`、`FlowParticles.tsx`(持續流動,見 ADR-0012)、`config.ts`(ADR-0009)。
+  `materials.ts`、`selection.ts`、`explode.ts`(**全域自動放射**,見 ADR-0014)、`Annotation.tsx`(公司卡)、
+  `NameTag.tsx`(元件名牌)、`ModelPart.tsx`、`FlowParticles.tsx`(流動,ADR-0012)、`config.ts`(ADR-0009)。
   之後:`kit/`(primitive 積木)。
+- **content 慣例(ADR-0014)**:`explode` 只需 `magnitude`(方向自動;vector 已廢棄)。每個 part 要有名字:
+  有意義的給 `label`;形狀小塊給 `partOf`(指向父節點 → 繼承父名 + 點選顯示父卡)。companies 仍走 `companies.csv`。
 - `src/ui/` — UI 殼。已建:`Controls.tsx`(拆解/重置/語言)、`TopicSwitcher.tsx`(左側題目切換,`?topic=` 導航)、
   `Credits.tsx`(借用模型 CC-BY 標註)、`Tuning.tsx`(leva 調參,**僅 DEV、僅 App**)。
 - **視覺數值一律走 `engine/config.ts`**,別在元件硬寫;調好 bake 進 `DEFAULT_CONFIG`。
