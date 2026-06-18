@@ -1,54 +1,179 @@
 {
   "topic": "datacenter",
-  "title": { "zh": "機房 / 伺服器陣列", "en": "Data Center Rack Array" },
-  "camera": { "position": [5.5, 4, 6.5], "target": [0, 0.8, 0] },
+  "title": {
+    "zh": "機房 / 伺服器陣列",
+    "en": "Data Center Rack Array"
+  },
+  "camera": {
+    "position": [
+      5.5,
+      4,
+      6.5
+    ],
+    "target": [
+      0,
+      0.8,
+      0
+    ]
+  },
   "parts": [
     {
       "id": "floor",
       "kind": "primitive",
-      "geometry": { "shape": "box", "args": [5, 0.15, 4], "bevel": 0.03 },
-      "transform": { "position": [0, 0.075, 0] },
+      "geometry": {
+        "shape": "box",
+        "args": [
+          5,
+          0.15,
+          4
+        ],
+        "bevel": 0.03
+      },
+      "transform": {
+        "position": [
+          0,
+          0.075,
+          0
+        ]
+      },
       "material": "metal-dark",
-      "explode": { "vector": [0, 0, 0], "magnitude": 0 },
+      "explode": {
+        "vector": [
+          0,
+          0,
+          0
+        ],
+        "magnitude": 0
+      },
       "annotation": null
     },
     {
       "id": "row-a",
       "kind": "primitive",
-      "geometry": { "shape": "box", "args": [0.7, 1.6, 0.9], "bevel": 0.03 },
-      "transform": { "position": [-1.65, 0.95, -1.1] },
+      "geometry": {
+        "shape": "box",
+        "args": [
+          0.7,
+          1.6,
+          0.9
+        ],
+        "bevel": 0.03
+      },
+      "transform": {
+        "position": [
+          -1.65,
+          0.95,
+          -1.1
+        ]
+      },
       "material": "metal-light",
-      "explode": { "vector": [0, 1, 0], "magnitude": 0.6 },
-      "repeat": { "count": 4, "step": [1.1, 0, 0] },
+      "explode": {
+        "vector": [
+          0,
+          1,
+          0
+        ],
+        "magnitude": 0.6
+      },
+      "repeat": {
+        "count": 4,
+        "step": [
+          1.1,
+          0,
+          0
+        ]
+      },
       "annotation": {
-        "title": { "zh": "伺服器機櫃", "en": "Server Rack" },
-        "companies": [{ "name": "緯穎", "ticker": "6669" }]
+        "title": {
+          "zh": "伺服器機櫃",
+          "en": "Server Rack"
+        }
       }
     },
     {
       "id": "row-b",
       "kind": "primitive",
-      "geometry": { "shape": "box", "args": [0.7, 1.6, 0.9], "bevel": 0.03 },
-      "transform": { "position": [-1.65, 0.95, 0] },
+      "geometry": {
+        "shape": "box",
+        "args": [
+          0.7,
+          1.6,
+          0.9
+        ],
+        "bevel": 0.03
+      },
+      "transform": {
+        "position": [
+          -1.65,
+          0.95,
+          0
+        ]
+      },
       "material": "metal-light",
-      "explode": { "vector": [0, 1, 0], "magnitude": 0.6 },
-      "repeat": { "count": 4, "step": [1.1, 0, 0] },
+      "explode": {
+        "vector": [
+          0,
+          1,
+          0
+        ],
+        "magnitude": 0.6
+      },
+      "repeat": {
+        "count": 4,
+        "step": [
+          1.1,
+          0,
+          0
+        ]
+      },
       "annotation": {
-        "title": { "zh": "伺服器機櫃", "en": "Server Rack" },
-        "companies": [{ "name": "廣達", "ticker": "2382" }]
+        "title": {
+          "zh": "伺服器機櫃",
+          "en": "Server Rack"
+        }
       }
     },
     {
       "id": "row-c",
       "kind": "primitive",
-      "geometry": { "shape": "box", "args": [0.7, 1.6, 0.9], "bevel": 0.03 },
-      "transform": { "position": [-1.65, 0.95, 1.1] },
+      "geometry": {
+        "shape": "box",
+        "args": [
+          0.7,
+          1.6,
+          0.9
+        ],
+        "bevel": 0.03
+      },
+      "transform": {
+        "position": [
+          -1.65,
+          0.95,
+          1.1
+        ]
+      },
       "material": "metal-light",
-      "explode": { "vector": [0, 1, 0], "magnitude": 0.6 },
-      "repeat": { "count": 4, "step": [1.1, 0, 0] },
+      "explode": {
+        "vector": [
+          0,
+          1,
+          0
+        ],
+        "magnitude": 0.6
+      },
+      "repeat": {
+        "count": 4,
+        "step": [
+          1.1,
+          0,
+          0
+        ]
+      },
       "annotation": {
-        "title": { "zh": "伺服器機櫃", "en": "Server Rack" },
-        "companies": [{ "name": "鴻海", "ticker": "2317" }]
+        "title": {
+          "zh": "伺服器機櫃",
+          "en": "Server Rack"
+        }
       }
     }
   ]

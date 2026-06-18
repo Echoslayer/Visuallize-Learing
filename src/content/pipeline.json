@@ -1,27 +1,85 @@
 {
   "topic": "pipeline",
-  "title": { "zh": "製程管線供應鏈", "en": "Process Pipeline Supply Chain" },
-  "camera": { "position": [4.5, 3, 6], "target": [0, 1.2, 0] },
+  "title": {
+    "zh": "製程管線供應鏈",
+    "en": "Process Pipeline Supply Chain"
+  },
+  "camera": {
+    "position": [
+      4.5,
+      3,
+      6
+    ],
+    "target": [
+      0,
+      1.2,
+      0
+    ]
+  },
   "parts": [
     {
       "id": "tank-1",
       "kind": "primitive",
-      "geometry": { "shape": "cylinder", "args": [0.5, 0.5, 1.8, 24] },
-      "transform": { "position": [-1.5, 0.9, 0] },
+      "geometry": {
+        "shape": "cylinder",
+        "args": [
+          0.5,
+          0.5,
+          1.8,
+          24
+        ]
+      },
+      "transform": {
+        "position": [
+          -1.5,
+          0.9,
+          0
+        ]
+      },
       "material": "metal-dark",
-      "explode": { "vector": [-0.7, 0.3, 0], "magnitude": 0.8 },
+      "explode": {
+        "vector": [
+          -0.7,
+          0.3,
+          0
+        ],
+        "magnitude": 0.8
+      },
       "annotation": {
-        "title": { "zh": "儲槽", "en": "Storage Tank" },
-        "companies": [{ "name": "中鋼", "ticker": "2002" }]
+        "title": {
+          "zh": "儲槽",
+          "en": "Storage Tank"
+        }
       }
     },
     {
       "id": "tank-2",
       "kind": "primitive",
-      "geometry": { "shape": "cylinder", "args": [0.5, 0.5, 1.8, 24] },
-      "transform": { "position": [1.5, 0.9, 0] },
+      "geometry": {
+        "shape": "cylinder",
+        "args": [
+          0.5,
+          0.5,
+          1.8,
+          24
+        ]
+      },
+      "transform": {
+        "position": [
+          1.5,
+          0.9,
+          0
+        ]
+      },
       "material": "metal-dark",
-      "explode": { "vector": [0.7, 0.3, 0], "magnitude": 0.8 },
+      "explode": {
+        "vector": [
+          0.7,
+          0.3,
+          0
+        ],
+        "magnitude": 0.8
+      },
       "annotation": null
     },
     {
@@ -30,19 +88,50 @@
       "geometry": {
         "shape": "tube",
         "path": [
-          [-1.5, 1.8, 0],
-          [-1.5, 2.45, 0],
-          [1.5, 2.45, 0],
-          [1.5, 1.8, 0]
+          [
+            -1.5,
+            1.8,
+            0
+          ],
+          [
+            -1.5,
+            2.45,
+            0
+          ],
+          [
+            1.5,
+            2.45,
+            0
+          ],
+          [
+            1.5,
+            1.8,
+            0
+          ]
         ],
         "radius": 0.12
       },
-      "transform": { "position": [0, 0, 0] },
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ]
+      },
       "material": "metal-light",
-      "explode": { "vector": [0, 1, 0], "magnitude": 1.0 },
+      "explode": {
+        "vector": [
+          0,
+          1,
+          0
+        ],
+        "magnitude": 1
+      },
       "annotation": {
-        "title": { "zh": "製程管線", "en": "Process Pipe" },
-        "companies": [{ "name": "官田鋼", "ticker": "2017" }]
+        "title": {
+          "zh": "製程管線",
+          "en": "Process Pipe"
+        }
       }
     },
     {
@@ -51,26 +140,70 @@
       "geometry": {
         "shape": "tube",
         "path": [
-          [-1.5, 0.4, 0.55],
-          [1.5, 0.4, 0.55]
+          [
+            -1.5,
+            0.4,
+            0.55
+          ],
+          [
+            1.5,
+            0.4,
+            0.55
+          ]
         ],
         "radius": 0.1
       },
-      "transform": { "position": [0, 0, 0] },
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ]
+      },
       "material": "metal-light",
-      "explode": { "vector": [0, 0, 1], "magnitude": 0.8 },
+      "explode": {
+        "vector": [
+          0,
+          0,
+          1
+        ],
+        "magnitude": 0.8
+      },
       "annotation": null
     },
     {
       "id": "valve",
       "kind": "primitive",
-      "geometry": { "shape": "cylinder", "args": [0.16, 0.16, 0.28, 16] },
-      "transform": { "position": [0, 0.4, 0.55] },
+      "geometry": {
+        "shape": "cylinder",
+        "args": [
+          0.16,
+          0.16,
+          0.28,
+          16
+        ]
+      },
+      "transform": {
+        "position": [
+          0,
+          0.4,
+          0.55
+        ]
+      },
       "material": "metal-dark",
-      "explode": { "vector": [0, 0, 1], "magnitude": 1.3 },
+      "explode": {
+        "vector": [
+          0,
+          0,
+          1
+        ],
+        "magnitude": 1.3
+      },
       "annotation": {
-        "title": { "zh": "閥件", "en": "Valve" },
-        "companies": [{ "name": "大田", "ticker": "8924" }]
+        "title": {
+          "zh": "閥件",
+          "en": "Valve"
+        }
       }
     }
   ]

@@ -1,99 +1,290 @@
 {
   "topic": "ai-server",
-  "title": { "zh": "AI 伺服器供應鏈", "en": "AI Server Supply Chain" },
-  "camera": { "position": [6, 4, 8], "target": [0, 1.6, 0] },
+  "title": {
+    "zh": "AI 伺服器供應鏈",
+    "en": "AI Server Supply Chain"
+  },
+  "camera": {
+    "position": [
+      6,
+      4,
+      8
+    ],
+    "target": [
+      0,
+      1.6,
+      0
+    ]
+  },
   "parts": [
     {
       "id": "rack-back",
       "kind": "primitive",
-      "geometry": { "shape": "box", "args": [2.3, 3.2, 0.12], "bevel": 0.03 },
-      "transform": { "position": [0, 1.6, -0.78] },
+      "geometry": {
+        "shape": "box",
+        "args": [
+          2.3,
+          3.2,
+          0.12
+        ],
+        "bevel": 0.03
+      },
+      "transform": {
+        "position": [
+          0,
+          1.6,
+          -0.78
+        ]
+      },
       "material": "metal-dark",
-      "explode": { "vector": [0, 0, 0], "magnitude": 0 },
+      "explode": {
+        "vector": [
+          0,
+          0,
+          0
+        ],
+        "magnitude": 0
+      },
       "annotation": null
     },
     {
       "id": "rack-base",
       "kind": "primitive",
-      "geometry": { "shape": "box", "args": [2.3, 0.18, 1.7], "bevel": 0.03 },
-      "transform": { "position": [0, 0.09, 0] },
+      "geometry": {
+        "shape": "box",
+        "args": [
+          2.3,
+          0.18,
+          1.7
+        ],
+        "bevel": 0.03
+      },
+      "transform": {
+        "position": [
+          0,
+          0.09,
+          0
+        ]
+      },
       "material": "metal-dark",
-      "explode": { "vector": [0, 0, 0], "magnitude": 0 },
+      "explode": {
+        "vector": [
+          0,
+          0,
+          0
+        ],
+        "magnitude": 0
+      },
       "annotation": null
     },
     {
       "id": "tray-gpu-01",
       "kind": "primitive",
-      "geometry": { "shape": "box", "args": [2.0, 0.24, 1.4], "bevel": 0.02 },
-      "transform": { "position": [0, 2.6, 0] },
-      "material": "metal-light",
-      "explode": { "vector": [0, 1, 0.2], "magnitude": 1.9 },
-      "annotation": {
-        "title": { "zh": "GPU 運算盤", "en": "GPU Compute Tray" },
-        "companies": [
-          { "name": "NVIDIA", "ticker": "NVDA" },
-          { "name": "台積電", "ticker": "2330" }
+      "geometry": {
+        "shape": "box",
+        "args": [
+          2,
+          0.24,
+          1.4
+        ],
+        "bevel": 0.02
+      },
+      "transform": {
+        "position": [
+          0,
+          2.6,
+          0
         ]
+      },
+      "material": "metal-light",
+      "explode": {
+        "vector": [
+          0,
+          1,
+          0.2
+        ],
+        "magnitude": 1.9
+      },
+      "annotation": {
+        "title": {
+          "zh": "GPU 運算盤",
+          "en": "GPU Compute Tray"
+        }
       }
     },
     {
       "id": "tray-gpu-02",
       "kind": "primitive",
-      "geometry": { "shape": "box", "args": [2.0, 0.24, 1.4], "bevel": 0.02 },
-      "transform": { "position": [0, 2.2, 0] },
+      "geometry": {
+        "shape": "box",
+        "args": [
+          2,
+          0.24,
+          1.4
+        ],
+        "bevel": 0.02
+      },
+      "transform": {
+        "position": [
+          0,
+          2.2,
+          0
+        ]
+      },
       "material": "metal-light",
-      "explode": { "vector": [0, 1, 0.2], "magnitude": 1.5 },
+      "explode": {
+        "vector": [
+          0,
+          1,
+          0.2
+        ],
+        "magnitude": 1.5
+      },
       "annotation": {
-        "title": { "zh": "GPU 運算盤", "en": "GPU Compute Tray" },
-        "companies": [{ "name": "NVIDIA", "ticker": "NVDA" }]
+        "title": {
+          "zh": "GPU 運算盤",
+          "en": "GPU Compute Tray"
+        }
       }
     },
     {
       "id": "tray-cpu",
       "kind": "primitive",
-      "geometry": { "shape": "box", "args": [2.0, 0.24, 1.4], "bevel": 0.02 },
-      "transform": { "position": [0, 1.8, 0] },
+      "geometry": {
+        "shape": "box",
+        "args": [
+          2,
+          0.24,
+          1.4
+        ],
+        "bevel": 0.02
+      },
+      "transform": {
+        "position": [
+          0,
+          1.8,
+          0
+        ]
+      },
       "material": "metal-light",
-      "explode": { "vector": [0, 1, 0.2], "magnitude": 1.15 },
+      "explode": {
+        "vector": [
+          0,
+          1,
+          0.2
+        ],
+        "magnitude": 1.15
+      },
       "annotation": {
-        "title": { "zh": "CPU 運算盤", "en": "CPU Tray" },
-        "companies": [{ "name": "Arm", "ticker": "ARM" }]
+        "title": {
+          "zh": "CPU 運算盤",
+          "en": "CPU Tray"
+        }
       }
     },
     {
       "id": "tray-nvswitch",
       "kind": "primitive",
-      "geometry": { "shape": "box", "args": [2.0, 0.24, 1.4], "bevel": 0.02 },
-      "transform": { "position": [0, 1.4, 0] },
+      "geometry": {
+        "shape": "box",
+        "args": [
+          2,
+          0.24,
+          1.4
+        ],
+        "bevel": 0.02
+      },
+      "transform": {
+        "position": [
+          0,
+          1.4,
+          0
+        ]
+      },
       "material": "metal-light",
-      "explode": { "vector": [0, 1, 0.2], "magnitude": 0.85 },
+      "explode": {
+        "vector": [
+          0,
+          1,
+          0.2
+        ],
+        "magnitude": 0.85
+      },
       "annotation": {
-        "title": { "zh": "NVSwitch 交換盤", "en": "NVSwitch Tray" },
-        "companies": [{ "name": "NVIDIA", "ticker": "NVDA" }]
+        "title": {
+          "zh": "NVSwitch 交換盤",
+          "en": "NVSwitch Tray"
+        }
       }
     },
     {
       "id": "tray-network",
       "kind": "primitive",
-      "geometry": { "shape": "box", "args": [2.0, 0.24, 1.4], "bevel": 0.02 },
-      "transform": { "position": [0, 1.0, 0] },
+      "geometry": {
+        "shape": "box",
+        "args": [
+          2,
+          0.24,
+          1.4
+        ],
+        "bevel": 0.02
+      },
+      "transform": {
+        "position": [
+          0,
+          1,
+          0
+        ]
+      },
       "material": "metal-light",
-      "explode": { "vector": [0, 1, 0.2], "magnitude": 0.55 },
+      "explode": {
+        "vector": [
+          0,
+          1,
+          0.2
+        ],
+        "magnitude": 0.55
+      },
       "annotation": {
-        "title": { "zh": "網路交換盤", "en": "Networking Tray" },
-        "companies": [{ "name": "Broadcom", "ticker": "AVGO" }]
+        "title": {
+          "zh": "網路交換盤",
+          "en": "Networking Tray"
+        }
       }
     },
     {
       "id": "tray-power",
       "kind": "primitive",
-      "geometry": { "shape": "box", "args": [2.0, 0.3, 1.4], "bevel": 0.02 },
-      "transform": { "position": [0, 0.55, 0] },
+      "geometry": {
+        "shape": "box",
+        "args": [
+          2,
+          0.3,
+          1.4
+        ],
+        "bevel": 0.02
+      },
+      "transform": {
+        "position": [
+          0,
+          0.55,
+          0
+        ]
+      },
       "material": "metal-dark",
-      "explode": { "vector": [0, 1, 0.2], "magnitude": 0.3 },
+      "explode": {
+        "vector": [
+          0,
+          1,
+          0.2
+        ],
+        "magnitude": 0.3
+      },
       "annotation": {
-        "title": { "zh": "電源盤", "en": "Power Shelf" },
-        "companies": [{ "name": "台達電", "ticker": "2308" }]
+        "title": {
+          "zh": "電源盤",
+          "en": "Power Shelf"
+        }
       }
     }
   ]

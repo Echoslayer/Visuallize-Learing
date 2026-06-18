@@ -31,7 +31,9 @@
 - `src/ui/` — UI 殼。已建:`Controls.tsx`(拆解/重置/語言)、`Tuning.tsx`(leva 調參,**僅 DEV、僅 App**)。
 - **視覺數值一律走 `engine/config.ts`**,別在元件硬寫;調好 bake 進 `DEFAULT_CONFIG`。
 - `src/gallery/` — 畫廊路由(`/?view=gallery`),每個零件單獨一格供截圖。
-- `src/content/` — 題目資料 JSON;換議題只動這裡。
+- `src/content/` — 題目資料 JSON(元件結構 + `annotation.title`,**不含公司**);換議題只動這裡。
+- `src/content/companies.csv` — **公司↔元件對應的唯一來源**(edge list `topic,part,ticker,name`,多對多,見 ADR-0011)。
+  加公司 = 加一列;**別把公司寫回 JSON**。`registry.ts` 在載入時 join 進 `annotation.companies`。欄位不可含逗號。
 - `tools/shoot.mjs` — 截圖 harness;`pnpm shoot "?view=gallery" <name>`。
 - 極簡路由:`src/main.tsx` 用 `?view=gallery` 切換,**不引 react-router**(見 ADR-0006)。
 
