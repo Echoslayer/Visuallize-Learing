@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build output
+dist/
+*.tsbuildinfo
+
+# Vite / cache
+.vite/
+*.local
+
+# Agent run artifacts (regenerated each run; not source)
+.agent/shots/
+.agent/log.md
+
+# Claude Code local-only config (machine-specific permissions)
+.claude/settings.local.json
+
+# Python (uv — for CadQuery/OpenSCAD tooling)
+.venv/
+__pycache__/
+
+# OS / editor
+.DS_Store
+*.swp
+.idea/
+.vscode/
