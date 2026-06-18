@@ -1,4 +1,4 @@
-import { Line, RoundedBox } from '@react-three/drei'
+import { RoundedBox } from '@react-three/drei'
 import { animated, useSpring } from '@react-spring/three'
 import type { ThreeEvent } from '@react-three/fiber'
 import { useMemo } from 'react'
@@ -43,7 +43,6 @@ export function GeometryFactory({ part, center }: { part: Part; center: Vec3 }) 
   const lang = useSelection((s) => s.lang)
   const metalness = useConfig((s) => s.metalness)
   const roughness = useConfig((s) => s.roughness)
-  const labelDistance = useConfig((s) => s.labelDistance)
   const labelOpacity = useConfig((s) => s.labelOpacity)
 
   // hooks 必須無條件呼叫 → 在 early return 之前算好 spring
@@ -148,11 +147,9 @@ export function GeometryFactory({ part, center }: { part: Part; center: Vec3 }) 
       return null
   }
 
-  // 公司卡:點選 → 該 part 的節點卡(自己或所屬節點);展開 → 只顯示節點自身的卡(子部位不冒,免擠)。
+  // 公司卡:點選 → 該 part 的節點卡;展開 → 節點自身的卡。錨在元件中心(無引線),展開時跟著大元件移到中心。
   const card = selected ? (part.card ?? part.annotation) : exploded ? part.annotation : null
-  const halfW = geometry?.shape === 'box' ? (geometry.args?.[0] ?? 2) / 2 : 1
-  const cardLineStart: Vec3 = [halfW + 0.05, 0, 0]
-  const cardAnchor: Vec3 = [halfW + labelDistance, 0, 0]
+  const cardAnchor: Vec3 = [0, 0, 0] // 元件中心
 
   // 名牌:顯示名(已在組合層解析:label → 父名 → 節點 title);點選或「全部顯示」時出現。
   const name = part.resolvedLabel?.[lang]
@@ -161,18 +158,7 @@ export function GeometryFactory({ part, center }: { part: Part; center: Vec3 }) 
   return (
     <animated.group position={pos} rotation={transform.rotation} scale={transform.scale}>
       {inner}
-      {card && (
-        <>
-          <Line
-            points={[cardLineStart, cardAnchor]}
-            color="#5b6470"
-            lineWidth={1.5}
-            transparent
-            opacity={Math.min(1, labelOpacity)}
-          />
-          <Annotation data={card} lang={lang} anchor={cardAnchor} opacity={labelOpacity} />
-        </>
-      )}
+      {card && <Annotation data={card} lang={lang} anchor={cardAnchor} opacity={labelOpacity} />}
       {showName && name && <NameTag text={name} anchor={nameTagAnchor(part)} />}
     </animated.group>
   )
