@@ -24,8 +24,9 @@
 
 ## 專案結構
 
-- `src/engine/` — 與題目無關、可重用。**不得出現任何題目字眼。** 目前:`SceneRoot`、`TestBox`。
-  之後:`GeometryFactory`、`kit/`、`materials.ts`、`explode.ts`、`Annotation.tsx`、`selection.ts`、`schema.ts`。
+- `src/engine/` — 與題目無關、可重用。**不得出現任何題目字眼。**
+  已建:`schema.ts`、`GeometryFactory.tsx`、`Scene.tsx`、`SceneRoot.tsx`、`materials.ts`、`selection.ts`。
+  之後:`explode.ts`(C4)、`Annotation.tsx`(C5)、`kit/`(階段二)。
 - `src/gallery/` — 畫廊路由(`/?view=gallery`),每個零件單獨一格供截圖。
 - `src/content/` — 題目資料 JSON;換議題只動這裡。
 - `tools/shoot.mjs` — 截圖 harness;`pnpm shoot "?view=gallery" <name>`。
@@ -42,7 +43,7 @@
 ## 現在該做什麼
 
 - 階段一:依序 C0→C6（PLAN.md §6），每點過 `/verify` 才 commit。
-- **進度:C0 ✅（骨架+harness 已通）。下一步 C1**(GeometryFactory 讀 content JSON 生成 primitive)。
+- **進度:C0–C3 ✅(骨架+harness、資料驅動渲染、統一材質柔影、點選高亮)。下一步 C4**(拆解動畫,`@react-spring/three`)。
 - 採互動式節奏:**每個查核點完成後停下,給人類看截圖再續**(本專案不用 ADW 自動化,見 ADR-0004)。
 - 階段一 DoD 達成後**停下等人類確認**，不要自行開始階段二。
 
