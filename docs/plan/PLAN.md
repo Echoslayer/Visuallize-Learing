@@ -43,14 +43,16 @@
 | 布林運算 | `three-bvh-csg` | 最新相容 |
 | 狀態 | `zustand` | `^5` |
 | 動畫 | `@react-spring/three` | 最新相容 |
-| 型別 | `typescript` | `^5` |
-| 打包 | `vite` | `^6` |
+| 型別 | `typescript` | `^6`（官方範本實裝）|
+| 打包 | `vite` | `^8`（官方範本實裝）|
 | 視覺自查 | `playwright` | 最新（dev 依賴）|
-| 靜態檢查 | `eslint` + `typescript-eslint` | 最新（dev 依賴；Vite react-ts 範本內建）|
+| 靜態檢查 | `eslint` + `typescript-eslint` | `^10` / `^8`（Vite react-ts 範本內建）|
 | i18n | 自寫極簡 dict（MVP 不引 i18next）| — |
 
-> 套件管理器固定用 **pnpm**。安裝範例：`pnpm create vite@latest . --template react-ts`，
-> 再 `pnpm add` 上表執行期依賴、`pnpm add -D` dev 依賴。
+> **真正的相容性鎖定是 `react@19` + `@react-three/fiber@9`**（錯配會壞）；vite/ts/eslint 跟隨
+> `pnpm create vite@latest --template react-ts` 官方範本當下版本即可（C0 實裝：vite 8 / ts 6 / eslint 10，
+> 比本表原訂的 vite6/ts5 新——刻意採用官方範本版本，不逆向降版）。
+> 套件管理器固定 **pnpm**：`pnpm add` 執行期依賴、`pnpm add -D` dev 依賴。
 
 ---
 
