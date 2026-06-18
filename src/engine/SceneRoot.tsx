@@ -39,26 +39,28 @@ export function SceneRoot({
       {/* 霧白棚拍底:讓柔影清楚可見(對齊參考產品的 airy 質感)。 */}
       <color attach="background" args={['#dadee4']} />
 
-      <ambientLight intensity={0.5} />
+      {/* 均勻柔光:hemisphere 當天空/地面補光,一盞主光給方向感與柔影。 */}
+      <hemisphereLight args={['#ffffff', '#c4c8cf', 0.85]} />
+      <ambientLight intensity={0.25} />
       <directionalLight
-        position={[6, 10, 6]}
-        intensity={1.6}
+        position={[5, 9, 7]}
+        intensity={1.0}
         castShadow
         shadow-mapSize={[2048, 2048]}
         shadow-bias={-0.0001}
         shadow-camera-left={-7}
         shadow-camera-right={7}
-        shadow-camera-top={7}
+        shadow-camera-top={9}
         shadow-camera-bottom={-7}
         shadow-camera-near={0.1}
         shadow-camera-far={40}
       />
 
-      {/* 程序化棚拍環境:給金屬反射,免外部 HDR。 */}
+      {/* 程序化棚拍環境:給材質一點柔和反射,免外部 HDR。對稱配置避免不均的高光。 */}
       <Environment resolution={256}>
-        <Lightformer intensity={2.2} position={[0, 6, -4]} scale={[12, 12, 1]} />
-        <Lightformer intensity={1.1} position={[-5, 3, 3]} scale={[6, 6, 1]} />
-        <Lightformer intensity={1.1} position={[5, 2, 4]} scale={[6, 6, 1]} />
+        <Lightformer intensity={1.2} position={[0, 6, 4]} scale={[10, 10, 1]} />
+        <Lightformer intensity={0.8} position={[-6, 2, 2]} scale={[6, 8, 1]} />
+        <Lightformer intensity={0.8} position={[6, 2, 2]} scale={[6, 8, 1]} />
       </Environment>
 
       {/* 接收柔影的地面(透明,只顯示陰影,不蓋掉背景色)。 */}

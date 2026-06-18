@@ -1,4 +1,4 @@
-import { RoundedBox } from '@react-three/drei'
+import { Line, RoundedBox } from '@react-three/drei'
 import { animated, useSpring } from '@react-spring/three'
 import type { ThreeEvent } from '@react-three/fiber'
 import { Annotation } from './Annotation'
@@ -93,9 +93,10 @@ export function GeometryFactory({ part }: { part: Part }) {
       return null
   }
 
-  // 標籤錨點:零件右側外緣一小段(展開時各盤往右散開,卡片不互相重疊)。
+  // 標籤拉到零件右側外一段距離,用一根引線連回零件,避免卡片貼著零件造成遮擋。
   const halfW = geometry.shape === 'box' ? (geometry.args[0] ?? 2) / 2 : 1
-  const anchor: Vec3 = [halfW + 0.4, 0, 0]
+  const lineStart: Vec3 = [halfW + 0.05, 0, 0]
+  const anchor: Vec3 = [halfW + 1.25, 0, 0]
   const annotation = part.annotation
   const showAnnotation = (selected || exploded) && annotation !== null
 
@@ -103,7 +104,16 @@ export function GeometryFactory({ part }: { part: Part }) {
     <animated.group position={pos} rotation={transform.rotation}>
       {inner}
       {showAnnotation && annotation && (
-        <Annotation data={annotation} lang={lang} anchor={anchor} />
+        <>
+          <Line
+            points={[lineStart, anchor]}
+            color="#5b6470"
+            lineWidth={1.5}
+            transparent
+            opacity={0.75}
+          />
+          <Annotation data={annotation} lang={lang} anchor={anchor} />
+        </>
       )}
     </animated.group>
   )

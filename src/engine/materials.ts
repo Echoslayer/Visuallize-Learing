@@ -11,8 +11,8 @@ export interface MaterialDef {
 const FALLBACK: MaterialDef = { color: '#9aa3ad', metalness: 0.5, roughness: 0.4 }
 
 export const MATERIALS: Record<string, MaterialDef> = {
-  'metal-light': { color: '#dde1e6', metalness: 0.5, roughness: 0.4 },
-  'metal-dark': { color: '#3f454e', metalness: 0.6, roughness: 0.45 },
+  'metal-light': { color: '#dfe3e8', metalness: 0.15, roughness: 0.6 },
+  'metal-dark': { color: '#414751', metalness: 0.2, roughness: 0.6 },
 }
 
 export function materialProps(id: string): MaterialDef {
