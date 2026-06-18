@@ -16,17 +16,20 @@
 - 場景尺度:帶長 ~9 單位,六節點間距 ~1.44。
 - 相機:`position [2, 4.2, 9.5]`、`target [0, 1, 0]`(前上方廣角看整條線)。
 
-## 3. 元件設計
-| 節點 id | 抽象形狀 | 相對大小 | 位置(概) | 材質 | 代表什麼 |
-|---|---|---|---|---|---|
-| conveyor | box(長薄) | 貫穿全場 | 中央底部 | metal-dark | 輸送帶/產線 |
-| design | box | 中 | 最左 | metal-light | IC 設計 |
-| wafer | cylinder(晶柱) | 中 | 左二 | metal-light | 矽晶圓 |
-| equip | box | 中 | 左三 | metal-dark | 設備/材料 |
-| foundry | box | **大(核心)** | 中 | metal-light | 晶圓代工 |
-| osat | box | 中 | 右二 | metal-dark | 封裝測試 |
-| downstream | box(小) | 小 | 最右 | metal-light | 下游應用 |
-| wafer-flow | **flow** | 小球 ×12 | 沿產線 | accent(藍) | 晶圓在線上流動 |
+## 3. 元件設計(每節點 = primitive 組合,套 object-abstraction;細節跟供應鏈意義)
+> 2026-06-19 用 `object-abstraction` 重做細:每個節點拆成有供應鏈意義的部位,非單方塊。
+> 同節點各 primitive 共用 explode;annotation 掛在主部位(id = 節點名),其餘 `-suffix` 為 null。
+
+| 節點 | primitive 組合(招牌特徵 → 供應鏈意義) |
+|---|---|
+| conveyor(產線) | 帶面 box + 滾輪 cylinder ×9(`repeat`)+ 支腳 box ×5(`repeat`) |
+| ① design(IC 設計) | 控制台 box + 螢幕 box(傾斜)+ **光罩/reticle**(薄 box,accent=設計輸出) |
+| ② wafer(矽晶圓) | **晶柱** cylinder + **晶圓片** 薄 cylinder ×3(`repeat`)+ 卡匣 box |
+| ③ equip(設備/材料) | 主機箱 box + EFEM box + **裝載埠** box ×3(`repeat`)+ 製程腔 cylinder + 排氣管 cylinder |
+| ④ foundry(晶圓代工,核心最大) | 廠房 box + 機台陣列 box ×4(`repeat`)+ 微影機 box + **鏡頭** cone(accent)+ 天車軌 box |
+| ⑤ osat(封裝測試) | 封裝機 box + **載板/ABF** 薄 box(accent=欣興等)+ 打線臂 cylinder + 測試機 box + 測試座 box ×2(`repeat`) |
+| ⑥ downstream(下游) | 機櫃框 box + 伺服盤 box ×4(`repeat`) |
+| wafer-flow | **flow** 藍球 ×12 沿產線循環(accent) |
 
 ## 4. 互動
 - **拆解**:六機台一律向上抬(explode `[0,1,0]`,核心 foundry 抬最多 0.85,其餘 0.5~0.7)→ 像把產線「拉開檢視」。輸送帶與 flow 不動。
