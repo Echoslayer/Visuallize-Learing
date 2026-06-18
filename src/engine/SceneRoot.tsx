@@ -3,6 +3,7 @@ import { Environment, Lightformer, OrbitControls } from '@react-three/drei'
 import { useEffect } from 'react'
 import type { ReactNode } from 'react'
 import type { CameraSpec } from './schema'
+import { useConfig } from './config'
 import { useSelection } from './selection'
 
 const DEFAULT_CAMERA: CameraSpec = { position: [4, 3, 5], target: [0, 0, 0] }
@@ -29,6 +30,9 @@ export function SceneRoot({
   children: ReactNode
 }) {
   const clear = useSelection((s) => s.clear)
+  const ambient = useConfig((s) => s.ambient)
+  const hemisphere = useConfig((s) => s.hemisphere)
+  const directional = useConfig((s) => s.directional)
   return (
     <Canvas
       shadows
@@ -39,12 +43,12 @@ export function SceneRoot({
       {/* 霧白棚拍底:讓柔影清楚可見(對齊參考產品的 airy 質感)。 */}
       <color attach="background" args={['#dadee4']} />
 
-      {/* 均勻柔光:hemisphere 當天空/地面補光,一盞主光給方向感與柔影。 */}
-      <hemisphereLight args={['#ffffff', '#c4c8cf', 0.85]} />
-      <ambientLight intensity={0.25} />
+      {/* 均勻柔光:hemisphere 當天空/地面補光,一盞主光給方向感與柔影。強度由 config 控制。 */}
+      <hemisphereLight args={['#ffffff', '#c4c8cf', hemisphere]} />
+      <ambientLight intensity={ambient} />
       <directionalLight
         position={[5, 9, 7]}
-        intensity={1.0}
+        intensity={directional}
         castShadow
         shadow-mapSize={[2048, 2048]}
         shadow-bias={-0.0001}

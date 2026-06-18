@@ -3,11 +3,10 @@ import type { CSSProperties } from 'react'
 import type { Annotation as AnnotationData, Lang, Vec3 } from './schema'
 
 // 浮動標籤卡:drei <Html> 把 DOM 釘在零件 3D 座標,隨相機移動自動追蹤。
-// 與題目無關——只認 schema 的 annotation 結構。
-const card: CSSProperties = {
+// 與題目無關——只認 schema 的 annotation 結構。背景不透明度由 config 控制。
+const cardBase: CSSProperties = {
   pointerEvents: 'none',
   whiteSpace: 'nowrap',
-  background: 'rgba(22, 26, 32, 0.92)',
   color: '#eef1f5',
   border: '1px solid rgba(255,255,255,0.12)',
   borderRadius: 8,
@@ -31,11 +30,17 @@ export function Annotation({
   data,
   lang,
   anchor,
+  opacity = 0.92,
 }: {
   data: AnnotationData
   lang: Lang
   anchor: Vec3
+  opacity?: number
 }) {
+  const card: CSSProperties = {
+    ...cardBase,
+    background: `rgba(22, 26, 32, ${opacity})`,
+  }
   return (
     <Html position={anchor} center zIndexRange={[20, 0]} style={{ pointerEvents: 'none' }}>
       <div style={card}>

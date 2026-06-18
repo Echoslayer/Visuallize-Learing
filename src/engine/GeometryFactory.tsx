@@ -2,8 +2,9 @@ import { Line, RoundedBox } from '@react-three/drei'
 import { animated, useSpring } from '@react-spring/three'
 import type { ThreeEvent } from '@react-three/fiber'
 import { Annotation } from './Annotation'
+import { useConfig } from './config'
 import { explodeOffset } from './explode'
-import { materialProps } from './materials'
+import { materialColor } from './materials'
 import { useSelection } from './selection'
 import type { Part, Vec3 } from './schema'
 
@@ -20,6 +21,10 @@ export function GeometryFactory({ part }: { part: Part }) {
   const selected = useSelection((s) => s.selectedId === part.id)
   const exploded = useSelection((s) => s.exploded)
   const lang = useSelection((s) => s.lang)
+  const metalness = useConfig((s) => s.metalness)
+  const roughness = useConfig((s) => s.roughness)
+  const labelDistance = useConfig((s) => s.labelDistance)
+  const labelOpacity = useConfig((s) => s.labelOpacity)
 
   // hooks 必須無條件呼叫 → 在 early return 之前算好 spring
   const base = part.transform.position
@@ -46,7 +51,9 @@ export function GeometryFactory({ part }: { part: Part }) {
   }
   const mat = (
     <meshStandardMaterial
-      {...materialProps(part.material)}
+      color={materialColor(part.material)}
+      metalness={metalness}
+      roughness={roughness}
       emissive={selected ? HIGHLIGHT : '#000000'}
       emissiveIntensity={selected ? 0.55 : 0}
     />
@@ -93,10 +100,10 @@ export function GeometryFactory({ part }: { part: Part }) {
       return null
   }
 
-  // 標籤拉到零件右側外一段距離,用一根引線連回零件,避免卡片貼著零件造成遮擋。
+  // 標籤拉到零件右側外一段距離(可由 config 調),用引線連回零件,避免遮擋。
   const halfW = geometry.shape === 'box' ? (geometry.args[0] ?? 2) / 2 : 1
   const lineStart: Vec3 = [halfW + 0.05, 0, 0]
-  const anchor: Vec3 = [halfW + 1.25, 0, 0]
+  const anchor: Vec3 = [halfW + labelDistance, 0, 0]
   const annotation = part.annotation
   const showAnnotation = (selected || exploded) && annotation !== null
 
@@ -110,9 +117,14 @@ export function GeometryFactory({ part }: { part: Part }) {
             color="#5b6470"
             lineWidth={1.5}
             transparent
-            opacity={0.75}
+            opacity={Math.min(1, labelOpacity)}
           />
-          <Annotation data={annotation} lang={lang} anchor={anchor} />
+          <Annotation
+            data={annotation}
+            lang={lang}
+            anchor={anchor}
+            opacity={labelOpacity}
+          />
         </>
       )}
     </animated.group>

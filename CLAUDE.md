@@ -25,9 +25,11 @@
 ## 專案結構
 
 - `src/engine/` — 與題目無關、可重用。**不得出現任何題目字眼。**
-  已建:`schema.ts`、`GeometryFactory.tsx`、`Scene.tsx`、`SceneRoot.tsx`、`materials.ts`、`selection.ts`、`explode.ts`、`Annotation.tsx`。
+  已建:`schema.ts`、`GeometryFactory.tsx`、`Scene.tsx`、`SceneRoot.tsx`、`materials.ts`(只留顏色)、
+  `selection.ts`、`explode.ts`、`Annotation.tsx`、`config.ts`(視覺旋鈕集中,見 ADR-0009)。
   之後:`kit/`(階段二 primitive 積木)。
-- `src/ui/` — UI 殼。已建:`Controls.tsx`(拆解/重置/語言)。
+- `src/ui/` — UI 殼。已建:`Controls.tsx`(拆解/重置/語言)、`Tuning.tsx`(leva 調參,**僅 DEV、僅 App**)。
+- **視覺數值一律走 `engine/config.ts`**,別在元件硬寫;調好 bake 進 `DEFAULT_CONFIG`。
 - `src/gallery/` — 畫廊路由(`/?view=gallery`),每個零件單獨一格供截圖。
 - `src/content/` — 題目資料 JSON;換議題只動這裡。
 - `tools/shoot.mjs` — 截圖 harness;`pnpm shoot "?view=gallery" <name>`。
