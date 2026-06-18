@@ -1,9 +1,30 @@
-import { useControls } from 'leva'
+import { button, useControls } from 'leva'
 import { useEffect } from 'react'
 import { DEFAULT_CONFIG, useConfig } from '../engine/config'
 
+// 把目前 config 值組成可貼回 engine/config.ts 的 DEFAULT_CONFIG 片段。
+function configSnippet(): string {
+  const c = useConfig.getState()
+  return `export const DEFAULT_CONFIG: Config = {
+  labelDistance: ${c.labelDistance},
+  labelOpacity: ${c.labelOpacity},
+  ambient: ${c.ambient},
+  hemisphere: ${c.hemisphere},
+  directional: ${c.directional},
+  metalness: ${c.metalness},
+  roughness: ${c.roughness},
+}`
+}
+
+function copyToConfig() {
+  const snippet = configSnippet()
+  // clipboard 在 localhost(secure context)可用;失敗則退回 console 讓使用者手動複製。
+  navigator.clipboard?.writeText(snippet).catch(() => {})
+  console.log('[tuning] DEFAULT_CONFIG snippet:\n' + snippet)
+}
+
 // 開發用調參面板(僅 DEV 掛載)。拖 slider 即時改 config store;
-// 調到滿意後把 engine/config.ts 的 DEFAULT_CONFIG 改成新值 bake 起來。
+// 按「複製到 config」把目前值複製成 DEFAULT_CONFIG 片段,貼回 engine/config.ts 即 bake。
 export default function Tuning() {
   const values = useControls({
     labelDistance: { value: DEFAULT_CONFIG.labelDistance, min: 0.5, max: 3, step: 0.05 },
@@ -13,6 +34,7 @@ export default function Tuning() {
     directional: { value: DEFAULT_CONFIG.directional, min: 0, max: 3, step: 0.05 },
     metalness: { value: DEFAULT_CONFIG.metalness, min: 0, max: 1, step: 0.05 },
     roughness: { value: DEFAULT_CONFIG.roughness, min: 0, max: 1, step: 0.05 },
+    '複製到 config': button(() => copyToConfig()),
   })
   const set = useConfig((s) => s.set)
   useEffect(() => set(values), [values, set])
