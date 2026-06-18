@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "typecheck": "tsc -b",
-    "shoot": "node tools/shoot.mjs"
+    "shoot": "node tools/shoot.mjs",
+    "check": "node tools/check-explode.ts"
   },
   "dependencies": {
     "@react-spring/three": "^10.1.1",

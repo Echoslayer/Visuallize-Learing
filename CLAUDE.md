@@ -51,6 +51,12 @@
 - 採互動式節奏:**每個查核點完成後停下,給人類看截圖再續**(本專案不用 ADW 自動化,見 ADR-0004)。
 - 待辦:annotation 內容查證(人類)、build chunk code-split。
 
+## 測試
+
+不做 TDD、不引測試框架(vitest 等)——這是視覺/宣告式 R3F 程式,**截圖 harness(§7)就是測試層**。
+唯一例外:`tools/check-explode.ts`(純數學 + 除零邊界),`pnpm check`,無框架。想加單元測試前先問:
+這是邏輯還是畫面?畫面 → 截圖驗;純函式有邊界 → 比照 check-explode 加一個 assert,別搬框架。
+
 ## 決策紀錄
 
 關鍵架構決策記在 [`docs/adr/`](docs/adr/)。改動觸及這些決策前先讀對應 ADR;若要推翻,新增一筆 ADR 標記 supersedes,不要默默改。
