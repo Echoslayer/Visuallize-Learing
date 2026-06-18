@@ -46,7 +46,8 @@
 - `/update-docs [scope]` — 同步活文件(README/CLAUDE/log)與按需新增 ADR。
 - **供應鏈題目三段管線**:`/research-supply-chain <產業>`(查證事實 → `docs/supply-chains/`)→ `/design-demo <slug>`(設計取捨:精選/形狀/大小/互動/物流 → `specs/`)→ `/add-topic`(依設計實作)。
 - `/add-component <name>` / `/add-topic <name>` — 階段二迭代（先有 `specs/` 規格;供應鏈題目的 spec 由 `/design-demo` 產出）。
-- 建 3D 工業元件時,skill `r3f-industrial-component` 會自動載入配方。
+- **skills**:`object-abstraction`(設計時:真實物件 → 3~8 個 primitive 的可辨識組合,**別用單一方塊**)、
+  `r3f-industrial-component`(實作時:R3F 蓋法/材質/拆解配方)。設計形狀套前者,寫程式套後者。
 
 ## 現在該做什麼
 
