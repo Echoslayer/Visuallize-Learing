@@ -62,6 +62,7 @@ schema 變更皆走 spec + sign-off(`repeat` 02、`tube` 03、`model` 05、`flow
 供應鏈題目走三段管線(見 [ADR-0013](docs/adr/0013-supply-chain-pipeline-abstraction.md)):
 `/research-supply-chain`(事實 → `docs/supply-chains/`)→ `/design-demo`(設計取捨,套 `object-abstraction` skill)→ `/add-topic`(建模)。
 模型細節層次跟著**供應鏈意義**走(鏈上有對應的部位就建,只略過無意義造型細節)。
+建置步驟 + **最終驗收清單**見 [`docs/plan/topic-playbook.md`](docs/plan/topic-playbook.md)。
 
 ## 素材出處 / Credits
 
