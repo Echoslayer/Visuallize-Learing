@@ -52,7 +52,7 @@ docs/adr/        # 架構決策紀錄
 
 ## 狀態
 
-🟢 **C0–C1 完成** — 骨架 + 自查 harness 打通;`GeometryFactory` 已能讀 `content/ai-server.json`
-依資料生成 primitive(機櫃 8 零件,box/cylinder/cone + 倒角)。
-下一步 **C2**:`materials.ts` 統一材質 + `<Environment>` 軟陰影 + OrbitControls。
+🟢 **C0–C2 完成** — 骨架 + 自查 harness;`GeometryFactory` 資料驅動生成 primitive;
+統一材質登錄表 + 程序化 Environment 柔影 + OrbitControls(霧白 airy 質感,對齊參考產品)。
+下一步 **C3**:點選零件 → 高亮(zustand store)。
 查核點進度見 [`PLAN.md §6`](docs/plan/PLAN.md)。

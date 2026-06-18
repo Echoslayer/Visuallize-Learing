@@ -8,7 +8,7 @@ const content = aiServer as unknown as SceneContent
 
 export default function App() {
   return (
-    <div style={{ position: 'fixed', inset: 0, background: '#1b1e23' }}>
+    <div style={{ position: 'fixed', inset: 0, background: '#dadee4' }}>
       <SceneRoot camera={content.camera}>
         <Scene content={content} />
       </SceneRoot>

@@ -1,13 +1,11 @@
 import { RoundedBox } from '@react-three/drei'
+import { materialProps } from './materials'
 import type { Part } from './schema'
-
-// C1:單一中性材質;C2 會由 materials.ts 依 part.material 提供。
-const PLACEHOLDER_COLOR = '#9aa3ad'
 
 /**
  * 幾何工廠:讀一個 part,依 geometry.shape 生成 primitive。
  * 與題目無關;每個 mesh 設 name/userData.partId,供之後選取與拆解定位。
- * kind === "model" 的載入留到後續(MVP 不需要)。
+ * 材質一律走 materials.ts 登錄表(統一畫風)。kind === "model" 的載入留到後續。
  */
 export function GeometryFactory({ part }: { part: Part }) {
   const { geometry, transform, id } = part
@@ -21,8 +19,10 @@ export function GeometryFactory({ part }: { part: Part }) {
     userData: { partId: id },
     position,
     rotation,
+    castShadow: true,
+    receiveShadow: true,
   }
-  const mat = <meshStandardMaterial color={PLACEHOLDER_COLOR} />
+  const mat = <meshStandardMaterial {...materialProps(part.material)} />
 
   switch (geometry.shape) {
     case 'box': {
