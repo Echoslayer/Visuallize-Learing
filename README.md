@@ -29,7 +29,7 @@ pnpm build
 pnpm shoot "?view=gallery" name   # Playwright 截圖到 .agent/shots/(自我驗證用)
 ```
 
-- 主場景:`/`;元件畫廊:`/?view=gallery`(供逐一截圖自查)。
+- 主場景:`/`(左側**題目切換器**可點選 6 個題目);元件畫廊:`/?view=gallery`(供逐一截圖自查)。
 - Python 工具（CadQuery/OpenSCAD，選用）一律用 [`uv`](https://docs.astral.sh/uv/)。
 
 ## 專案結構
