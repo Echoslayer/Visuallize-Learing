@@ -4,6 +4,6 @@
 
 - [x] ① 變壓器（box + bushing 圓柱，純 primitive）→ `grid` topic（spec 01）。engine 未動,首測 cone。
 - [x] ② 機房 / 機架陣列（schema `repeat`）→ `datacenter` topic（spec 02）。engine 加 schema/expand/Scene + check-expand。
-- [ ] ③ 管線（`TubeGeometry`）
+- [x] ③ 管線（`TubeGeometry`）→ `pipeline` topic（spec 03）。engine 加 tube shape(schema/GeometryFactory)。
 - [ ] ④ 風機（葉片 primitive，機艙 box）
 - [ ] ⑤ 有機件試點：一架飛機（借模型、整隻一零件）

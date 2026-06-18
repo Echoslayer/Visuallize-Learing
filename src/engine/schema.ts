@@ -6,7 +6,7 @@ export type LocalizedText = Record<Lang, string>
 
 export type Vec3 = [number, number, number]
 
-export type GeometryShape = 'box' | 'cylinder' | 'cone'
+export type GeometryShape = 'box' | 'cylinder' | 'cone' | 'tube'
 
 /**
  * args 直接對應 three 幾何體建構子參數:
@@ -14,11 +14,14 @@ export type GeometryShape = 'box' | 'cylinder' | 'cone'
  *   cylinder → [radiusTop, radiusBottom, height, radialSegments?]
  *   cone     → [radius, height, radialSegments?]
  * bevel 僅對 box 有意義(圓角半徑)。
+ * tube 不用 args,改用 path(控制點,CatmullRom 平滑穿過)+ radius(管半徑)。
  */
 export interface Geometry {
   shape: GeometryShape
-  args: number[]
+  args?: number[] // box/cylinder/cone 用;tube 不帶
   bevel?: number
+  path?: Vec3[] // tube:路徑控制點(≥2)
+  radius?: number // tube:管半徑(預設 0.1)
 }
 
 export interface Transform {

@@ -1,6 +1,8 @@
 import { Line, RoundedBox } from '@react-three/drei'
 import { animated, useSpring } from '@react-spring/three'
 import type { ThreeEvent } from '@react-three/fiber'
+import { useMemo } from 'react'
+import { CatmullRomCurve3, Vector3 } from 'three'
 import { Annotation } from './Annotation'
 import { useConfig } from './config'
 import { explodeOffset } from './explode'
@@ -34,6 +36,15 @@ export function GeometryFactory({ part }: { part: Part }) {
     : base
   const { pos } = useSpring({ pos: target, config: { tension: 170, friction: 24 } })
 
+  // tube 用:把 path 控制點做成平滑曲線(hook 必須無條件呼叫,故在 early return 前算)。
+  const tubeCurve = useMemo(
+    () =>
+      new CatmullRomCurve3(
+        (part.geometry?.path ?? []).map((p) => new Vector3(p[0], p[1], p[2])),
+      ),
+    [part.geometry?.path],
+  )
+
   const { geometry, transform, id } = part
   if (!geometry) return null
 
@@ -62,7 +73,7 @@ export function GeometryFactory({ part }: { part: Part }) {
   let inner: React.ReactNode
   switch (geometry.shape) {
     case 'box': {
-      const args = geometry.args as [number, number, number]
+      const args = (geometry.args ?? []) as [number, number, number]
       inner =
         geometry.bevel && geometry.bevel > 0 ? (
           <RoundedBox {...meshProps} args={args} radius={geometry.bevel} smoothness={4}>
@@ -77,7 +88,7 @@ export function GeometryFactory({ part }: { part: Part }) {
       break
     }
     case 'cylinder': {
-      const args = geometry.args as [number, number, number, number?]
+      const args = (geometry.args ?? []) as [number, number, number, number?]
       inner = (
         <mesh {...meshProps}>
           <cylinderGeometry args={args} />
@@ -87,10 +98,19 @@ export function GeometryFactory({ part }: { part: Part }) {
       break
     }
     case 'cone': {
-      const args = geometry.args as [number, number, number?]
+      const args = (geometry.args ?? []) as [number, number, number?]
       inner = (
         <mesh {...meshProps}>
           <coneGeometry args={args} />
+          {mat}
+        </mesh>
+      )
+      break
+    }
+    case 'tube': {
+      inner = (
+        <mesh {...meshProps}>
+          <tubeGeometry args={[tubeCurve, 32, geometry.radius ?? 0.1, 12, false]} />
           {mat}
         </mesh>
       )
@@ -101,7 +121,7 @@ export function GeometryFactory({ part }: { part: Part }) {
   }
 
   // 標籤拉到零件右側外一段距離(可由 config 調),用引線連回零件,避免遮擋。
-  const halfW = geometry.shape === 'box' ? (geometry.args[0] ?? 2) / 2 : 1
+  const halfW = geometry.shape === 'box' ? (geometry.args?.[0] ?? 2) / 2 : 1
   const lineStart: Vec3 = [halfW + 0.05, 0, 0]
   const anchor: Vec3 = [halfW + labelDistance, 0, 0]
   const annotation = part.annotation
