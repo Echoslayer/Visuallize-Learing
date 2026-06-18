@@ -69,9 +69,10 @@ export interface Part {
   explode: Explode
   annotation: Annotation | null
   repeat?: Repeat // 選用;無此欄 = 原樣一份(向後相容)
-  label?: LocalizedText // 元件自己的名字(子部位用);點選/全部顯示時出現
-  partOf?: string // 子部位 → 所屬節點 part 的 id(點選時顯示該節點的卡)
-  card?: Annotation | null // 載入時解析:點選此 part 要顯示的節點卡(自己或 partOf 的)。內容勿手寫
+  label?: LocalizedText // 元件自己的名字;形狀小塊可省 → 繼承 partOf 父元件的名字
+  partOf?: string // 子部位 → 所屬節點 part 的 id(繼承名字 + 點選顯示該節點的卡)
+  card?: Annotation | null // 載入時解析:點選此 part 顯示的節點卡(自己或 partOf 的)。內容勿手寫
+  resolvedLabel?: LocalizedText // 載入時解析:顯示名 = label ?? 父名 ?? annotation.title。內容勿手寫
 }
 
 export interface CameraSpec {

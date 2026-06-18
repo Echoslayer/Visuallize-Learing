@@ -80,7 +80,8 @@
         ],
         "magnitude": 0.8
       },
-      "annotation": null
+      "annotation": null,
+      "partOf": "tank-1"
     },
     {
       "id": "pipe-top",
@@ -169,7 +170,8 @@
         ],
         "magnitude": 0.8
       },
-      "annotation": null
+      "annotation": null,
+      "partOf": "pipe-top"
     },
     {
       "id": "valve",

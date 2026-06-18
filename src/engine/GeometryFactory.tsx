@@ -154,8 +154,8 @@ export function GeometryFactory({ part, center }: { part: Part; center: Vec3 }) 
   const cardLineStart: Vec3 = [halfW + 0.05, 0, 0]
   const cardAnchor: Vec3 = [halfW + labelDistance, 0, 0]
 
-  // 名牌:label 或節點 title;點選或「全部顯示」時出現。
-  const name = part.label?.[lang] ?? part.annotation?.title[lang]
+  // 名牌:顯示名(已在組合層解析:label → 父名 → 節點 title);點選或「全部顯示」時出現。
+  const name = part.resolvedLabel?.[lang]
   const showName = (selected || showAllNames) && !!name
 
   return (

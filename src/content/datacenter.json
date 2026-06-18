@@ -45,7 +45,11 @@
         ],
         "magnitude": 0
       },
-      "annotation": null
+      "annotation": null,
+      "label": {
+        "zh": "機房地板",
+        "en": "Data Center Floor"
+      }
     },
     {
       "id": "row-a",

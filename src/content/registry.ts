@@ -35,11 +35,15 @@ function enrich(content: SceneContent): SceneContent {
       : p,
   )
   const nodeCard = new Map(parts.filter((p) => p.annotation).map((p) => [p.id, p.annotation]))
+  // 每個 part 的「自己的名字」= label 或節點 title;供子部位繼承。
+  const ownName = new Map(parts.map((p) => [p.id, p.label ?? p.annotation?.title]))
   return {
     ...content,
     parts: parts.map((p) => ({
       ...p,
       card: p.annotation ?? (p.partOf ? (nodeCard.get(p.partOf) ?? null) : null),
+      // 顯示名:自己的 label → 父元件名(partOf)→ 自己的節點 title。形狀小塊靠這繼承父名。
+      resolvedLabel: p.label ?? (p.partOf ? ownName.get(p.partOf) : undefined) ?? p.annotation?.title,
     })),
   }
 }

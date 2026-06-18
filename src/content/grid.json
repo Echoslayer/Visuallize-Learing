@@ -45,7 +45,11 @@
         ],
         "magnitude": 0
       },
-      "annotation": null
+      "annotation": null,
+      "label": {
+        "zh": "底座",
+        "en": "Base"
+      }
     },
     {
       "id": "tank",
@@ -110,7 +114,11 @@
         ],
         "magnitude": 0.6
       },
-      "annotation": null
+      "annotation": null,
+      "label": {
+        "zh": "頂蓋",
+        "en": "Lid"
+      }
     },
     {
       "id": "core",
@@ -174,7 +182,8 @@
         ],
         "magnitude": 0.9
       },
-      "annotation": null
+      "annotation": null,
+      "partOf": "bushing-2"
     },
     {
       "id": "bushing-2",
@@ -237,7 +246,8 @@
         ],
         "magnitude": 0.9
       },
-      "annotation": null
+      "annotation": null,
+      "partOf": "bushing-2"
     },
     {
       "id": "fin-1",
@@ -267,7 +277,8 @@
         ],
         "magnitude": 1.1
       },
-      "annotation": null
+      "annotation": null,
+      "partOf": "fin-2"
     },
     {
       "id": "fin-2",
@@ -332,7 +343,8 @@
         ],
         "magnitude": 1.1
       },
-      "annotation": null
+      "annotation": null,
+      "partOf": "fin-2"
     }
   ]
 }

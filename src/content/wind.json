@@ -119,7 +119,11 @@
         ],
         "magnitude": 1.4
       },
-      "annotation": null
+      "annotation": null,
+      "label": {
+        "zh": "輪轂",
+        "en": "Hub"
+      }
     },
     {
       "id": "blade-0",
@@ -189,7 +193,8 @@
         ],
         "magnitude": 1
       },
-      "annotation": null
+      "annotation": null,
+      "partOf": "blade-0"
     },
     {
       "id": "blade-2",
@@ -224,7 +229,8 @@
         ],
         "magnitude": 1
       },
-      "annotation": null
+      "annotation": null,
+      "partOf": "blade-0"
     }
   ]
 }

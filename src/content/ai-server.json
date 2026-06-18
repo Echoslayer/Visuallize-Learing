@@ -45,7 +45,11 @@
         ],
         "magnitude": 0
       },
-      "annotation": null
+      "annotation": null,
+      "label": {
+        "zh": "背板",
+        "en": "Back Panel"
+      }
     },
     {
       "id": "rack-base",
@@ -75,7 +79,11 @@
         ],
         "magnitude": 0
       },
-      "annotation": null
+      "annotation": null,
+      "label": {
+        "zh": "底座",
+        "en": "Base"
+      }
     },
     {
       "id": "tray-gpu-01",

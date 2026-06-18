@@ -45,7 +45,11 @@
         ],
         "magnitude": 0
       },
-      "annotation": null
+      "annotation": null,
+      "label": {
+        "zh": "停機坪",
+        "en": "Apron"
+      }
     },
     {
       "id": "airframe",
