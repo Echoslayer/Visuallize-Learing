@@ -64,5 +64,8 @@ pnpm shoot "?view=gallery&topic=semiconductor&exploded=1" semi-radial
 - 放射狀拆解只先套 semiconductor;其他題目要不要也改放射,之後再說(現有設計向量大多 OK)。
 - showAll 時 semiconductor ~29 名牌,靠放射散開 + 小字應夠;仍擠的話再做名牌錯位。
 
-## 等待
-**請確認後我再實作。**
+## 實作後記(2026-06-19)
+- 已 sign-off 實作。**放射狀拆解改為全域 engine 行為**(比 spec 原本「每個 content 手寫向量」更省):
+  `explodeOffset(explode, position, center)` 自動算「從中心往外 + 上抬」方向,**所有題目共用、各元件依自身位置放射**。
+  `explode.vector` 廢棄(留欄忽略),只用 `magnitude`(0=不動)。check-explode 改驗放射。
+- 驗證:點子部位 → 名牌(光罩)+ 節點卡(IC設計+公司);「名稱」按鈕 → 全部名稱;放射拆解散開;ai-server 無回歸。

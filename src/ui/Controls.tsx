@@ -38,8 +38,10 @@ const btnActive: CSSProperties = {
 
 export function Controls() {
   const exploded = useSelection((s) => s.exploded)
+  const showAllNames = useSelection((s) => s.showAllNames)
   const lang = useSelection((s) => s.lang)
   const toggleExploded = useSelection((s) => s.toggleExploded)
+  const toggleAllNames = useSelection((s) => s.toggleAllNames)
   const setLang = useSelection((s) => s.setLang)
   const resetView = useSelection((s) => s.resetView)
 
@@ -53,6 +55,13 @@ export function Controls() {
         onClick={toggleExploded}
       >
         {exploded ? t('收合', 'Collapse') : t('拆解', 'Explode')}
+      </button>
+      <button
+        data-action="names"
+        style={showAllNames ? btnActive : btn}
+        onClick={toggleAllNames}
+      >
+        {t('名稱', 'Names')}
       </button>
       <button data-action="reset" style={btn} onClick={resetView}>
         {t('重置視角', 'Reset')}

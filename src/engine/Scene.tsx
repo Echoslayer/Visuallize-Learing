@@ -11,7 +11,7 @@ export function Scene({ content }: { content: SceneContent }) {
   return (
     <Suspense fallback={null}>
       {expandParts(content.parts).map((part) => (
-        <GeometryFactory key={part.id} part={part} />
+        <GeometryFactory key={part.id} part={part} center={content.camera.target} />
       ))}
     </Suspense>
   )

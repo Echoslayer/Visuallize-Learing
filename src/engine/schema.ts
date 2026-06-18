@@ -43,8 +43,8 @@ export interface Annotation {
 }
 
 export interface Explode {
-  vector: Vec3
-  magnitude: number
+  vector?: Vec3 // legacy:已改為「自動從中心放射」,方向不再讀 vector(留欄向後相容,忽略)
+  magnitude: number // 拆解位移距離;0 = 不動(框體/輸送帶/flow 用)
 }
 
 export interface ModelRef {
@@ -69,6 +69,9 @@ export interface Part {
   explode: Explode
   annotation: Annotation | null
   repeat?: Repeat // 選用;無此欄 = 原樣一份(向後相容)
+  label?: LocalizedText // 元件自己的名字(子部位用);點選/全部顯示時出現
+  partOf?: string // 子部位 → 所屬節點 part 的 id(點選時顯示該節點的卡)
+  card?: Annotation | null // 載入時解析:點選此 part 要顯示的節點卡(自己或 partOf 的)。內容勿手寫
 }
 
 export interface CameraSpec {

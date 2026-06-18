@@ -26,18 +26,24 @@ export const TOPIC_LIST: { id: string; title: LocalizedText }[] = Object.entries
   ([id, c]) => ({ id, title: c.title }),
 )
 
-// 把 companies.csv 的公司對應接到每個 part 的 annotation(不改 JSON、不改 engine)。
-function withCompanies(content: SceneContent): SceneContent {
+// 1) 把 companies.csv 的公司接到節點 annotation;2) 解析每個 part 的 card(自己或 partOf 的節點卡)。
+// 都在組合層,不改 JSON、不改 engine。
+function enrich(content: SceneContent): SceneContent {
+  const parts = content.parts.map((p) =>
+    p.annotation
+      ? { ...p, annotation: { ...p.annotation, companies: companiesFor(content.topic, p.id) } }
+      : p,
+  )
+  const nodeCard = new Map(parts.filter((p) => p.annotation).map((p) => [p.id, p.annotation]))
   return {
     ...content,
-    parts: content.parts.map((p) =>
-      p.annotation
-        ? { ...p, annotation: { ...p.annotation, companies: companiesFor(content.topic, p.id) } }
-        : p,
-    ),
+    parts: parts.map((p) => ({
+      ...p,
+      card: p.annotation ?? (p.partOf ? (nodeCard.get(p.partOf) ?? null) : null),
+    })),
   }
 }
 
 export function getTopic(name: string | null): SceneContent {
-  return withCompanies((name && TOPICS[name]) || TOPICS[DEFAULT_TOPIC])
+  return enrich((name && TOPICS[name]) || TOPICS[DEFAULT_TOPIC])
 }

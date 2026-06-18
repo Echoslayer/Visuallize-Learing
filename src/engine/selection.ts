@@ -7,10 +7,12 @@ interface SelectionState {
   selectedId: string | null
   exploded: boolean
   lang: Lang
+  showAllNames: boolean // 「名稱」按鈕:同時顯示所有元件名牌
   resetNonce: number // 遞增以觸發場景內相機復位(DOM 按鈕無法直接碰 OrbitControls)
   select: (id: string) => void
   clear: () => void
   toggleExploded: () => void
+  toggleAllNames: () => void
   setLang: (lang: Lang) => void
   resetView: () => void
 }
@@ -19,10 +21,12 @@ export const useSelection = create<SelectionState>((set) => ({
   selectedId: null,
   exploded: false,
   lang: 'zh',
+  showAllNames: false,
   resetNonce: 0,
   select: (id) => set({ selectedId: id }),
   clear: () => set({ selectedId: null }),
   toggleExploded: () => set((s) => ({ exploded: !s.exploded })),
+  toggleAllNames: () => set((s) => ({ showAllNames: !s.showAllNames })),
   setLang: (lang) => set({ lang }),
   resetView: () =>
     set((s) => ({ selectedId: null, exploded: false, resetNonce: s.resetNonce + 1 })),

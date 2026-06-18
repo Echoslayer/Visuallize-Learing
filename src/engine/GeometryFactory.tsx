@@ -6,6 +6,7 @@ import { CatmullRomCurve3, Vector3 } from 'three'
 import { Annotation } from './Annotation'
 import { FlowParticles } from './FlowParticles'
 import { ModelPart } from './ModelPart'
+import { NameTag } from './NameTag'
 import { useConfig } from './config'
 import { explodeOffset } from './explode'
 import { materialColor } from './materials'
@@ -14,16 +15,31 @@ import type { Part, Vec3 } from './schema'
 
 const HIGHLIGHT = '#2f6df6'
 
+// 名牌錨點:元件上方;flow 用 path 平均點 + 上抬(flow group 在原點)。
+function nameTagAnchor(part: Part): Vec3 {
+  const g = part.geometry
+  if (g?.shape === 'flow' && g.path?.length) {
+    const n = g.path.length
+    const avg = (i: number) => g.path!.reduce((s, p) => s + p[i], 0) / n
+    return [avg(0), avg(1) + 0.3, avg(2)]
+  }
+  if (g?.shape === 'box') return [0, (g.args?.[1] ?? 0.4) / 2 + 0.12, 0]
+  if (g?.shape === 'cylinder') return [0, (g.args?.[2] ?? 0.4) / 2 + 0.12, 0]
+  if (g?.shape === 'cone') return [0, (g.args?.[1] ?? 0.4) / 2 + 0.12, 0]
+  return [0, 0.3, 0]
+}
+
 /**
  * 幾何工廠:讀一個 part,依 geometry.shape 生成 primitive。
  * - 位置交給 animated.group:展開時位移 explodeOffset,react-spring 補間;收合復位。
  * - 內層 mesh 設 name/userData.partId、castShadow、onClick,被選取時加 emissive 高亮。
  * 與題目無關;材質一律走 materials.ts。kind === "model" 的載入留到後續。
  */
-export function GeometryFactory({ part }: { part: Part }) {
+export function GeometryFactory({ part, center }: { part: Part; center: Vec3 }) {
   const select = useSelection((s) => s.select)
   const selected = useSelection((s) => s.selectedId === part.id)
   const exploded = useSelection((s) => s.exploded)
+  const showAllNames = useSelection((s) => s.showAllNames)
   const lang = useSelection((s) => s.lang)
   const metalness = useConfig((s) => s.metalness)
   const roughness = useConfig((s) => s.roughness)
@@ -32,7 +48,7 @@ export function GeometryFactory({ part }: { part: Part }) {
 
   // hooks 必須無條件呼叫 → 在 early return 之前算好 spring
   const base = part.transform.position
-  const off = explodeOffset(part.explode)
+  const off = explodeOffset(part.explode, base, center) // 自動從中心放射
   const target: Vec3 = exploded
     ? [base[0] + off[0], base[1] + off[1], base[2] + off[2]]
     : base
@@ -132,33 +148,32 @@ export function GeometryFactory({ part }: { part: Part }) {
       return null
   }
 
-  // 標籤拉到零件右側外一段距離(可由 config 調),用引線連回零件,避免遮擋。
+  // 公司卡:點選 → 該 part 的節點卡(自己或所屬節點);展開 → 只顯示節點自身的卡(子部位不冒,免擠)。
+  const card = selected ? (part.card ?? part.annotation) : exploded ? part.annotation : null
   const halfW = geometry?.shape === 'box' ? (geometry.args?.[0] ?? 2) / 2 : 1
-  const lineStart: Vec3 = [halfW + 0.05, 0, 0]
-  const anchor: Vec3 = [halfW + labelDistance, 0, 0]
-  const annotation = part.annotation
-  const showAnnotation = (selected || exploded) && annotation !== null
+  const cardLineStart: Vec3 = [halfW + 0.05, 0, 0]
+  const cardAnchor: Vec3 = [halfW + labelDistance, 0, 0]
+
+  // 名牌:label 或節點 title;點選或「全部顯示」時出現。
+  const name = part.label?.[lang] ?? part.annotation?.title[lang]
+  const showName = (selected || showAllNames) && !!name
 
   return (
     <animated.group position={pos} rotation={transform.rotation} scale={transform.scale}>
       {inner}
-      {showAnnotation && annotation && (
+      {card && (
         <>
           <Line
-            points={[lineStart, anchor]}
+            points={[cardLineStart, cardAnchor]}
             color="#5b6470"
             lineWidth={1.5}
             transparent
             opacity={Math.min(1, labelOpacity)}
           />
-          <Annotation
-            data={annotation}
-            lang={lang}
-            anchor={anchor}
-            opacity={labelOpacity}
-          />
+          <Annotation data={card} lang={lang} anchor={cardAnchor} opacity={labelOpacity} />
         </>
       )}
+      {showName && name && <NameTag text={name} anchor={nameTagAnchor(part)} />}
     </animated.group>
   )
 }
