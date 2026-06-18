@@ -6,7 +6,8 @@ import type { Annotation as AnnotationData, Lang, Vec3 } from './schema'
 // 與題目無關——只認 schema 的 annotation 結構。背景不透明度由 config 控制。
 const cardBase: CSSProperties = {
   pointerEvents: 'none',
-  whiteSpace: 'nowrap',
+  width: 'fit-content',
+  maxWidth: '12em', // 公司超過此寬就換行(約等於「超過名稱」就折行)
   color: '#eef1f5',
   border: '1px solid rgba(255,255,255,0.12)',
   borderRadius: 8,
@@ -17,9 +18,9 @@ const cardBase: CSSProperties = {
   fontFamily: "system-ui, 'Segoe UI', Roboto, sans-serif",
 }
 const titleStyle: CSSProperties = { fontWeight: 600, marginBottom: 4 }
+const chips: CSSProperties = { display: 'flex', flexWrap: 'wrap', gap: 4 }
 const chip: CSSProperties = {
-  display: 'inline-block',
-  marginRight: 6,
+  whiteSpace: 'nowrap',
   padding: '1px 7px',
   borderRadius: 5,
   background: 'rgba(255,255,255,0.1)',
@@ -45,7 +46,7 @@ export function Annotation({
     <Html position={anchor} center zIndexRange={[20, 0]} style={{ pointerEvents: 'none' }}>
       <div style={card}>
         <div style={titleStyle}>{data.title[lang]}</div>
-        <div>
+        <div style={chips}>
           {data.companies.map((c) => (
             <span key={c.ticker} style={chip}>
               {c.name} <b>{c.ticker}</b>
