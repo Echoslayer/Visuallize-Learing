@@ -1,66 +1,68 @@
-# schema-change:元件名稱標籤(點選顯示名 + 全部顯示按鈕)
+# schema-change:元件名稱標籤 + 節點歸屬(點選顯示名+節點卡;全部顯示按鈕;放射狀拆解)
 
-> 使用者要求。**schema 變更 + 互動/UI → 動 `engine/`**,先寫此 spec 報人類,**確認後才實作**。
+> 使用者要求(含澄清)。**schema 變更 + 互動/UI → 動 `engine/`**,先寫此 spec 報人類,**確認後才實作**。
 
 ## Metadata
 - type: `schema-change`
 - slug: `label`
 - date: 2026-06-19
 
-## 需求(使用者原話拆解)
-1. **點選某個模型(primitive)→ 跳出該模型的名稱**(小元件的名字,如「光罩」「晶柱」「滾輪」)。
-2. **一顆新按鈕 → 顯示所有元件的名稱**(含會動的 flow 粒子)。字小一點。
-
-## 解法(最小)
-- 每個 part 加選用 `label`(該元件的名字)。**顯示名 = `label` ?? `annotation.title`**
-  → 已有 annotation 的主節點(IC 設計/矽晶圓…)沿用其 title 當名稱,只有子部位(螢幕/光罩/滾輪…)要補 `label`。**內容改動最小。**
-- **點選一個 part → 顯示它的名稱**(小字 name tag)。
-- **新按鈕「名稱」→ 切換顯示全部 part 的名稱**(store flag,小字)。
+## 需求(使用者澄清後)
+1. **點選一個 primitive → 顯示它自己的名稱**(小元件名,如「光罩」「滾輪」)。
+2. **點選小元件 → 同時顯示它所屬「大元件(節點)」的名稱 + 公司名**(不是二選一,兩個都出)。
+3. **新按鈕「名稱」→ 顯示所有元件的名稱**(含會動的 flow),字小。
+4. **拆解改成放射狀**:零件向前後左右上「遠離中心」散開 → 散開後全部顯示才不擠。(此項**純內容**,見 §6。)
 
 ## Schema 變更(engine/schema.ts)
 ```ts
 export interface Part {
-  // ...既有不變...
-  label?: LocalizedText // 該元件自己的名字(子部位用);主節點可省→沿用 annotation.title
+  // ...既有不變(annotation 仍只掛在節點 part)...
+  label?: LocalizedText // 元件自己的名字(子部位用)
+  node?: string         // 子部位 → 所屬節點 part 的 id(用來顯示節點卡)
 }
 ```
-向後相容:無 label 且無 annotation 的 part 點選時不顯示名稱(無害)。
+- **顯示名 = `label` ?? `annotation.title`** → 節點 part 沿用 title,只有子部位要補 `label`。
+- 向後相容:無 label/無 annotation/無 node 的 part 行為不變。
 
-## Engine 變更(四處)
-1. `engine/schema.ts`:`Part` 加 `label?`。
-2. `engine/selection.ts`:加 `showAllLabels: boolean` + `toggleAllLabels()`。
-3. **新 `engine/NameTag.tsx`**:drei `<Html>` 小字名牌(比 annotation 卡更小、純文字)。
+## Engine 變更(三處)
+1. `engine/schema.ts`:`Part` 加 `label?`、`node?`。
+2. `engine/selection.ts`:加 `showAllNames: boolean` + `toggleAllNames()`。
+3. **新 `engine/NameTag.tsx`**:drei `<Html>` 小字名牌(比公司卡小、純文字)。
 4. `engine/GeometryFactory.tsx`:
-   - `displayName = part.label ?? part.annotation?.title`。
-   - 顯示條件:`(selected || showAllLabels) && displayName`,錨在元件上方。
-   - **公司 annotation 改為只在 `exploded` 顯示**(點選改成顯示「名稱」而非公司卡)。
-   - flow 的名牌錨點:用 path 平均點 + 上偏(flow group 在原點,不能用 [0,0,0])。
+   - **名牌**:`displayName = label ?? annotation?.title`;顯示於 `(selected || showAllNames) && displayName`,錨在元件上方。
+   - **節點卡(公司)**:
+     - `selected` → 顯示 `part.card`(= 自己的 annotation,或 `node` 指向的節點 annotation)→ 點子部位也看到大元件名+公司。
+     - `exploded` → 只顯示 `part.annotation`(節點自己的)→ 展開時不會每個子部位都冒卡(避免擠)。
+   - flow 名牌錨在 path 中段固定點(粒子在動、名牌不動)。
 
-## 組合層
-- `ui/Controls.tsx`:加一顆「名稱 / Names」按鈕,接 `toggleAllLabels`(active 時高亮)。
+## 組合層(非 engine)
+- `content/registry.ts`:enrich 時多解析 `part.card`:`annotation ?? nodes.get(part.node)`(沿用現有 company join 後的節點 annotation)。
+  → 為此 `Part` 加 `card?: Annotation | null`(**載入時解析,內容不手寫**)。
+- `ui/Controls.tsx`:加一顆「名稱 / Names」按鈕,接 `toggleAllNames`(active 高亮)。
 
-## 內容(本次只補 semiconductor;其他題目之後增量補)
-- semiconductor 的子部位加 `label`:螢幕/光罩/晶柱/晶圓片/EFEM/裝載埠/製程腔/排氣管/機台陣列/微影機/鏡頭/天車軌/載板/打線臂/測試機/測試座/伺服盤/滾輪/支腳/晶圓(flow)。
-- 主節點(design/wafer/equip/foundry/osat/downstream)沿用 annotation.title,**不必加 label**。
+## 內容(本次只補 semiconductor)
+- 子部位加 `label`(螢幕/光罩/晶柱/晶圓片/EFEM/裝載埠/製程腔/排氣管/機台陣列/微影機/鏡頭/天車軌/載板/打線臂/測試機/測試座/伺服盤/滾輪/支腳/晶圓 flow)+ `node`(指向所屬節點 id)。
+- 主節點沿用 annotation.title,不必加 label。
+- **放射狀拆解(純內容)**:把六節點的 `explode.vector` 從一律 `[0,1,0]` 改為**從場景中心往外**的方向
+  (左端往左、右端往右、中間往上,加些前後 z)→ 各節點放射散開。子部位沿用所屬節點向量。**engine 不動**(explodeOffset 早支援任意方向)。
 
 ## Acceptance Criteria
-- [ ] 點某個小元件 → 跳出它的名稱;點不同元件名稱跟著換;點空白清掉。
+- [ ] 點任一 primitive → 出現它的名稱 +(子部位時)所屬節點名+公司;點空白清掉。
 - [ ] 按「名稱」按鈕 → 所有元件(含流動晶圓)同時顯示名稱(小字);再按關閉。
-- [ ] 切中英,名稱跟著 zh/en。
-- [ ] 既有題目無回歸(沒 label 的 part 點選不顯示名稱,公司卡仍在展開時出現)。
-- [ ] `git diff src/engine` 只動 schema/selection/NameTag(新)/GeometryFactory。
+- [ ] 拆解時零件放射狀遠離中心散開;散開後按「名稱」不會太擠。
+- [ ] 切中英,名稱與節點卡跟著 zh/en。
+- [ ] 既有題目無回歸。`git diff src/engine` 只動 schema/selection/NameTag(新)/GeometryFactory。
 
 ## Validation
 ```bash
 pnpm check && pnpm typecheck && pnpm lint && pnpm build
-pnpm shoot "?view=gallery&topic=semiconductor" semi          # 收合
-# 點選 / showAll 用 Playwright 驅動(window.__selection 設 showAllLabels / 點 part)
+pnpm shoot "?view=gallery&topic=semiconductor&exploded=1" semi-radial
+# 點選 / showAll 用 Playwright(點 part、window.__selection 設 showAllNames)
 ```
 
 ## Notes / 待確認
-- **點選行為改變**:點一個 part 現在顯示「名稱」(而非公司卡);公司卡改成只在**展開**時出現。可接受嗎?(或要點選同時顯示名稱+公司?)
-- 名牌很多時(showAll,semiconductor ~29 個)會擠;字小 + 只顯示名稱應還好,擠的話再議錯位。
-- flow 名牌錨在 path 中段固定點(粒子在動,名牌不動)。
+- 放射狀拆解只先套 semiconductor;其他題目要不要也改放射,之後再說(現有設計向量大多 OK)。
+- showAll 時 semiconductor ~29 名牌,靠放射散開 + 小字應夠;仍擠的話再做名牌錯位。
 
 ## 等待
-**請確認(尤其點選行為、要不要順便補其他題目的 label)後我再實作。**
+**請確認後我再實作。**
