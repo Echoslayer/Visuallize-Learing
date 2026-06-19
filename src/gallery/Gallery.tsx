@@ -39,6 +39,11 @@ const link: CSSProperties = {
   whiteSpace: 'nowrap',
 }
 const active: CSSProperties = { ...link, background: '#2f6df6', color: '#fff' }
+const back: CSSProperties = {
+  ...link,
+  borderBottom: '1px solid rgba(255,255,255,0.12)',
+  marginBottom: 3,
+}
 
 function sub(a: Vec3, b: Vec3): Vec3 {
   return [a[0] - b[0], a[1] - b[1], a[2] - b[2]]
@@ -51,12 +56,14 @@ function rootId(parts: Part[], id: string): string {
 function focusMachine(content: SceneContent, id: string | null): SceneContent {
   if (!id) return content
   const root = rootId(content.parts, id)
+  const rootPart = content.parts.find((p) => p.id === root)
   const parts = content.parts.filter((p) => p.id === root || p.partOf === root)
-  const anchor = content.parts.find((p) => p.id === root)?.transform.position
+  const anchor = rootPart?.transform.position
   if (!parts.length || !anchor) return content
   return {
     ...content,
-    process: undefined,
+    // 機台級內部流(machine-local 座標,root 為原點)→ 提升為 content.process 給 ProcessLayer。
+    process: rootPart?.process,
     camera: { position: [1.6, 1.4, 2.8], target: [0, 0.35, 0] },
     parts: parts.map((p) => ({
       ...p,
@@ -77,6 +84,9 @@ function MachineList({ content, current }: { content: SceneContent; current: str
   const machines = content.parts.filter((p) => p.annotation)
   return (
     <nav style={panel}>
+      <a href={`?topic=${content.topic}`} style={back}>
+        {lang === 'zh' ? '← 供應鏈' : '← Supply chain'}
+      </a>
       <a href={href(null)} style={current ? link : active}>
         All
       </a>

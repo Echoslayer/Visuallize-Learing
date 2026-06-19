@@ -9,7 +9,7 @@ function v(p: Vec3) {
   return new Vector3(p[0], p[1], p[2])
 }
 
-function Arrow({ path, material }: { path: Vec3[]; material: string }) {
+function Arrow({ path, material, scale }: { path: Vec3[]; material: string; scale: number }) {
   const quaternion = useMemo(() => {
     const end = v(path[path.length - 1])
     const prev = v(path[path.length - 2] ?? path[path.length - 1])
@@ -19,30 +19,30 @@ function Arrow({ path, material }: { path: Vec3[]; material: string }) {
   const end = path[path.length - 1] ?? [0, 0, 0]
   return (
     <mesh position={end} quaternion={quaternion}>
-      <coneGeometry args={[0.09, 0.22, 12]} />
+      <coneGeometry args={[0.09 * scale, 0.22 * scale, 12]} />
       <meshStandardMaterial color={materialColor(material)} metalness={0.25} roughness={0.45} />
     </mesh>
   )
 }
 
-function RouteLine({ path, material }: { path: Vec3[]; material: string }) {
+function RouteLine({ path, material, scale }: { path: Vec3[]; material: string; scale: number }) {
   const curve = useMemo(() => new CatmullRomCurve3(path.map(v), false), [path])
   if (path.length < 2) return null
   return (
     <>
       <mesh>
-        <tubeGeometry args={[curve, 48, 0.025, 8, false]} />
+        <tubeGeometry args={[curve, 48, 0.025 * scale, 8, false]} />
         <meshStandardMaterial color={materialColor(material)} metalness={0.25} roughness={0.5} />
       </mesh>
-      <Arrow path={path} material={material} />
+      <Arrow path={path} material={material} scale={scale} />
     </>
   )
 }
 
-function StopMarker({ position, material }: { position: Vec3; material: string }) {
+function StopMarker({ position, material, scale }: { position: Vec3; material: string; scale: number }) {
   return (
     <mesh position={position} rotation={[-Math.PI / 2, 0, 0]}>
-      <torusGeometry args={[0.18, 0.014, 8, 28]} />
+      <torusGeometry args={[0.18 * scale, 0.014 * scale, 8, 28]} />
       <meshStandardMaterial
         color={materialColor(material)}
         emissive={materialColor(material)}
@@ -106,11 +106,12 @@ function ProcessTokens({ process }: { process: ProcessSpec }) {
 export function ProcessLayer({ process, parts }: { process?: ProcessSpec; parts: Part[] }) {
   const partMap = useMemo(() => new Map(parts.map((p) => [p.id, p])), [parts])
   if (!process) return null
+  const scale = process.scale ?? 1
 
   return (
     <>
       {process.routes.map((route) => (
-        <RouteLine key={route.id} path={route.path} material={route.material ?? 'accent'} />
+        <RouteLine key={route.id} path={route.path} material={route.material ?? 'accent'} scale={scale} />
       ))}
       {process.routes.flatMap((route) =>
         (route.stops ?? []).map((stop) => (
@@ -118,6 +119,7 @@ export function ProcessLayer({ process, parts }: { process?: ProcessSpec; parts:
             key={`${route.id}-${stop.point}-${stop.station}`}
             position={route.path[stop.point] ?? [0, 0, 0]}
             material={route.material ?? 'accent'}
+            scale={scale}
           />
         )),
       )}
@@ -129,6 +131,7 @@ export function ProcessLayer({ process, parts }: { process?: ProcessSpec; parts:
             key={station.id}
             position={part.transform.position}
             material={station.output ? 'chip' : 'accent'}
+            scale={scale}
           />
         )
       })}

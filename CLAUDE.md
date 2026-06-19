@@ -57,6 +57,7 @@
   `Tuning.tsx`(leva 調參,**僅 DEV、僅 App**)、`DevHandle.tsx`(**DEV 截圖驅動縫**:`window.__view` = camera/controls/scene/store,延伸 ADR-0008,別當垃圾清掉)。
 - **視覺數值一律走 `engine/config.ts`**,別在元件硬寫;調好 bake 進 `DEFAULT_CONFIG`。
 - `src/gallery/` — 畫廊路由(`/?view=gallery`),可用 `?machine=<partId>` 單獨看一台機台(含 partOf 子部位)供截圖調試。
+  **掛上與主場景同一組 `Controls`/`Hotkeys`**(同一 `useSelection` store),機台頁也能拆解/名稱/股票/透視/重置。
 - `src/content/` — 題目資料 JSON(元件結構 + `annotation.title`,**不含公司**);換議題只動這裡。
 - `src/content/companies.csv` — **公司↔元件對應的唯一來源**(edge list `topic,part,ticker,name`,多對多,見 ADR-0011)。
   加公司 = 加一列;**別把公司寫回 JSON**。`registry.ts` 在載入時 join 進 `annotation.companies`。欄位不可含逗號。
@@ -81,7 +82,10 @@
 - **階段一 C0–C6 全部 ✅ 完成(DoD 達成)** —— 完整垂直切片,engine/content 分離守住。
 - **階段二第一輪已完成**:grid/datacenter/pipeline/wind/aerospace/semiconductor 已驗證 primitive、repeat、tube、model、flow/dwell、process layer、label/partOf、enclosure。
 - **semiconductor 已用三段管線重做為深度範本**:深度研究(36 公司查證)→ design-demo v2(spec 09,修動線/互動)→ 重建;
-  含 enclosure 透視、process layer 單向產線(spec 11)、flow/dwell 舊能力(spec 10)。其他供應鏈照 `topic-playbook.md` 跟進。
+  含 enclosure 透視、process layer 單向產線(spec 11)、flow/dwell 舊能力(spec 10)。
+- **datacenter 已從 repeat 範例重做為資料中心基礎設施 demo**:研究草稿(`docs/supply-chains/datacenter.md`)→ spec 18 →
+  `content/datacenter.json` 五節點(運算機櫃列/電力室/冷卻迴路/網路 fabric/監控),用 topic-level process 表 power/cooling/data/telemetry。
+  公司對應需人類校對。
 - 採互動式節奏:**每個查核點完成後停下,給人類看截圖再續**(本專案不用 ADW 自動化,見 ADR-0004)。
 - 下一步看 `.agent/backlog.md`:先清 `docs/reveiw/architecture-audit.md` 的低風險項,再人工校對 `companies.csv` 對應,之後新增供應鏈題目(research → design-demo → add-topic)。build chunk code-split 只有造成問題再做。
 

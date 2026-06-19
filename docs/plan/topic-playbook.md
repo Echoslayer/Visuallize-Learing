@@ -45,7 +45,7 @@
 - **機台 primitive 配方**:`docs/plan/machine-patterns.md`。先套 Conveyor / Process Tool / Factory Cell / Rack / Tank / Transformer / Piping Skid / Turbine,再依題目調整。
 - **機台三段管線**:`docs/machines/README.md` + `.claude/commands/research-machine.md` + `.claude/commands/design-machine.md`。單台機台先研究、再設計、再由 `/add-component` 實作。
 - **透視外殼**:`src/content/semiconductor.json` 的 `foundry.enclosure`、`src/content/grid.json` 的油箱。用 `enclosure:true` + X-Ray 看內部。
-- **重複陣列**:`src/content/datacenter.json`。用 `repeat` 展開機櫃/滾輪/盤片,別手列。
+- **資料中心基礎設施 / 多流路 topic**:`src/content/datacenter.json` + `specs/18-topic-datacenter.md`。用 `repeat` 展開機櫃列,並用 topic-level `process` 同時表 power/cooling/data/telemetry。
 - **管線**:`src/content/pipeline.json`。用 `tube` + `path` 表管路,必要時加閥件/法蘭 primitive。
 - **有機模型**:`src/content/aerospace.json`。GLB 整隻一件,標 attribution,不拆件。
 - **多 primitive 節點 + partOf**:`src/content/semiconductor.json`。主節點有 annotation,小部位用 `partOf` 繼承名牌與公司卡。

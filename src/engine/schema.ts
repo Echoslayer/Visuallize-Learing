@@ -84,6 +84,7 @@ export interface ProcessSpec {
   stations: ProcessStation[]
   routes: ProcessRoute[]
   tokens: ProcessToken[]
+  scale?: number // 路線管/箭頭/站點環的尺寸倍率;預設 1(整線視圖)。單機台 process 用 ~0.4 縮小,免得箭頭/環蓋過機台。
 }
 
 export interface ModelRef {
@@ -113,6 +114,7 @@ export interface Part {
   partOf?: string // 子部位 → 所屬節點 part 的 id(繼承名字 + 點選顯示該節點的卡)
   card?: Annotation | null // 載入時解析:點選此 part 顯示的節點卡(自己或 partOf 的)。內容勿手寫
   resolvedLabel?: LocalizedText // 載入時解析:顯示名 = label ?? 父名 ?? annotation.title。內容勿手寫
+  process?: ProcessSpec // 機台級內部流(物料進→過站→出);座標 machine-local(root 視為原點)。聚焦單機台時由 gallery 提升為 content.process 渲染;整線視圖忽略。
 }
 
 export interface CameraSpec {
