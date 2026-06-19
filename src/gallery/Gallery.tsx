@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import type { CSSProperties } from 'react'
 import { SceneRoot } from '../engine/SceneRoot'
 import { Scene } from '../engine/Scene'
 import { Credits } from '../ui/Credits'
@@ -9,6 +10,33 @@ import type { Part, SceneContent, Vec3 } from '../engine/schema'
 
 const q = new URLSearchParams(window.location.search)
 const content = focusMachine(getTopic(q.get('topic')), q.get('machine'))
+const original = getTopic(q.get('topic'))
+const machine = q.get('machine')
+
+const panel: CSSProperties = {
+  position: 'fixed',
+  left: 12,
+  top: 12,
+  zIndex: 10,
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 5,
+  maxHeight: 'calc(100vh - 24px)',
+  overflow: 'auto',
+  padding: 8,
+  background: 'rgba(22, 26, 32, 0.9)',
+  borderRadius: 8,
+}
+const link: CSSProperties = {
+  color: '#dbe2eb',
+  textDecoration: 'none',
+  fontSize: 12,
+  fontFamily: "system-ui, 'Segoe UI', Roboto, sans-serif",
+  padding: '5px 8px',
+  borderRadius: 5,
+  whiteSpace: 'nowrap',
+}
+const active: CSSProperties = { ...link, background: '#2f6df6', color: '#fff' }
 
 function sub(a: Vec3, b: Vec3): Vec3 {
   return [a[0] - b[0], a[1] - b[1], a[2] - b[2]]
@@ -33,6 +61,30 @@ function focusMachine(content: SceneContent, id: string | null): SceneContent {
       transform: { ...p.transform, position: sub(p.transform.position, anchor) },
     })),
   }
+}
+
+function href(id: string | null): string {
+  const next = new URLSearchParams(window.location.search)
+  if (id) next.set('machine', id)
+  else next.delete('machine')
+  return `?${next.toString()}`
+}
+
+function MachineList({ content, current }: { content: SceneContent; current: string | null }) {
+  const lang = useSelection((s) => s.lang)
+  const machines = content.parts.filter((p) => p.annotation)
+  return (
+    <nav style={panel}>
+      <a href={href(null)} style={current ? link : active}>
+        All
+      </a>
+      {machines.map((p) => (
+        <a key={p.id} href={href(p.id)} style={current === p.id ? active : link}>
+          {p.resolvedLabel?.[lang] ?? p.annotation?.title[lang] ?? p.id}
+        </a>
+      ))}
+    </nav>
+  )
 }
 
 /** 讀 URL query 把狀態灌進 store(?exploded=1&lang=en&part=id),供截圖自查分別取狀態。 */
@@ -67,6 +119,7 @@ export function Gallery() {
         <Scene content={content} />
         {import.meta.env.DEV && <DevHandle />}
       </SceneRoot>
+      <MachineList content={original} current={machine} />
       <Credits content={content} />
     </div>
   )
