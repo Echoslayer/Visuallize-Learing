@@ -27,6 +27,7 @@ const item: CSSProperties = {
   fontFamily: "system-ui, 'Segoe UI', Roboto, sans-serif",
 }
 const active: CSSProperties = { ...item, background: '#2f6df6', color: '#fff', fontWeight: 600 }
+const tool: CSSProperties = { ...item, borderTop: '1px solid rgba(255,255,255,0.12)' }
 
 export function TopicSwitcher({ current }: { current: string }) {
   const lang = useSelection((s) => s.lang)
@@ -37,6 +38,9 @@ export function TopicSwitcher({ current }: { current: string }) {
           {t.title[lang]}
         </a>
       ))}
+      <a href={`?view=gallery&topic=${current}`} style={tool}>
+        {lang === 'zh' ? '機台' : 'Machines'}
+      </a>
     </nav>
   )
 }
