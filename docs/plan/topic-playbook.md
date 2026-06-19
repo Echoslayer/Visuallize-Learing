@@ -32,6 +32,17 @@
 
 ---
 
+## 可重用 pattern(先看範例,別重造輪子)
+
+- **產線 / process**:`src/content/semiconductor.json` + `specs/11-schema-process-layer.md`。用 `process.stations/routes/tokens` 表單向、進站停留、物料變形、側向注入。
+- **透視外殼**:`src/content/semiconductor.json` 的 `foundry.enclosure`、`src/content/grid.json` 的油箱。用 `enclosure:true` + X-Ray 看內部。
+- **重複陣列**:`src/content/datacenter.json`。用 `repeat` 展開機櫃/滾輪/盤片,別手列。
+- **管線**:`src/content/pipeline.json`。用 `tube` + `path` 表管路,必要時加閥件/法蘭 primitive。
+- **有機模型**:`src/content/aerospace.json`。GLB 整隻一件,標 attribution,不拆件。
+- **多 primitive 節點 + partOf**:`src/content/semiconductor.json`。主節點有 annotation,小部位用 `partOf` 繼承名牌與公司卡。
+
+---
+
 ## 最終驗收清單(一條供應鏈「完成」前逐項打勾)
 
 **內容 / 結構**
