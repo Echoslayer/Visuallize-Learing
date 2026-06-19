@@ -30,7 +30,7 @@ pnpm shoot "?view=gallery" name   # Playwright 截圖到 .agent/shots/(自我驗
 ```
 
 **截圖自查接口(DEV,ADR-0008)**:`?topic=` 切題目、DOM `[data-action]` 按鈕、`?exploded=1&lang=en&part=id`(Gallery)灌初始狀態。
-單機台調試:`?view=gallery&topic=semiconductor&machine=foundry&xray=1&names=1`。
+單機台調試:`?view=gallery&topic=grid&machine=transformer&xray=1&names=1`。
 相機角度/縮放與狀態驅動走 `window.__view`(Canvas 內 DEV 暴露):
 
 ```js
@@ -68,7 +68,7 @@ docs/adr/        # 架構決策紀錄
 🎉 **階段一完成(C0–C6)** — AI 伺服器機櫃垂直切片:旋轉 / 點選 / 拆解 / 標籤(中英)/ UI 殼,
 全由 JSON 驅動,engine 不含題目字眼。
 
-🎉 **7 題目**:`?topic=ai-server`(預設)、`grid`(變壓器)、`datacenter`(**資料中心基礎設施,含電力/冷卻/資料/監控 flow**)、`pipeline`(製程管線)、`wind`(風力發電機)、`aerospace`(航太/飛機)、`semiconductor`(**半導體晶圓產線,含流動動畫**)。
+🎉 **7 題目**:`?topic=ai-server`(預設,**機櫃 6 盤深做 + rack-sys + 電源/資料雙層互連**)、`grid`(**小型變電站,含 GIS→變壓器→母線→配電 + control signal**)、`datacenter`(**資料中心基礎設施,含電力/冷卻/資料/監控 flow**)、`pipeline`(製程管線)、`wind`(風力發電機)、`aerospace`(航太/飛機)、`semiconductor`(**半導體晶圓產線,6 台機台深做 + 單機台物料流 + 整線藍→綠**)。
 引擎支援 box/cylinder/cone/tube + repeat + rotation + model(GLB)+ **flow(裝飾/循環流動粒子,可設站點停頓 dwell)**+
 **process layer(產線語意:station/route/token,單向箭頭、停站加工、物料變化)**;
 互動:點選高亮、**元件名牌**(點選/「名稱」按鈕)、**公司卡**(「股票」按鈕)、**放射狀拆解**(全域自中心散開)、**透視**(「透視」按鈕看穿外殼內部,ADR-0015)、中英、**鍵盤快捷**(E/X/數字鍵);engine/content 分離全程守住。
@@ -83,4 +83,4 @@ schema 變更皆走 spec + sign-off(`repeat` 02、`tube` 03、`model` 05、`flow
 
 - **Airplane**(`aerospace` 題目)— by **Poly by Google**,來源 [poly.pizza](https://poly.pizza/),授權 **CC-BY**。
 
-**已知待辦**:公司↔元件**對應**仍 AI 起草、可再校(尤其新 datacenter 對應);build 的 three.js chunk(>500kB)可後續 code-split。
+**已知待辦**:公司↔元件**對應**仍 AI 起草、可再校(尤其 grid / datacenter / ai-server / semiconductor 新對應);build 的 three.js chunk(>500kB)可後續 code-split。

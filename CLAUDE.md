@@ -83,11 +83,16 @@
 - **階段二第一輪已完成**:grid/datacenter/pipeline/wind/aerospace/semiconductor 已驗證 primitive、repeat、tube、model、flow/dwell、process layer、label/partOf、enclosure。
 - **semiconductor 已用三段管線重做為深度範本**:深度研究(36 公司查證)→ design-demo v2(spec 09,修動線/互動)→ 重建;
   含 enclosure 透視、process layer 單向產線(spec 11)、flow/dwell 舊能力(spec 10)。
+- **grid 已重做為小型變電站 demo**:研究(`docs/supply-chains/grid.md`)→ topic spec 18 → 五台機台 research/design/add-component
+  (power-transformer、GIS/breaker、busbar/cable、control/protection、distribution/load)→ topic-level 電力流 Phase D。
+  `src/content/grid.json` 已有 HV/LV/control routes;公司對應需人類校對。
 - **datacenter 已從 repeat 範例重做為資料中心基礎設施 demo**:研究草稿(`docs/supply-chains/datacenter.md`)→ spec 18 →
   `content/datacenter.json` 五節點(運算機櫃列/電力室/冷卻迴路/網路 fabric/監控),用 topic-level process 表 power/cooling/data/telemetry。
   公司對應需人類校對。
+- **ai-server redo 已完成(A–D)**:三段管線(研究 `docs/supply-chains/ai-server.md` → design-demo spec 17 → 逐盤 specs 21–24)重做 6 盤(GPU×2/CPU/NVSwitch/Network/電源)+ `rack-sys`(機櫃/CDU/NVLink 背板);機台級流(ADR-0017)+ 整機兩層 process(電源發散 + 資料 fabric)。見 `docs/plan/ai-server-redo.md`。公司對應需人類校對。
+- **semiconductor 機台已逐台重做(Phase 0–6)**:6 台 research/design/add-component(specs 12–16、26)→ 每台機台級物料流(ADR-0017,scale 0.4)+ 整線藍→綠變色點定於 osat。見 `docs/plan/semiconductor-machine-redo.md`。
 - 採互動式節奏:**每個查核點完成後停下,給人類看截圖再續**(本專案不用 ADW 自動化,見 ADR-0004)。
-- 下一步看 `.agent/backlog.md`:先清 `docs/reveiw/architecture-audit.md` 的低風險項,再人工校對 `companies.csv` 對應,之後新增供應鏈題目(research → design-demo → add-topic)。build chunk code-split 只有造成問題再做。
+- 下一步:人工校對 `companies.csv` 的新對應(grid/datacenter/ai-server/semiconductor);build chunk code-split 只有造成問題再做。
 
 ## 測試(見 [ADR-0010](docs/adr/0010-no-test-framework.md))
 

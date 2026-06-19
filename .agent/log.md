@@ -394,3 +394,10 @@
 - 無新 ADR(Phase 6 僅契約材質對齊,易反轉;機台級 process 機制已記 ADR-0017)。Pattern 不另寫 playbook(避免與並行作業衝突;ADR-0017 + specs 已涵蓋)。
 - 驗證:check/typecheck/lint/build 全綠。
 - **半導體機台重做計畫(Phase 0–6)全部完成。**
+
+## /update-docs — 同步 ai-server + semiconductor 重做完成 ✅
+- CLAUDE.md §現在該做什麼:ai-server C-4 行 → A–D 完成;新增 semiconductor 機台重做(Phase 0–6)行;下一步改為校對 companies(含 semiconductor)。
+- README.md:ai-server 改「6 盤 + rack-sys + 雙層互連」;semiconductor 改「6 台深做 + 整線藍→綠」;已知待辦補 semiconductor。
+- topic-playbook.md:可重用 pattern 加「機台級物料流(ADR-0017,Part.process machine-local + scale)」。
+- 無新 ADR(ADR-0017 已涵蓋機台級 process;Phase 6 僅契約材質對齊,易反轉)。
+- ⚠️ 多 agent:CLAUDE/README/topic-playbook 同時被並行作業(grid/datacenter/pipeline)編輯;本次只動 ai-server/semiconductor 相關行,保留其餘。
