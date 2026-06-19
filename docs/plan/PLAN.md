@@ -2,8 +2,12 @@
 
 > 這份計劃是寫給「在終端自主迭代的 coding agent（Claude Code）」看的。
 > **開工前先讀 [CONTEXT.md](./CONTEXT.md)**（專案緣起、核心原則、為什麼這樣選）。
-> 規則：**先做完階段一的最小核心 demo（C0→C6），每個查核點都要通過 §7 的自我驗證迴圈才能往下**；
-> 階段二的迭代要等人類確認後才開始。每個查核點 = 一個 git commit。
+> **現況（2026-06-19）**：階段一 C0–C6 與第一輪階段二 backlog 已完成。
+> 本檔保留「架構與歷史計畫」。新增/更新供應鏈題目的現行流程以
+> [topic-playbook.md](./topic-playbook.md) 為準。
+>
+> 規則：每個工作單元都要通過 §7 的自我驗證迴圈才能 commit；
+> 階段二新增題目走三段管線（研究 → 設計 → 建模）。每個查核點 = 一個 git commit。
 >
 > **工具鏈：** Node/React 用 **`pnpm`**（指令一律 `pnpm`，非 `npm`）；若用到 Python（如 CadQuery）用 **`uv`**；需要時可用 Docker。
 
@@ -40,7 +44,7 @@
 | R3F | `@react-three/fiber` | `^9`（**必須配 React 19**）|
 | 3D 核心 | `three` | 跟隨 fiber@9 相容版 |
 | 輔助 | `@react-three/drei` | 最新相容 |
-| 布林運算 | `three-bvh-csg` | 最新相容 |
+| 布林運算 | `three-bvh-csg` | 選用；真正需要 CSG 時再引入/保留 |
 | 狀態 | `zustand` | `^5` |
 | 動畫 | `@react-spring/three` | 最新相容 |
 | 型別 | `typescript` | `^6`（官方範本實裝）|
@@ -65,13 +69,14 @@ src/
     GeometryFactory.tsx  # 讀 part.kind 生成 primitive 或載 model
     kit/                 # 可重用 primitive 積木：BeveledBox, RoundedCylinder, BusBar...
     materials.ts         # 共用材質登錄表（統一畫風的唯一來源）
-    explode.ts           # 拆解向量計算 + react-spring 綁定
+    explode.ts           # 放射拆解位移計算 + react-spring 綁定
     Annotation.tsx       # drei <Html> 浮動標籤
     selection.ts         # zustand store：selectedId / exploded / lang
     schema.ts            # content schema 的 TypeScript 型別（單一事實來源）
   ui/                    # UI 殼：拆解鈕、重置、語言切換
   content/
-    ai-server.json       # 第一份題目資料（schema 的實例）
+    *.json               # 題目資料（元件結構 + annotation.title，不含公司）
+    companies.csv        # 公司↔元件 edge list 的唯一來源
   gallery/               # 元件畫廊：每個零件/場景單獨渲染一格，供截圖自查
   App.tsx
 tools/
@@ -93,48 +98,20 @@ docs/
 
 ## 5. CONTENT SCHEMA（引擎與內容的契約）
 
-`engine/schema.ts` 定義型別；`content/*.json` 是它的實例。MVP 欄位如下：
+`engine/schema.ts` 是單一型別來源；`content/*.json` 是實例。現行慣例以
+[topic-playbook.md](./topic-playbook.md) 為準，重點如下：
 
-```jsonc
-{
-  "topic": "ai-server",
-  "title": { "zh": "AI 伺服器供應鏈", "en": "AI Server Supply Chain" },
-  "camera": { "position": [6, 4, 8], "target": [0, 1.5, 0] },
-  "parts": [
-    {
-      "id": "rack-frame",
-      "kind": "primitive",                       // "primitive" | "model"
-      "geometry": { "shape": "box", "args": [2.2, 3.2, 1.6], "bevel": 0.03 },
-      "transform": { "position": [0, 1.6, 0] },
-      "material": "metal-dark",
-      "explode": { "vector": [0, 0, 0], "magnitude": 0 },   // 框體不爆
-      "annotation": null
-    },
-    {
-      "id": "tray-gpu-01",
-      "kind": "primitive",
-      "geometry": { "shape": "box", "args": [2.0, 0.22, 1.4], "bevel": 0.02 },
-      "transform": { "position": [0, 2.6, 0] },
-      "material": "metal-light",
-      "explode": { "vector": [0, 1, 0.4], "magnitude": 1.2 },
-      "annotation": {
-        "title": { "zh": "GPU 運算盤", "en": "GPU Tray" },
-        "companies": [{ "name": "台積電", "ticker": "2330" }]
-      }
-    }
-    // …其餘 tray 依序往下排（MVP 先手列 6~8 片）
-  ]
-}
-```
-
-`kind: "model"` 的零件改用 `"model": { "url": "/assets/x.glb", "node": "optional_subnode" }`，
-其餘欄位（transform / explode / annotation）共用。**MVP 不需要 model 類型**，留型別即可。
-
-未來增強（非 MVP，列入 backlog）：`parts[].repeat = { count, step:[x,y,z] }` 讓引擎自動展開重複盤。
+- `geometry.shape` 支援 `box / cylinder / cone / tube / flow`；有機造型才用 `kind:"model"`。
+- `explode` 只寫 `magnitude`。方向由 `explode.ts` 依相機 target 自動放射；舊 `vector` 已廢棄。
+- 每個 part 都要可顯示名稱：有意義的節點給 `label`，小部位用 `partOf` 繼承父名。
+- 擋住內部的外殼標 `enclosure: true`，讓「透視」模式看穿並點到內部。
+- 公司不要寫進 JSON；只寫 `src/content/companies.csv`，由 `registry.ts` join 到 annotation。
+- 重複件用 `repeat`；非產線/裝飾性流動可用 `flow + stops/dwell`。
+- 產線/物流語意用 topic-level `process`：`stations / routes / tokens`，不要用閉合 `flow` 冒充單向產線。
 
 ---
 
-## 6. 階段一：最小核心 demo 與查核點
+## 6. 階段一：最小核心 demo 與查核點（已完成）
 
 依序完成，每點都要過 §7 才 commit。
 
@@ -162,11 +139,11 @@ docs/
 - 驗收：點不同零件高亮會切換；點背景清除高亮（兩張截圖對比）。
 
 **C4 — 拆解動畫**
-- `explode.ts`：`exploded=true` 時每零件位移 `normalize(vector) × magnitude`，用 `@react-spring/three` 補間；`false` 復位。
+- `explode.ts`：`exploded=true` 時每零件依中心放射位移 `direction × magnitude`，用 `@react-spring/three` 補間；`false` 復位。
 - 驗收：切換往返平滑；收合後零件回原位無漂移（對比展開/收合兩張截圖，框體不動）。
 
 **C5 — 標籤投影**
-- `Annotation` 用 drei `<Html>`，在「被選取或展開」的零件旁顯示 `annotation.title[lang]` + 公司名/代號。
+- `Annotation` 用 drei `<Html>`，在「股票」或展開狀態顯示 `annotation.title[lang]` + registry join 後的公司名/代號。
 - 驗收：標籤貼著零件、隨相機移動不脫離；切 `lang` 文字在 zh/en 間改變。
 
 **C6 — 最小 UI 殼**
@@ -232,18 +209,19 @@ docs/
 
 ---
 
-## 8. 階段二：迭代流程（人類確認後才開始）
+## 8. 階段二：迭代流程（現行）
 
-> 每個工作單元都走：**`/prime` → 寫 spec → 實作 → `/verify` → commit**。
+> 第一輪 backlog 已完成。新增/更新供應鏈題目時走
+> [topic-playbook.md](./topic-playbook.md)：**研究 → 設計 → 建模 → `/verify` → commit**。
 
 ### 8.1 新增一個元件 — `/add-component`
-1. **寫 spec**：在 `specs/` 依 `_TEMPLATE.md` 建檔，填形狀判定、子零件、拆解向量、標註、Validation Commands。
-2. **判形狀（選型流程）**：方正機械 → `kit/` 加 primitive 積木（必要時 `three-bvh-csg` 挖孔/切角）；
+1. **寫 spec**：在 `specs/` 依 `_TEMPLATE.md` 建檔，填形狀判定、子零件、拆解 `magnitude`、標註、Validation Commands。
+2. **判形狀（選型流程）**：方正機械 → primitive 組合（真需要時再評估 `kit/` 或 `three-bvh-csg`）；
    精密規律件 → 程式 CAD（CadQuery/OpenSCAD，Python 用 `uv`，必要時 Docker）產 GLB 當 `kind:"model"`；
    有機 → 借模型（先回報來源/授權），整隻一個零件不細分。
 3. 若用到新材質，先登錄到 `materials.ts`。
 4. 做成**參數化元件**（`<ServerRack rows={6} />`），不要寫死。
-5. 把零件加進對應 `content/*.json`，設好 `id`/`explode`/`annotation`。
+5. 把零件加進對應 `content/*.json`，設好 `id`、`explode.magnitude`、`label/partOf`、`annotation.title`。
 6. 在 `gallery/` 加一格單獨渲染它，跑 `/verify`（含讀回截圖對照 spec 與 `docs/references/`）。
 7. 過了再串進場景的拆解與標註，commit。
 
@@ -254,9 +232,11 @@ docs/
 4. Gallery 加該場景頁，跑 `/verify`，commit。
 
 ### 8.3 Backlog 佇列
-- 待辦寫在 `.agent/backlog.md`，由上而下一次拉一項做，每項自帶驗收，並對應一份 spec。
-- 初始建議順序：①變壓器（box+bushing 圓柱，純 primitive）→ ②機房/機架陣列（schema `repeat`）→ ③管線（`TubeGeometry`）→ ④風機（葉片可用 primitive，機艙 box）→ ⑤有機件試點：一架飛機（借模型、整隻一零件）。
-- 每完成一項：更新 backlog 勾選 + commit。
+- 待辦寫在 `.agent/backlog.md`，由上而下一次拉一項做，每項自帶驗收，並對應一份 spec 或 review。
+- 目前第一輪 backlog 已完成；下一輪優先做 hygiene，再新增題目：
+  1. 清理 `docs/reveiw/architecture-audit.md` 指出的低風險項。
+  2. 人工校對 `companies.csv` 的公司↔元件對應。
+  3. 依 `topic-playbook.md` 新增下一條供應鏈。
 
 ### 8.4 重構守則
 - primitive 拼法重複 ≥2 次 → 抽 `kit/` 元件（程式版 kitbash）。
@@ -278,18 +258,18 @@ docs/
 ## 10. 啟動指令範例（貼進終端的 Claude Code）
 
 ```
-先跑 /prime 建立上下文（會讀 CONTEXT.md + PLAN.md）。依序執行階段一 C0→C6。
-C0 必須先把自查 harness（gallery 路由 + tools/shoot.mjs + scripts + ESLint）建好再進 C1。
-每個查核點完成後跑 /verify（§7 自我驗證迴圈），全綠才用 /commit 以 "C{n}: ..." 格式 commit；
+先跑 /prime 建立上下文（會讀 CONTEXT.md + PLAN.md + topic-playbook.md）。
+先處理 .agent/backlog.md 的最上方工作；若是新增供應鏈，必須走 research → design-demo → add-topic。
+每個工作單元完成後跑 /verify（§7 自我驗證迴圈），全綠才 /commit。
 同一查核點失敗 3 次就停下，在 .agent/log.md 寫摘要並回報我。
-階段一 DoD 達成後停下等我確認，不要自行開始階段二（階段二用 /add-component、/add-topic）。
-遵守 §2 GUARDRAILS 與 §9 停止條件。
+遵守 §2 GUARDRAILS、§9 停止條件，以及 topic-playbook 的最終驗收清單。
 ```
 
 ---
 
 ### 附：給人類的快速檢查清單
-- [ ] C0–C6 各有一個 commit、各附一張 `.agent/shots/` 截圖
-- [ ] `grep -ri "台積\|2330\|伺服器" src/engine` 為空（分離成功）
-- [ ] 改 `content/ai-server.json` 任一數值，畫面即時反映（資料驅動成功）
-- [ ] 視窗 380px 寬不破版
+- [ ] `src/engine/` 不含題目字眼、公司名、股票代號
+- [ ] 純內容題目沒有改 `src/engine/`
+- [ ] `pnpm check && pnpm typecheck && pnpm lint && pnpm build` 全綠
+- [ ] `pnpm shoot "?view=gallery&topic=<slug>" <name>` 截圖讀回後符合 spec
+- [ ] 未查證的公司對應明確標 `待查證`
