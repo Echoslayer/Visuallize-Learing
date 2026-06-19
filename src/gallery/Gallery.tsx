@@ -3,6 +3,8 @@ import type { CSSProperties } from 'react'
 import { SceneRoot } from '../engine/SceneRoot'
 import { Scene } from '../engine/Scene'
 import { Credits } from '../ui/Credits'
+import { Controls } from '../ui/Controls'
+import { Hotkeys } from '../ui/Hotkeys'
 import { DevHandle } from '../ui/DevHandle'
 import { useSelection } from '../engine/selection'
 import { getTopic } from '../content/registry'
@@ -120,6 +122,8 @@ export function Gallery() {
         {import.meta.env.DEV && <DevHandle />}
       </SceneRoot>
       <MachineList content={original} current={machine} />
+      <Hotkeys />
+      <Controls />
       <Credits content={content} />
     </div>
   )
