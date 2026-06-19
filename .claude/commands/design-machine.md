@@ -4,22 +4,22 @@
 > 這支只做設計取捨；不改 content、不碰 engine。
 
 ## Variables
-slug: $1 — 對應 `docs/machines/<slug>.md`。
+slug: $1 — 對應 `docs/research/machines/<slug>.md`。
 
 ## Instructions
-1. 先讀 `docs/machines/<slug>.md` 與 `docs/plan/machine-patterns.md`。
+1. 先讀 `docs/research/machines/<slug>.md` 與 `docs/machine-patterns.md`。
 2. 套用 `object-abstraction`：每個有供應鏈意義的部位都要列出 primitive；不要用單一方塊代表整台機台。
 3. 優先用既有 schema：`box / cylinder / cone / tube / repeat / rotation / partOf / enclosure / explode.magnitude`。
 4. 先設計成 content primitive 群組。只有同一拼法已在 2+ 題目重複且 JSON 難維護時，才建議抽 `src/engine/kit/`。
-5. 輸出到 `specs/<NN>-machine-<slug>.md`。
+5. 輸出到 `docs/specs/<NN>-machine-<slug>.md`。
 
 ## Format
 ```md
 # <機台名稱> machine spec (`<slug>`)
 
-> 由 `/design-machine <slug>` 依 `docs/machines/<slug>.md` 產出。確認後由 `/add-component` 實作。
+> 由 `/design-machine <slug>` 依 `docs/research/machines/<slug>.md` 產出。確認後由 `/add-component` 實作。
 - type: machine
-- 研究來源: docs/machines/<slug>.md
+- 研究來源: docs/research/machines/<slug>.md
 
 ## 1. 目標
 <這台機台在畫面中要讓人看懂什麼。>

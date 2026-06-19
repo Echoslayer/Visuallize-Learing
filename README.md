@@ -9,7 +9,7 @@
 
 - **幾何是程式碼，不是二進位檔**：機械件程式生成 primitive；有機件才借模型且不細分。
 - **engine / content 兩層分離**：`engine/` 不認識題目，題目資訊只在 `content/*.json`。
-- 設計動機見 [`docs/plan/CONTEXT.md`](docs/plan/CONTEXT.md)（為什麼）與 [`docs/plan/PLAN.md`](docs/plan/PLAN.md)（怎麼做）；
+- 設計動機見 [`docs/CONTEXT.md`](docs/CONTEXT.md)（為什麼）與 [`docs/PLAN.md`](docs/PLAN.md)（怎麼做）；
   關鍵決策見 [`docs/adr/`](docs/adr/)（架構決策紀錄）。
 
 ## 技術棧
@@ -51,11 +51,13 @@ src/engine/      # 與題目無關的引擎(SceneRoot、之後的 GeometryFactor
 src/gallery/     # 元件畫廊路由,每個零件單獨一格供截圖
 src/content/     # 題目資料(JSON);換議題只動這裡
 tools/shoot.mjs  # 截圖 harness
-specs/           # 階段二每個工作單元的規格(spec-driven)
-docs/plan/       # CONTEXT / PLAN / SETUP
-docs/machines/   # 單台機台研究;供 design-machine/add-component 使用
-docs/adr/        # 架構決策紀錄
-.claude/         # slash commands + r3f-industrial-component skill + 權限安全網
+docs/             # 正典(CONTEXT/PLAN/SETUP/playbook)+ 下列子目錄;入口見 docs/README.md
+docs/research/    # 階段一:供應鏈(supply-chains/)與機台(machines/)研究
+docs/specs/       # 階段二:每個工作單元的設計規格(spec-driven)
+docs/progress/    # 各題目重做的進度日誌(*-redo.md)
+docs/adr/         # 架構決策紀錄
+docs/review/      # 一次性審查報告(如 architecture-audit)
+.claude/          # slash commands + skills + 權限安全網
 ```
 
 ## 給 coding agent
@@ -74,10 +76,10 @@ docs/adr/        # 架構決策紀錄
 互動:點選高亮、**元件名牌**(點選/「名稱」按鈕)、**公司卡**(「股票」按鈕)、**放射狀拆解**(全域自中心散開)、**透視**(「透視」按鈕看穿外殼內部,ADR-0015)、中英、**鍵盤快捷**(E/X/數字鍵);engine/content 分離全程守住。
 schema 變更皆走 spec + sign-off(`repeat` 02、`tube` 03、`model` 05、`flow` 06、`label` 08、`flow-dwell` 10、`process` 11)。純函式附 `pnpm check` 斷言(見 [ADR-0010])。
 供應鏈題目走三段管線(見 [ADR-0013](docs/adr/0013-supply-chain-pipeline-abstraction.md)):
-`/research-supply-chain`(事實 → `docs/supply-chains/`)→ `/design-demo`(設計取捨,套 `object-abstraction` skill)→ `/add-topic`(建模)。
-單台機台也走小三段:`/research-machine`(事實 → `docs/machines/`)→ `/design-machine`(取捨 → `specs/<NN>-machine-*.md`)→ `/add-component`(建模到 content)。
+`/research-supply-chain`(事實 → `docs/research/supply-chains/`)→ `/design-demo`(設計取捨,套 `object-abstraction` skill)→ `/add-topic`(建模)。
+單台機台也走小三段:`/research-machine`(事實 → `docs/research/machines/`)→ `/design-machine`(取捨 → `docs/specs/<NN>-machine-*.md`)→ `/add-component`(建模到 content)。
 模型細節層次跟著**供應鏈意義**走(鏈上有對應的部位就建,只略過無意義造型細節)。
-建置步驟 + **最終驗收清單**見 [`docs/plan/topic-playbook.md`](docs/plan/topic-playbook.md)。
+建置步驟 + **最終驗收清單**見 [`docs/topic-playbook.md`](docs/topic-playbook.md)。
 
 ## 素材出處 / Credits
 

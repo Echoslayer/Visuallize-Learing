@@ -1,14 +1,14 @@
 # Design Demo
 > 接 `/research-supply-chain` 的功課,**做設計決策**:把研究(事實)轉成一個「教學用、抽象、可建模」的 demo 設計。
-> 產出設計 spec 到 `specs/`,人類確認後由 `/add-topic` 實作。
+> 產出設計 spec 到 `docs/specs/`,人類確認後由 `/add-topic` 實作。
 > **三段分離:研究=事實 / 設計=取捨 / 建模=實作。** 這支只做中段「怎麼設計」,不查資料、不寫 content。
 
 ## Variables
-slug: $1 — 研究文件 slug(對應 `docs/supply-chains/<slug>.md`)。
+slug: $1 — 研究文件 slug(對應 `docs/research/supply-chains/<slug>.md`)。
 
 ## Instructions
-- **先讀** `docs/supply-chains/<slug>.md`(功課)。設計依它的環節/流動/公司,不另外查資料。
-- **先看** `docs/plan/machine-patterns.md`:每個節點先選最接近的機台 pattern,再按供應鏈意義增減部位。
+- **先讀** `docs/research/supply-chains/<slug>.md`(功課)。設計依它的環節/流動/公司,不另外查資料。
+- **先看** `docs/machine-patterns.md`:每個節點先選最接近的機台 pattern,再按供應鏈意義增減部位。
 - **套用 skill `object-abstraction`**:每個元件**先調研真實物件長相**,再用 primitive **把有供應鏈意義的部位都組出來——不論大小,沒有上限**。
   **判準是供應鏈意義,不是視覺擬真**:鏈上有對應(材料/零件/製程/供應商)的部位就建;**只略過沒有供應鏈意義的造型細節**(紋理/油漆/椅墊造型/把板子鎖一起的通用五金)。螺絲螺帽看角色——代表扣件商/關鍵功能件就留,純組裝瑣節才省。
   **抽象 ≠ 簡陋,也 ≠ 只建幾塊**;「抽象」只指 primitive、低多邊形的**風格**,**結構要跟著供應鏈一樣細**。
@@ -27,15 +27,15 @@ slug: $1 — 研究文件 slug(對應 `docs/supply-chains/<slug>.md`)。
     station=加工/停留點,route=單向路線,token=物料。不要只畫閉合跑馬燈。
 - **在引擎能力內設計**:可用 box/cylinder/cone/tube/flow + `repeat`(陣列)+ `rotation` + `model`(GLB,需借素材→先回報)+ explode + annotation + config。**別設計引擎做不到的**;真需要新能力 → 標記為「需先開 schema-change spec」。
 - 公司**不在這決定**——指向研究 §4,提醒之後填 `companies.csv`。
-- 輸出到 `specs/<NN>-topic-<slug>.md`(NN 接續現有編號)。**不建 content JSON、不碰 engine。**
+- 輸出到 `docs/specs/<NN>-topic-<slug>.md`(NN 接續現有編號)。**不建 content JSON、不碰 engine。**
 
 ## Format(產出的設計 spec)
 ```md
 # <產業> demo 設計(topic `<slug>`)
 
-> 由 /design-demo 依 `docs/supply-chains/<slug>.md` 產出。教學用、抽象。人類確認後 /add-topic 建。
+> 由 /design-demo 依 `docs/research/supply-chains/<slug>.md` 產出。教學用、抽象。人類確認後 /add-topic 建。
 - type: topic
-- 研究來源:docs/supply-chains/<slug>.md
+- 研究來源:docs/research/supply-chains/<slug>.md
 
 ## 1. 教學目標 + 取捨
 <這個 demo 要讓人看懂什麼;從研究的 N 環節挑哪幾個當節點、合併/省略哪些、為什麼>

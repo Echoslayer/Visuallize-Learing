@@ -6,7 +6,7 @@
 name: $1 — 題目名稱（如 `grid` 重電電網、`semiconductor` 半導體）。
 
 ## Instructions
-1. **讀 latest topic spec**：優先讀 `specs/<NN>-topic-{name}.md`；供應鏈題目必須先由 `/design-demo` 產出 spec。
+1. **讀 latest topic spec**：優先讀 `docs/specs/<NN>-topic-{name}.md`；供應鏈題目必須先由 `/design-demo` 產出 spec。
 2. 建 `content/{name}.json`，依 spec 實作 `title`、`camera`、`parts`。可參考既有 JSON，但不要機械式複製 `ai-server.json`。
    `annotation` 只放 `title`(**公司不寫進 JSON**)。
 3. 若 spec 有產線/物流,用 topic-level `process` 寫 station/route/token；不要用閉合 `flow` 冒充單向產線。

@@ -1,6 +1,6 @@
 # Research Machine
 
-> 研究單一機台/設備的真實外觀與功能，產出 `docs/machines/<slug>.md`。
+> 研究單一機台/設備的真實外觀與功能，產出 `docs/research/machines/<slug>.md`。
 > 這支只做事實整理；不寫 spec、不改 content、不碰 engine。
 
 ## Variables
@@ -9,9 +9,9 @@ machine: $1 — 機台名稱（如 `lithography-tool`、`transformer`、`conveyo
 ## Instructions
 1. 先查真實外觀與構造。可用 WebSearch/WebFetch；有不確定就標 `(待查證)`，不要猜。
 2. 聚焦「建模需要知道的事」：剪影、主要量體、輸入/輸出、關鍵子系統、哪些部位有供應鏈意義。
-3. 先看 `docs/plan/machine-patterns.md`，標記最接近的 pattern；沒有就寫「無現成 pattern」。
+3. 先看 `docs/machine-patterns.md`，標記最接近的 pattern；沒有就寫「無現成 pattern」。
 4. 不列純造型細節。螺絲、支架、管線只有在代表材料/零件/製程/供應商時才保留。
-5. 寫到 `docs/machines/<slug>.md`；已存在則補強，不要改短。
+5. 寫到 `docs/research/machines/<slug>.md`；已存在則補強，不要改短。
 
 ## Format
 ```md
@@ -33,7 +33,7 @@ machine: $1 — 機台名稱（如 `lithography-tool`、`transformer`、`conveyo
 |---|---|---|---|
 
 ## 5. 可套用 pattern
-<參照 `docs/plan/machine-patterns.md`，說明要沿用/增減什麼。>
+<參照 `docs/machine-patterns.md`，說明要沿用/增減什麼。>
 
 ## 6. 待查證
 <不確定的外觀、部位、功能。>

@@ -25,3 +25,4 @@
 | [0015](0015-enclosure-xray.md) | 透視(X-Ray):enclosure 旗標 + 全域開關,看穿封閉外殼內部 | Accepted |
 | [0016](0016-process-layer.md) | process layer 表達產線語意(station / route / token) | Accepted |
 | [0017](0017-machine-level-process.md) | 機台級 process(Part.process machine-local + ProcessSpec.scale),單機台物料進出 | Accepted |
+| [0018](0018-docs-layout-mirrors-pipeline.md) | docs 結構對應三段管線(research/specs/progress),單一棵樹 + `docs/README.md` 地圖 | Accepted |

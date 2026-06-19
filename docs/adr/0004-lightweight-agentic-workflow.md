@@ -14,7 +14,7 @@ Review→Document 階段化、規格驅動、命令化、閉環驗證。但 ADW 
 
 **只取 ADW 的方法論,不搬機制。** 採用:
 
-- **規格驅動**:階段二每個工作單元先寫 `specs/` 規格(含 Validation Commands),再實作。
+- **規格驅動**:階段二每個工作單元先寫 `docs/specs/` 規格(含 Validation Commands),再實作。
 - **命令化**:重複流程固化成 `.claude/commands/`:`/prime`、`/verify`、`/commit`、`/add-component`、`/add-topic`。
 - **領域 skill**:`r3f-industrial-component` 在建元件時自動載入配方。
 - **閉環**:見 [[0003]]。

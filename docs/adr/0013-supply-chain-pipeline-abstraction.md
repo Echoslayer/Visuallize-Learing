@@ -13,8 +13,8 @@
 ## Decision
 
 ### A. 三段管線(職責分離,各段產物可審查)
-1. **研究 = 事實** — `/research-supply-chain <產業>` → `docs/supply-chains/<slug>.md`。WebSearch 查證實際運作、環節、流動、公司(代號查證)。
-2. **設計 = 取捨** — `/design-demo <slug>` → `specs/<NN>-topic-<slug>.md`。精選節點、決定形狀/大小/布局/互動/物流。套 `object-abstraction` skill。
+1. **研究 = 事實** — `/research-supply-chain <產業>` → `docs/research/supply-chains/<slug>.md`。WebSearch 查證實際運作、環節、流動、公司(代號查證)。
+2. **設計 = 取捨** — `/design-demo <slug>` → `docs/specs/<NN>-topic-<slug>.md`。精選節點、決定形狀/大小/布局/互動/物流。套 `object-abstraction` skill。
 3. **建模 = 實作** — `/add-topic` 依設計建 content;公司填 `companies.csv`。
 - 每段人類可審查、可調:研究錯改研究、設計不滿改設計,再建。
 

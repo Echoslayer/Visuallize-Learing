@@ -1,6 +1,7 @@
 # CLAUDE.md
 
-給在這個 repo 工作的 Claude Code 的指引。**先讀 `docs/plan/CONTEXT.md` 與 `docs/plan/PLAN.md`**（或直接跑 `/prime`）。
+給在這個 repo 工作的 Claude Code 的指引。**先讀 `docs/CONTEXT.md` 與 `docs/PLAN.md`**（或直接跑 `/prime`）。
+**找文件看 [`docs/README.md`](docs/README.md) 地圖**(研究→設計→實作的目錄對應)。
 
 ## 多 agent 交接
 
@@ -70,10 +71,10 @@
 - `/verify [route]` — 跑自我驗證迴圈（typecheck→lint→build→shoot→讀回截圖）。**沒過不准 commit。**
 - `/commit` — 格式化 commit（階段一 `C{n}: ...`；階段二含 spec 檔名）。
 - `/update-docs [scope]` — 同步活文件(README/CLAUDE/log)與按需新增 ADR。
-- **供應鏈題目三段管線**:`/research-supply-chain <產業>`(查證事實 → `docs/supply-chains/`)→ `/design-demo <slug>`(設計取捨:精選/形狀/大小/互動/物流 → `specs/`)→ `/add-topic`(依設計實作)。
-  **單台機台**也走小三段:`/research-machine <machine>`(→ `docs/machines/`)→ `/design-machine <slug>`(→ `specs/<NN>-machine-*.md`)→ `/add-component`(依 spec 實作到 content)。
-  **完整建置步驟 + 慣例 + 最終驗收清單見 [`docs/plan/topic-playbook.md`](docs/plan/topic-playbook.md)** —— 每條供應鏈照它跑。
-- `/add-component <name>` / `/add-topic <name>` — 階段二迭代（先有 `specs/` 規格;供應鏈題目的 spec 由 `/design-demo` 產出）。
+- **供應鏈題目三段管線**:`/research-supply-chain <產業>`(查證事實 → `docs/research/supply-chains/`)→ `/design-demo <slug>`(設計取捨:精選/形狀/大小/互動/物流 → `docs/specs/`)→ `/add-topic`(依設計實作)。
+  **單台機台**也走小三段:`/research-machine <machine>`(→ `docs/research/machines/`)→ `/design-machine <slug>`(→ `docs/specs/<NN>-machine-*.md`)→ `/add-component`(依 spec 實作到 content)。
+  **完整建置步驟 + 慣例 + 最終驗收清單見 [`docs/topic-playbook.md`](docs/topic-playbook.md)** —— 每條供應鏈照它跑。
+- `/add-component <name>` / `/add-topic <name>` — 階段二迭代（先有 `docs/specs/` 規格;供應鏈題目的 spec 由 `/design-demo` 產出）。
 - **skills**:`object-abstraction`(設計時:真實物件 → primitive 組合;細節跟供應鏈意義走,**別用單一方塊**)、
   `r3f-industrial-component`(實作時:R3F 蓋法/材質/拆解配方)。設計形狀套前者,寫程式套後者。
 
@@ -83,14 +84,14 @@
 - **階段二第一輪已完成**:grid/datacenter/pipeline/wind/aerospace/semiconductor 已驗證 primitive、repeat、tube、model、flow/dwell、process layer、label/partOf、enclosure。
 - **semiconductor 已用三段管線重做為深度範本**:深度研究(36 公司查證)→ design-demo v2(spec 09,修動線/互動)→ 重建;
   含 enclosure 透視、process layer 單向產線(spec 11)、flow/dwell 舊能力(spec 10)。
-- **grid 已重做為小型變電站 demo**:研究(`docs/supply-chains/grid.md`)→ topic spec 18 → 五台機台 research/design/add-component
+- **grid 已重做為小型變電站 demo**:研究(`docs/research/supply-chains/grid.md`)→ topic spec 18 → 五台機台 research/design/add-component
   (power-transformer、GIS/breaker、busbar/cable、control/protection、distribution/load)→ topic-level 電力流 Phase D。
   `src/content/grid.json` 已有 HV/LV/control routes;公司對應需人類校對。
-- **datacenter 已從 repeat 範例重做為資料中心基礎設施 demo**:研究草稿(`docs/supply-chains/datacenter.md`)→ spec 18 →
+- **datacenter 已從 repeat 範例重做為資料中心基礎設施 demo**:研究草稿(`docs/research/supply-chains/datacenter.md`)→ spec 18 →
   `content/datacenter.json` 五節點(運算機櫃列/電力室/冷卻迴路/網路 fabric/監控),用 topic-level process 表 power/cooling/data/telemetry。
   公司對應需人類校對。
-- **ai-server redo 已完成(A–D)**:三段管線(研究 `docs/supply-chains/ai-server.md` → design-demo spec 17 → 逐盤 specs 21–24)重做 6 盤(GPU×2/CPU/NVSwitch/Network/電源)+ `rack-sys`(機櫃/CDU/NVLink 背板);機台級流(ADR-0017)+ 整機兩層 process(電源發散 + 資料 fabric)。見 `docs/plan/ai-server-redo.md`。公司對應需人類校對。
-- **semiconductor 機台已逐台重做(Phase 0–6)**:6 台 research/design/add-component(specs 12–16、26)→ 每台機台級物料流(ADR-0017,scale 0.4)+ 整線藍→綠變色點定於 osat。見 `docs/plan/semiconductor-machine-redo.md`。
+- **ai-server redo 已完成(A–D)**:三段管線(研究 `docs/research/supply-chains/ai-server.md` → design-demo spec 17 → 逐盤 specs 21–24)重做 6 盤(GPU×2/CPU/NVSwitch/Network/電源)+ `rack-sys`(機櫃/CDU/NVLink 背板);機台級流(ADR-0017)+ 整機兩層 process(電源發散 + 資料 fabric)。見 `docs/progress/ai-server-redo.md`。公司對應需人類校對。
+- **semiconductor 機台已逐台重做(Phase 0–6)**:6 台 research/design/add-component(specs 12–16、26)→ 每台機台級物料流(ADR-0017,scale 0.4)+ 整線藍→綠變色點定於 osat。見 `docs/progress/semiconductor-machine-redo.md`。
 - 採互動式節奏:**每個查核點完成後停下,給人類看截圖再續**(本專案不用 ADW 自動化,見 ADR-0004)。
 - 下一步:人工校對 `companies.csv` 的新對應(grid/datacenter/ai-server/semiconductor);build chunk code-split 只有造成問題再做。
 

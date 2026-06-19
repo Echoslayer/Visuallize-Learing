@@ -401,3 +401,9 @@
 - topic-playbook.md:可重用 pattern 加「機台級物料流(ADR-0017,Part.process machine-local + scale)」。
 - 無新 ADR(ADR-0017 已涵蓋機台級 process;Phase 6 僅契約材質對齊,易反轉)。
 - ⚠️ 多 agent:CLAUDE/README/topic-playbook 同時被並行作業(grid/datacenter/pipeline)編輯;本次只動 ai-server/semiconductor 相關行,保留其餘。
+
+## docs 架構重整(ADR-0018)✅
+- 文件從「8 處 / 兩棵樹」收斂成單一 `docs/` 樹,對應三段管線:`research/`(supply-chains+machines 合併)、`specs/`(從 repo 根收進)、`progress/`(*-redo.md 從 plan/ 拆出);正典 CONTEXT/PLAN/SETUP/playbook 提到 docs/ 根;`reveiw/`→`review/`;刪空的 `assest/`。
+- 全 `git mv` 保留歷史;同步改 CLAUDE/README/`.claude`(含未追蹤 skills)/docs 全部 prose 路徑 + 18 條相對連結;link-checker 驗 0 斷鏈。
+- 新增 `docs/README.md` 地圖(找文件入口),CLAUDE.md 開頭指向它。新增 ADR-0018。
+- `.agent/` 歷史 log 不改(舊路徑是當時事實)。純文件搬遷,不影響 build。

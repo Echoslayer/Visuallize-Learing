@@ -6,7 +6,7 @@
 name: $1 — 元件/機台 slug（如 `transformer`、`server-rack`）。
 
 ## Instructions
-1. **先找 spec**：優先讀 `specs/<NN>-machine-{name}.md`；沒有就先跑 `/research-machine {name}` → `/design-machine {name}`，不要直接憑空建。
+1. **先找 spec**：優先讀 `docs/specs/<NN>-machine-{name}.md`；沒有就先跑 `/research-machine {name}` → `/design-machine {name}`，不要直接憑空建。
 2. **形狀判定（選型流程，CONTEXT.md §4）**：
    - 方正機械 → 先用 content JSON primitive 群組實作（必要時 `repeat` / `partOf` / `enclosure`）。
    - 精密規律件 → 程式 CAD（CadQuery/OpenSCAD，Python 用 `uv`，必要時 Docker）產 GLB，當 `kind:"model"`。
