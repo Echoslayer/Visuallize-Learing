@@ -25,8 +25,17 @@ description: 在本專案用 React Three Fiber 程式生成「可拆解的工業
 
 ## 拆解動畫(數學很短,與題目無關)
 
-每個零件位移 = `normalize(explode.vector) × explode.magnitude`,用 `@react-spring/three` 補間;
-`exploded=false` 復位。框體類零件 `magnitude=0` 不動。收合後不可漂移。
+每個零件位移 = 自動從場景中心放射方向 × `explode.magnitude`,用 `@react-spring/three` 補間;
+`exploded=false` 復位。框體/底座/流程層 `magnitude=0` 不動。收合後不可漂移。
+
+## 產線 / 流程層
+
+製程或物流題目不要只用閉合小球 `flow` 冒充產線。用 topic-level `process`:
+- `stations`:加工/停留點,錨到既有 `partId`。
+- `routes`:單向 path,畫 tube + arrow。
+- `tokens`:物料,沿 route 移動,到 station 依 `processTime` 停留。
+
+`flow` 只保留給裝飾性循環流動;產線語意走 `ProcessLayer`。
 
 ## 標註
 

@@ -49,6 +49,43 @@ export interface Explode {
   magnitude: number // 拆解位移距離;0 = 不動(框體/輸送帶/flow 用)
 }
 
+export interface ProcessStation {
+  id: string
+  partId: string // 對應 parts[].id;用來把流程語意錨到站點模型
+  processTime?: number // token 到站停留秒數;預設 0
+  input?: string
+  output?: string
+}
+
+export interface ProcessRouteStop {
+  point: number // route.path 的點索引;token 到此點時視為進站
+  station: string // ProcessStation.id
+}
+
+export interface ProcessRoute {
+  id: string
+  path: Vec3[] // 單向路徑;不閉合,token 到終點後重回起點
+  stops?: ProcessRouteStop[]
+  material?: string
+  kind?: 'main' | 'side'
+}
+
+export interface ProcessToken {
+  id: string
+  routeId: string
+  material: string
+  count: number
+  radius?: number
+  duration?: number // 跑完 route.path 的秒數;不含站點 processTime
+  spacing?: number // token 間相位間隔;預設 1/count
+}
+
+export interface ProcessSpec {
+  stations: ProcessStation[]
+  routes: ProcessRoute[]
+  tokens: ProcessToken[]
+}
+
 export interface ModelRef {
   url: string
   node?: string
@@ -88,4 +125,5 @@ export interface SceneContent {
   title: LocalizedText
   camera: CameraSpec
   parts: Part[]
+  process?: ProcessSpec
 }

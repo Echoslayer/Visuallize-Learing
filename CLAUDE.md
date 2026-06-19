@@ -27,11 +27,14 @@
 - `src/engine/` — 與題目無關、可重用。**不得出現任何題目字眼。**
   已建:`schema.ts`、`GeometryFactory.tsx`(box/cylinder/cone/tube/flow + model)、`Scene.tsx`、`SceneRoot.tsx`、
   `materials.ts`、`selection.ts`、`explode.ts`(**全域自動放射**,見 ADR-0014)、`Annotation.tsx`(公司卡)、
-  `NameTag.tsx`(元件名牌)、`ModelPart.tsx`、`FlowParticles.tsx`(流動,ADR-0012)、`flow-dwell.ts`(站點停頓純函式,spec 10)、`config.ts`(ADR-0009)。
+  `NameTag.tsx`(元件名牌)、`ModelPart.tsx`、`FlowParticles.tsx`(裝飾/循環流動,ADR-0012)、
+  `ProcessLayer.tsx`(產線語意:station/route/token,spec 11)、`flow-dwell.ts`(站點停頓純函式,spec 10)、
+  `process-motion.ts`(process 停站純函式,spec 11)、`config.ts`(ADR-0009)。
   之後:`kit/`(primitive 積木)。
 - **content 慣例(ADR-0014)**:`explode` 只需 `magnitude`(方向自動;vector 已廢棄)。每個 part 要有名字:
   有意義的給 `label`;形狀小塊給 `partOf`(指向父節點 → 繼承父名 + 點選顯示父卡)。companies 仍走 `companies.csv`。
   擋住內部的箱體/機殼標 `enclosure: true`(ADR-0015)→「透視」按鈕看穿。
+  產線/物流題目用 topic-level `process`(station/route/token);`flow` 只保留裝飾性循環流動。
 - `src/ui/` — UI 殼。已建:`Controls.tsx`(拆解/名稱/股票/透視/重置/語言)、`TopicSwitcher.tsx`(左側題目切換,`?topic=` 導航)、
   `Hotkeys.tsx`(E 拆解/X 透視/數字鍵切題目)、`Credits.tsx`(借用模型 CC-BY 標註)、
   `Tuning.tsx`(leva 調參,**僅 DEV、僅 App**)、`DevHandle.tsx`(**DEV 截圖驅動縫**:`window.__view` = camera/controls/scene/store,延伸 ADR-0008,別當垃圾清掉)。
@@ -52,17 +55,17 @@
 - **供應鏈題目三段管線**:`/research-supply-chain <產業>`(查證事實 → `docs/supply-chains/`)→ `/design-demo <slug>`(設計取捨:精選/形狀/大小/互動/物流 → `specs/`)→ `/add-topic`(依設計實作)。
   **完整建置步驟 + 慣例 + 最終驗收清單見 [`docs/plan/topic-playbook.md`](docs/plan/topic-playbook.md)** —— 每條供應鏈照它跑。
 - `/add-component <name>` / `/add-topic <name>` — 階段二迭代（先有 `specs/` 規格;供應鏈題目的 spec 由 `/design-demo` 產出）。
-- **skills**:`object-abstraction`(設計時:真實物件 → 3~8 個 primitive 的可辨識組合,**別用單一方塊**)、
+- **skills**:`object-abstraction`(設計時:真實物件 → primitive 組合;細節跟供應鏈意義走,**別用單一方塊**)、
   `r3f-industrial-component`(實作時:R3F 蓋法/材質/拆解配方)。設計形狀套前者,寫程式套後者。
 
 ## 現在該做什麼
 
 - **階段一 C0–C6 全部 ✅ 完成(DoD 達成)** —— 完整垂直切片,engine/content 分離守住。
-- **階段二進行中**(加元件 `/add-component`、加題目 `/add-topic`,先寫 `specs/`)。
+- **階段二第一輪已完成**:grid/datacenter/pipeline/wind/aerospace/semiconductor 已驗證 primitive、repeat、tube、model、flow/dwell、process layer、label/partOf、enclosure。
 - **semiconductor 已用三段管線重做為深度範本**:深度研究(36 公司查證)→ design-demo v2(spec 09,修動線/互動)→ 重建;
-  含 enclosure 透視、flow 進站爬升 + 站點停頓 dwell(spec 10)。其他供應鏈照 `topic-playbook.md` 跟進。
+  含 enclosure 透視、process layer 單向產線(spec 11)、flow/dwell 舊能力(spec 10)。其他供應鏈照 `topic-playbook.md` 跟進。
 - 採互動式節奏:**每個查核點完成後停下,給人類看截圖再續**(本專案不用 ADW 自動化,見 ADR-0004)。
-- 待辦:其他供應鏈題目(research → design-demo → add-topic);annotation 對應人工再校;build chunk code-split。
+- 下一步看 `.agent/backlog.md`:先清 `docs/reveiw/architecture-audit.md` 的低風險項,再人工校對 `companies.csv` 對應,之後新增供應鏈題目(research → design-demo → add-topic)。build chunk code-split 只有造成問題再做。
 
 ## 測試(見 [ADR-0010](docs/adr/0010-no-test-framework.md))
 

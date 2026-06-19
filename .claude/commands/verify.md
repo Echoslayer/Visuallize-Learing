@@ -12,6 +12,12 @@ route: $1 — 要截圖的 gallery 路由（如 `gallery?part=tray-gpu-01&explod
 4. `pnpm shoot {route}` — Playwright headless 截圖到 `.agent/shots/`。
 5. **用 Read 工具讀回那張 PNG**，逐條對照當前查核點/spec 的「驗收」。
    比例/質感類驗收：若 `docs/references/` 有對應圖，一併讀進來做視覺方向校準（非像素比對）。
+   若題目含 `process`,額外檢查:
+   - route 有箭頭且單向,不是閉合跑馬燈。
+   - token 穿過 station 中心附近,不是沿邊掠過。
+   - token 到站有停留/加工感;station 有 marker。
+   - input/output token 材質或路線有區隔。
+   - side input 不排在主線上。
 
 ## Report（結構化）
 ```json

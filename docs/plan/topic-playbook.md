@@ -26,7 +26,8 @@
 - **命名(每個 part 都要有名)**:有意義的給 `label`;形狀小塊給 `partOf`(指向父節點 → 繼承父名 + 點選顯示父卡)。
 - **外殼/黑箱**:把擋住內部的箱體/機殼標 `enclosure: true`(ADR-0015)→「透視」按鈕可看穿,內部元件/flow 才看得見。
 - **公司**:不寫進 JSON;寫 `content/companies.csv`(`topic,part,ticker,name`,多對多,keyed 到**節點 part id**)。代號要查證。
-- **動態/物流**:材料在環節間流動用 `shape:"flow"`(晶圓/流體…)。要「進站停頓加工」感 → 加 `stops`(停留 path 點索引)+ `dwell`(秒)(spec 10)。
+- **動態/物流**:產線/物流題目優先用 topic-level `process`(station / route / token),表達單向、進站停留、加工後變形、側向注入。
+  `shape:"flow"` 只保留給裝飾性/非語意的循環流動。
 - **engine/content 分離**:純內容題目**不得動 `engine/`**;要動 = schema 缺口 → 先寫 schema-change spec 報人類 sign-off。
 
 ---
@@ -46,7 +47,8 @@
 - [ ] 「透視」按鈕(若題目有外殼):標 `enclosure` 的箱體變半透明,看得見內部、且能點選內部元件。
 - [ ] 點子部位:顯示其名 + 所屬節點名 + 公司(卡置中、公司超寬會換行)。
 - [ ] 中/EN 切換:名稱、公司卡、標題都跟著變。
-- [ ] flow(若有):材料沿產線流動、循環。
+- [ ] flow(若有):只作非產線/裝飾性循環流動,不冒充製程主線。
+- [ ] process(若有):route 有箭頭且單向;token 穿過站心;到站停留;input/output 或側向注入讀得出來。
 
 **工程 / 回歸**
 - [ ] 純內容題目:`git diff --stat -- src/engine` 為**空**(動了 engine 代表需 schema-change spec)。
@@ -64,6 +66,6 @@
 - 節點橫排太多 → 名牌會擠,放射拆解有助散開;極密再議名牌錯位。
 
 ## 相關
-- ADR:0001(分離)、0002(幾何即程式)、0010(測試邊界)、0011(公司 CSV)、0012(flow)、0013(三段管線+抽象判準)、0014(放射拆解+名牌+partOf)。
+- ADR/spec:0001(分離)、0002(幾何即程式)、0010(測試邊界)、0011(公司 CSV)、0012(flow)、0013(三段管線+抽象判準)、0014(放射拆解+名牌+partOf)、spec 11(process layer)。
 - skills:`object-abstraction`(設計 WHAT)、`r3f-industrial-component`(實作 HOW)。
 - 命令:`/research-supply-chain`、`/design-demo`、`/add-topic`、`/verify`、`/update-docs`。
