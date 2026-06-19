@@ -1,351 +1,951 @@
 {
   "topic": "grid",
   "title": {
-    "zh": "重電 / 變壓器供應鏈",
-    "en": "Power Transformer Supply Chain"
+    "zh": "重電 / 電網供應鏈",
+    "en": "Heavy Electric / Grid Supply Chain"
   },
   "camera": {
-    "position": [
-      4.5,
-      2.8,
-      5.5
-    ],
-    "target": [
-      0,
-      1.1,
-      0
-    ]
+    "position": [4.5, 2.8, 5.5],
+    "target": [0, 1.1, 0]
   },
   "parts": [
     {
-      "id": "base",
+      "id": "gis",
       "kind": "primitive",
-      "geometry": {
-        "shape": "box",
-        "args": [
-          1.9,
-          0.18,
-          1.3
-        ],
-        "bevel": 0.03
-      },
-      "transform": {
-        "position": [
-          0,
-          0.09,
-          0
-        ]
-      },
+      "geometry": { "shape": "box", "args": [0.9, 0.62, 0.58], "bevel": 0.04 },
+      "transform": { "position": [-2.15, 0.78, 0] },
       "material": "metal-dark",
-      "explode": {
-        "vector": [
-          0,
-          0,
-          0
-        ],
-        "magnitude": 0
-      },
-      "annotation": null,
-      "label": {
-        "zh": "底座",
-        "en": "Base"
-      }
-    },
-    {
-      "id": "tank",
-      "kind": "primitive",
-      "geometry": {
-        "shape": "box",
-        "args": [
-          1.5,
-          1.2,
-          1
-        ],
-        "bevel": 0.05
-      },
-      "transform": {
-        "position": [
-          0,
-          0.85,
-          0
-        ]
-      },
-      "material": "metal-dark",
-      "explode": {
-        "vector": [
-          0,
-          0,
-          0
-        ],
-        "magnitude": 0
-      },
+      "explode": { "magnitude": 0.9 },
       "enclosure": true,
-      "annotation": {
-        "title": {
-          "zh": "油箱本體",
-          "en": "Tank"
-        }
+      "label": { "zh": "GIS / 斷路器", "en": "GIS / Breaker" },
+      "annotation": { "title": { "zh": "高壓 GIS / 斷路器", "en": "HV GIS / Breaker" } },
+      "process": {
+        "scale": 0.42,
+        "stations": [
+          {
+            "id": "gis-breaker-station",
+            "partId": "gis",
+            "processTime": 0.5,
+            "input": "high-voltage-ac",
+            "output": "protected-high-voltage-ac"
+          }
+        ],
+        "routes": [
+          {
+            "id": "gis-hv-in",
+            "kind": "main",
+            "material": "accent",
+            "path": [[-0.95, 0.28, 0.05], [-0.45, 0.1, 0.02], [0, 0, 0]],
+            "stops": [{ "point": 2, "station": "gis-breaker-station" }]
+          },
+          {
+            "id": "gis-hv-out",
+            "kind": "main",
+            "material": "accent",
+            "path": [[0, 0, 0], [0.45, 0.08, 0.02], [0.95, 0.22, 0.05]],
+            "stops": [{ "point": 0, "station": "gis-breaker-station" }]
+          },
+          {
+            "id": "gis-signal-in",
+            "kind": "side",
+            "material": "metal-light",
+            "path": [[0.55, 0.25, -0.75], [0.3, 0.1, -0.35], [0.1, 0.02, -0.08]],
+            "stops": [{ "point": 2, "station": "gis-breaker-station" }]
+          }
+        ],
+        "tokens": [
+          {
+            "id": "gis-hv-token",
+            "routeId": "gis-hv-in",
+            "material": "accent",
+            "count": 2,
+            "radius": 0.05,
+            "duration": 3.5
+          },
+          {
+            "id": "gis-out-token",
+            "routeId": "gis-hv-out",
+            "material": "accent",
+            "count": 2,
+            "radius": 0.05,
+            "duration": 3.5
+          },
+          {
+            "id": "gis-signal-token",
+            "routeId": "gis-signal-in",
+            "material": "metal-light",
+            "count": 1,
+            "radius": 0.035,
+            "duration": 4.4
+          }
+        ]
       }
     },
     {
-      "id": "lid",
+      "id": "gis-phase-tubes",
       "kind": "primitive",
-      "geometry": {
-        "shape": "box",
-        "args": [
-          1.5,
-          0.14,
-          1
-        ],
-        "bevel": 0.02
-      },
-      "transform": {
-        "position": [
-          0,
-          1.52,
-          0
-        ]
-      },
-      "material": "metal-dark",
-      "explode": {
-        "vector": [
-          0,
-          1,
-          0
-        ],
-        "magnitude": 0.6
-      },
-      "annotation": null,
-      "label": {
-        "zh": "頂蓋",
-        "en": "Lid"
-      }
-    },
-    {
-      "id": "core",
-      "kind": "primitive",
-      "geometry": {
-        "shape": "box",
-        "args": [
-          0.5,
-          0.95,
-          0.5
-        ],
-        "bevel": 0.02
-      },
-      "transform": {
-        "position": [
-          0,
-          0.9,
-          0
-        ]
-      },
+      "geometry": { "shape": "cylinder", "args": [0.055, 0.055, 0.74, 14] },
+      "transform": { "position": [-2.15, 0.92, -0.18], "rotation": [0, 0, 1.5708] },
       "material": "metal-light",
-      "explode": {
-        "vector": [
-          -0.9,
-          1,
-          0.2
+      "explode": { "magnitude": 1.1 },
+      "repeat": { "count": 3, "step": [0, 0, 0.18] },
+      "partOf": "gis",
+      "label": { "zh": "", "en": "" },
+      "annotation": null
+    },
+    {
+      "id": "gis-breaker-chamber",
+      "kind": "primitive",
+      "geometry": { "shape": "cylinder", "args": [0.16, 0.16, 0.52, 16] },
+      "transform": { "position": [-2.15, 0.78, 0], "rotation": [1.5708, 0, 0] },
+      "material": "accent",
+      "explode": { "magnitude": 1.2 },
+      "partOf": "gis",
+      "label": { "zh": "斷路器腔", "en": "Breaker" },
+      "annotation": null
+    },
+    {
+      "id": "gis-drive",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.22, 0.34, 0.2], "bevel": 0.02 },
+      "transform": { "position": [-1.62, 0.75, 0.24] },
+      "material": "chip",
+      "explode": { "magnitude": 1.0 },
+      "partOf": "gis",
+      "label": { "zh": "操作機構", "en": "Drive" },
+      "annotation": null
+    },
+    {
+      "id": "gis-disconnector",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.18, 0.12, 0.18], "bevel": 0.01 },
+      "transform": { "position": [-2.44, 1.08, 0.18] },
+      "material": "metal-light",
+      "explode": { "magnitude": 1.0 },
+      "partOf": "gis",
+      "label": { "zh": "隔離開關", "en": "Disconnector" },
+      "annotation": null
+    },
+    {
+      "id": "gis-earthing-switch",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.18, 0.1, 0.18], "bevel": 0.01 },
+      "transform": { "position": [-2.38, 0.43, 0.18] },
+      "material": "metal-light",
+      "explode": { "magnitude": 1.0 },
+      "partOf": "gis",
+      "label": { "zh": "接地開關", "en": "Earthing" },
+      "annotation": null
+    },
+    {
+      "id": "gis-bushings-in",
+      "kind": "primitive",
+      "geometry": { "shape": "cone", "args": [0.055, 0.34, 14] },
+      "transform": { "position": [-2.45, 1.26, -0.18] },
+      "material": "metal-light",
+      "explode": { "magnitude": 1.1 },
+      "repeat": { "count": 3, "step": [0, 0, 0.18] },
+      "partOf": "gis",
+      "label": { "zh": "", "en": "" },
+      "annotation": null
+    },
+    {
+      "id": "gis-bushings-out",
+      "kind": "primitive",
+      "geometry": { "shape": "cone", "args": [0.055, 0.3, 14] },
+      "transform": { "position": [-1.86, 1.22, -0.18] },
+      "material": "metal-light",
+      "explode": { "magnitude": 1.1 },
+      "repeat": { "count": 3, "step": [0, 0, 0.18] },
+      "partOf": "gis",
+      "label": { "zh": "", "en": "" },
+      "annotation": null
+    },
+    {
+      "id": "gis-gil-out",
+      "kind": "primitive",
+      "geometry": { "shape": "cylinder", "args": [0.055, 0.055, 0.62, 14] },
+      "transform": { "position": [-1.55, 0.9, 0], "rotation": [0, 0, 1.5708] },
+      "material": "metal-light",
+      "explode": { "magnitude": 0.8 },
+      "partOf": "gis",
+      "label": { "zh": "出線管", "en": "GIL" },
+      "annotation": null
+    },
+    {
+      "id": "gis-monitor",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.14, 0.12, 0.08], "bevel": 0.01 },
+      "transform": { "position": [-1.92, 1.1, 0.32] },
+      "material": "chip",
+      "explode": { "magnitude": 1.0 },
+      "partOf": "gis",
+      "label": { "zh": "狀態監測", "en": "Monitor" },
+      "annotation": null
+    },
+    {
+      "id": "gis-base",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [1.02, 0.08, 0.68], "bevel": 0.01 },
+      "transform": { "position": [-2.15, 0.36, 0] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 0.5 },
+      "partOf": "gis",
+      "label": { "zh": "", "en": "" },
+      "annotation": null
+    },
+    {
+      "id": "transformer",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.95, 0.85, 0.62], "bevel": 0.03 },
+      "transform": { "position": [-0.8, 0.75, 0] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 0.9 },
+      "enclosure": true,
+      "label": { "zh": "電力變壓器", "en": "Power Transformer" },
+      "annotation": { "title": { "zh": "電力變壓器", "en": "Power Transformer" } },
+      "process": {
+        "scale": 0.45,
+        "stations": [
+          {
+            "id": "transformer-core-station",
+            "partId": "transformer",
+            "processTime": 0.8,
+            "input": "high-voltage-ac",
+            "output": "stepped-ac"
+          }
         ],
-        "magnitude": 1.9
-      },
-      "annotation": {
-        "title": {
-          "zh": "鐵芯 / 矽鋼片",
-          "en": "Core"
-        }
+        "routes": [
+          {
+            "id": "transformer-hv-in",
+            "kind": "main",
+            "material": "accent",
+            "path": [[-0.9, 0.45, 0.05], [-0.45, 0.2, 0.02], [0, 0, 0]],
+            "stops": [{ "point": 2, "station": "transformer-core-station" }]
+          },
+          {
+            "id": "transformer-lv-out",
+            "kind": "main",
+            "material": "chip",
+            "path": [[0, 0, 0], [0.45, 0.15, 0.02], [0.95, 0.38, 0.05]],
+            "stops": [{ "point": 0, "station": "transformer-core-station" }]
+          },
+          {
+            "id": "transformer-signal-in",
+            "kind": "side",
+            "material": "metal-light",
+            "path": [[0.65, 0.15, -0.65], [0.35, 0.05, -0.28], [0.15, 0, -0.08]],
+            "stops": [{ "point": 2, "station": "transformer-core-station" }]
+          }
+        ],
+        "tokens": [
+          {
+            "id": "transformer-hv-token",
+            "routeId": "transformer-hv-in",
+            "material": "accent",
+            "count": 2,
+            "radius": 0.055,
+            "duration": 3.8
+          },
+          {
+            "id": "transformer-lv-token",
+            "routeId": "transformer-lv-out",
+            "material": "chip",
+            "count": 2,
+            "radius": 0.055,
+            "duration": 3.8
+          },
+          {
+            "id": "transformer-signal-token",
+            "routeId": "transformer-signal-in",
+            "material": "metal-light",
+            "count": 1,
+            "radius": 0.035,
+            "duration": 4.6
+          }
+        ]
       }
     },
     {
-      "id": "bushing-1",
+      "id": "transformer-lid",
       "kind": "primitive",
-      "geometry": {
-        "shape": "cone",
-        "args": [
-          0.13,
-          0.55,
-          16
-        ]
-      },
-      "transform": {
-        "position": [
-          -0.45,
-          1.86,
-          0.1
-        ]
-      },
+      "geometry": { "shape": "box", "args": [1.03, 0.08, 0.68], "bevel": 0.015 },
+      "transform": { "position": [-0.8, 1.2, 0] },
       "material": "metal-light",
-      "explode": {
-        "vector": [
-          0,
-          1,
-          0.3
-        ],
-        "magnitude": 0.9
-      },
-      "annotation": null,
-      "partOf": "bushing-2"
+      "explode": { "magnitude": 0.8 },
+      "partOf": "transformer",
+      "label": { "zh": "頂蓋", "en": "Tank Lid" },
+      "annotation": null
     },
     {
-      "id": "bushing-2",
+      "id": "transformer-base",
       "kind": "primitive",
-      "geometry": {
-        "shape": "cone",
-        "args": [
-          0.13,
-          0.55,
-          16
-        ]
-      },
-      "transform": {
-        "position": [
-          0,
-          1.86,
-          0.1
-        ]
-      },
+      "geometry": { "shape": "box", "args": [1.05, 0.08, 0.08], "bevel": 0.01 },
+      "transform": { "position": [-0.8, 0.28, -0.24] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 0.6 },
+      "repeat": { "count": 2, "step": [0, 0, 0.48] },
+      "partOf": "transformer",
+      "label": { "zh": "", "en": "" },
+      "annotation": null
+    },
+    {
+      "id": "transformer-core",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.08, 0.58, 0.18], "bevel": 0.01 },
+      "transform": { "position": [-0.98, 0.8, 0] },
       "material": "metal-light",
-      "explode": {
-        "vector": [
-          0,
-          1,
-          0.3
+      "explode": { "magnitude": 1.3 },
+      "repeat": { "count": 3, "step": [0.18, 0, 0] },
+      "partOf": "transformer",
+      "label": { "zh": "", "en": "" },
+      "annotation": null
+    },
+    {
+      "id": "transformer-windings",
+      "kind": "primitive",
+      "geometry": { "shape": "cylinder", "args": [0.095, 0.095, 0.38, 16] },
+      "transform": { "position": [-0.98, 0.8, 0], "rotation": [1.5708, 0, 0] },
+      "material": "accent",
+      "explode": { "magnitude": 1.4 },
+      "repeat": { "count": 3, "step": [0.18, 0, 0] },
+      "partOf": "transformer",
+      "label": { "zh": "", "en": "" },
+      "annotation": null
+    },
+    {
+      "id": "transformer-bushings-hv",
+      "kind": "primitive",
+      "geometry": { "shape": "cone", "args": [0.07, 0.42, 16] },
+      "transform": { "position": [-1.08, 1.45, -0.18] },
+      "material": "metal-light",
+      "explode": { "magnitude": 1.2 },
+      "repeat": { "count": 3, "step": [0, 0, 0.18] },
+      "partOf": "transformer",
+      "label": { "zh": "", "en": "" },
+      "annotation": null
+    },
+    {
+      "id": "transformer-bushings-lv",
+      "kind": "primitive",
+      "geometry": { "shape": "cone", "args": [0.055, 0.32, 16] },
+      "transform": { "position": [-0.52, 1.38, -0.18] },
+      "material": "metal-light",
+      "explode": { "magnitude": 1.2 },
+      "repeat": { "count": 3, "step": [0, 0, 0.18] },
+      "partOf": "transformer",
+      "label": { "zh": "", "en": "" },
+      "annotation": null
+    },
+    {
+      "id": "transformer-radiators-front",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.045, 0.66, 0.08], "bevel": 0.004 },
+      "transform": { "position": [-1.12, 0.75, 0.42] },
+      "material": "metal-light",
+      "explode": { "magnitude": 1.0 },
+      "repeat": { "count": 8, "step": [0.09, 0, 0] },
+      "partOf": "transformer",
+      "label": { "zh": "", "en": "" },
+      "annotation": null
+    },
+    {
+      "id": "transformer-radiators-back",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.045, 0.66, 0.08], "bevel": 0.004 },
+      "transform": { "position": [-1.12, 0.75, -0.42] },
+      "material": "metal-light",
+      "explode": { "magnitude": 1.0 },
+      "repeat": { "count": 8, "step": [0.09, 0, 0] },
+      "partOf": "transformer",
+      "label": { "zh": "", "en": "" },
+      "annotation": null
+    },
+    {
+      "id": "transformer-conservator",
+      "kind": "primitive",
+      "geometry": { "shape": "cylinder", "args": [0.11, 0.11, 0.78, 16] },
+      "transform": { "position": [-0.8, 1.45, -0.42], "rotation": [0, 0, 1.5708] },
+      "material": "metal-light",
+      "explode": { "magnitude": 1.1 },
+      "partOf": "transformer",
+      "label": { "zh": "油枕", "en": "Conservator" },
+      "annotation": null
+    },
+    {
+      "id": "transformer-tap-changer",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.18, 0.34, 0.2], "bevel": 0.02 },
+      "transform": { "position": [-0.22, 0.78, 0.18] },
+      "material": "chip",
+      "explode": { "magnitude": 1.1 },
+      "partOf": "transformer",
+      "label": { "zh": "分接開關", "en": "Tap Changer" },
+      "annotation": null
+    },
+    {
+      "id": "transformer-protection",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.16, 0.14, 0.08], "bevel": 0.01 },
+      "transform": { "position": [-0.36, 1.08, 0.35] },
+      "material": "chip",
+      "explode": { "magnitude": 1.1 },
+      "partOf": "transformer",
+      "label": { "zh": "保護監測", "en": "Protection" },
+      "annotation": null
+    },
+    {
+      "id": "busbar",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [1.15, 0.1, 0.48], "bevel": 0.02 },
+      "transform": { "position": [0.55, 0.66, 0] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 0.7 },
+      "label": { "zh": "母線 / 電纜", "en": "Busbar / Cable" },
+      "annotation": { "title": { "zh": "母線 / 電纜", "en": "Busbar / Cable" } },
+      "process": {
+        "scale": 0.38,
+        "stations": [
+          {
+            "id": "busbar-transfer",
+            "partId": "busbar",
+            "processTime": 0.2,
+            "input": "stepped-ac",
+            "output": "load-power"
+          }
         ],
-        "magnitude": 0.9
-      },
-      "annotation": {
-        "title": {
-          "zh": "高壓套管 / 礙子",
-          "en": "HV Bushing"
-        }
+        "routes": [
+          {
+            "id": "busbar-in",
+            "kind": "main",
+            "material": "chip",
+            "path": [[-0.85, 0.16, 0], [-0.35, 0.16, 0], [0, 0.16, 0]],
+            "stops": [{ "point": 2, "station": "busbar-transfer" }]
+          },
+          {
+            "id": "busbar-out",
+            "kind": "main",
+            "material": "chip",
+            "path": [[0, 0.16, 0], [0.42, 0.12, 0], [0.95, 0.08, -0.15]],
+            "stops": [{ "point": 0, "station": "busbar-transfer" }]
+          }
+        ],
+        "tokens": [
+          {
+            "id": "busbar-token",
+            "routeId": "busbar-in",
+            "material": "chip",
+            "count": 2,
+            "radius": 0.045,
+            "duration": 3.2
+          },
+          {
+            "id": "busbar-out-token",
+            "routeId": "busbar-out",
+            "material": "chip",
+            "count": 2,
+            "radius": 0.045,
+            "duration": 3.2
+          }
+        ]
       }
     },
     {
-      "id": "bushing-3",
+      "id": "busbar-bars",
       "kind": "primitive",
-      "geometry": {
-        "shape": "cone",
-        "args": [
-          0.13,
-          0.55,
-          16
-        ]
-      },
-      "transform": {
-        "position": [
-          0.45,
-          1.86,
-          0.1
-        ]
-      },
+      "geometry": { "shape": "box", "args": [0.98, 0.045, 0.045], "bevel": 0.004 },
+      "transform": { "position": [0.55, 0.82, -0.16] },
+      "material": "accent",
+      "explode": { "magnitude": 0.9 },
+      "repeat": { "count": 3, "step": [0, 0, 0.16] },
+      "partOf": "busbar",
+      "label": { "zh": "", "en": "" },
+      "annotation": null
+    },
+    {
+      "id": "busbar-insulators-a",
+      "kind": "primitive",
+      "geometry": { "shape": "cylinder", "args": [0.04, 0.04, 0.22, 12] },
+      "transform": { "position": [0.18, 0.74, -0.16] },
       "material": "metal-light",
-      "explode": {
-        "vector": [
-          0,
-          1,
-          0.3
-        ],
-        "magnitude": 0.9
-      },
-      "annotation": null,
-      "partOf": "bushing-2"
+      "explode": { "magnitude": 0.8 },
+      "repeat": { "count": 3, "step": [0, 0, 0.16] },
+      "partOf": "busbar",
+      "label": { "zh": "", "en": "" },
+      "annotation": null
     },
     {
-      "id": "fin-1",
+      "id": "busbar-insulators-b",
       "kind": "primitive",
-      "geometry": {
-        "shape": "box",
-        "args": [
-          0.08,
-          1,
-          0.85
-        ],
-        "bevel": 0.01
-      },
-      "transform": {
-        "position": [
-          0.82,
-          0.85,
-          0
-        ]
-      },
-      "material": "metal-dark",
-      "explode": {
-        "vector": [
-          1,
-          0.2,
-          0
-        ],
-        "magnitude": 1.1
-      },
-      "annotation": null,
-      "partOf": "fin-2"
+      "geometry": { "shape": "cylinder", "args": [0.04, 0.04, 0.22, 12] },
+      "transform": { "position": [0.92, 0.74, -0.16] },
+      "material": "metal-light",
+      "explode": { "magnitude": 0.8 },
+      "repeat": { "count": 3, "step": [0, 0, 0.16] },
+      "partOf": "busbar",
+      "label": { "zh": "", "en": "" },
+      "annotation": null
     },
     {
-      "id": "fin-2",
+      "id": "busbar-terminations",
       "kind": "primitive",
-      "geometry": {
-        "shape": "box",
-        "args": [
-          0.08,
-          1,
-          0.85
-        ],
-        "bevel": 0.01
-      },
-      "transform": {
-        "position": [
-          0.92,
-          0.85,
-          0
-        ]
-      },
+      "geometry": { "shape": "cylinder", "args": [0.055, 0.055, 0.28, 14] },
+      "transform": { "position": [1.12, 0.78, -0.16] },
+      "material": "metal-light",
+      "explode": { "magnitude": 0.9 },
+      "repeat": { "count": 3, "step": [0, 0, 0.16] },
+      "partOf": "busbar",
+      "label": { "zh": "", "en": "" },
+      "annotation": null
+    },
+    {
+      "id": "busbar-cable-a",
+      "kind": "primitive",
+      "geometry": { "shape": "tube", "path": [[0.58, 0.18, -0.16], [0.86, 0.1, -0.28], [1.05, 0.02, -0.42]], "radius": 0.025 },
+      "transform": { "position": [0.55, 0.66, 0] },
+      "material": "chip",
+      "explode": { "magnitude": 0.8 },
+      "partOf": "busbar",
+      "label": { "zh": "", "en": "" },
+      "annotation": null
+    },
+    {
+      "id": "busbar-cable-b",
+      "kind": "primitive",
+      "geometry": { "shape": "tube", "path": [[0.58, 0.18, 0], [0.9, 0.08, -0.03], [1.12, 0.02, -0.12]], "radius": 0.025 },
+      "transform": { "position": [0.55, 0.66, 0] },
+      "material": "chip",
+      "explode": { "magnitude": 0.8 },
+      "partOf": "busbar",
+      "label": { "zh": "", "en": "" },
+      "annotation": null
+    },
+    {
+      "id": "busbar-cable-c",
+      "kind": "primitive",
+      "geometry": { "shape": "tube", "path": [[0.58, 0.18, 0.16], [0.86, 0.1, 0.22], [1.05, 0.02, 0.32]], "radius": 0.025 },
+      "transform": { "position": [0.55, 0.66, 0] },
+      "material": "chip",
+      "explode": { "magnitude": 0.8 },
+      "partOf": "busbar",
+      "label": { "zh": "", "en": "" },
+      "annotation": null
+    },
+    {
+      "id": "busbar-ground",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.9, 0.03, 0.035], "bevel": 0.003 },
+      "transform": { "position": [0.55, 0.72, 0.29] },
+      "material": "metal-light",
+      "explode": { "magnitude": 0.6 },
+      "partOf": "busbar",
+      "label": { "zh": "接地排", "en": "Ground Bar" },
+      "annotation": null
+    },
+    {
+      "id": "control",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.68, 1.05, 0.28], "bevel": 0.03 },
+      "transform": { "position": [0.1, 0.92, -1.05] },
       "material": "metal-dark",
-      "explode": {
-        "vector": [
-          1,
-          0.2,
-          0
+      "explode": { "magnitude": 0.9 },
+      "label": { "zh": "控制保護 / SCADA", "en": "Control / SCADA" },
+      "annotation": { "title": { "zh": "控制保護 / SCADA", "en": "Control & Protection / SCADA" } },
+      "process": {
+        "scale": 0.36,
+        "stations": [
+          {
+            "id": "control-logic",
+            "partId": "control",
+            "processTime": 0.4,
+            "input": "field-status",
+            "output": "trip-command"
+          }
         ],
-        "magnitude": 1.1
-      },
-      "annotation": {
-        "title": {
-          "zh": "散熱器",
-          "en": "Radiator"
-        }
+        "routes": [
+          {
+            "id": "control-status-in",
+            "kind": "side",
+            "material": "metal-light",
+            "path": [[-0.9, 0.2, 0.35], [-0.35, 0.1, 0.16], [0, 0.05, 0]],
+            "stops": [{ "point": 2, "station": "control-logic" }]
+          },
+          {
+            "id": "control-command-out",
+            "kind": "side",
+            "material": "metal-light",
+            "path": [[0, 0.05, 0], [0.45, 0.15, 0.18], [0.95, 0.25, 0.36]],
+            "stops": [{ "point": 0, "station": "control-logic" }]
+          }
+        ],
+        "tokens": [
+          {
+            "id": "control-status-token",
+            "routeId": "control-status-in",
+            "material": "metal-light",
+            "count": 1,
+            "radius": 0.035,
+            "duration": 3.8
+          },
+          {
+            "id": "control-command-token",
+            "routeId": "control-command-out",
+            "material": "metal-light",
+            "count": 1,
+            "radius": 0.035,
+            "duration": 3.8
+          }
+        ]
       }
     },
     {
-      "id": "fin-3",
+      "id": "control-door-frame",
       "kind": "primitive",
-      "geometry": {
-        "shape": "box",
-        "args": [
-          0.08,
-          1,
-          0.85
-        ],
-        "bevel": 0.01
-      },
-      "transform": {
-        "position": [
-          1.02,
-          0.85,
-          0
-        ]
-      },
+      "geometry": { "shape": "box", "args": [0.58, 0.9, 0.035], "bevel": 0.01 },
+      "transform": { "position": [0.1, 0.94, -0.89] },
+      "material": "metal-light",
+      "explode": { "magnitude": 0.7 },
+      "partOf": "control",
+      "label": { "zh": "", "en": "" },
+      "annotation": null
+    },
+    {
+      "id": "control-relays",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.16, 0.14, 0.035], "bevel": 0.006 },
+      "transform": { "position": [-0.12, 0.98, -0.86] },
+      "material": "chip",
+      "explode": { "magnitude": 1.0 },
+      "repeat": { "count": 6, "step": [0.17, 0, 0] },
+      "partOf": "control",
+      "label": { "zh": "", "en": "" },
+      "annotation": null
+    },
+    {
+      "id": "control-screen",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.36, 0.18, 0.035], "bevel": 0.006 },
+      "transform": { "position": [0.1, 1.28, -0.86] },
+      "material": "metal-light",
+      "explode": { "magnitude": 1.0 },
+      "partOf": "control",
+      "label": { "zh": "SCADA", "en": "SCADA" },
+      "annotation": null
+    },
+    {
+      "id": "control-mimic-line",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.38, 0.018, 0.018], "bevel": 0.003 },
+      "transform": { "position": [0.1, 1.2, -0.84] },
+      "material": "accent",
+      "explode": { "magnitude": 1.0 },
+      "partOf": "control",
+      "label": { "zh": "", "en": "" },
+      "annotation": null
+    },
+    {
+      "id": "control-terminals",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.05, 0.08, 0.035], "bevel": 0.004 },
+      "transform": { "position": [-0.17, 0.58, -0.86] },
+      "material": "metal-light",
+      "explode": { "magnitude": 0.9 },
+      "repeat": { "count": 8, "step": [0.05, 0, 0] },
+      "partOf": "control",
+      "label": { "zh": "", "en": "" },
+      "annotation": null
+    },
+    {
+      "id": "control-comms",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.18, 0.24, 0.12], "bevel": 0.012 },
+      "transform": { "position": [0.5, 1.05, -1.02] },
+      "material": "chip",
+      "explode": { "magnitude": 1.0 },
+      "partOf": "control",
+      "label": { "zh": "通訊", "en": "Comms" },
+      "annotation": null
+    },
+    {
+      "id": "control-ups",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.42, 0.16, 0.22], "bevel": 0.012 },
+      "transform": { "position": [0.1, 0.36, -0.99] },
+      "material": "metal-light",
+      "explode": { "magnitude": 0.8 },
+      "partOf": "control",
+      "label": { "zh": "控制電源", "en": "UPS" },
+      "annotation": null
+    },
+    {
+      "id": "distribution",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.72, 1.05, 0.36], "bevel": 0.03 },
+      "transform": { "position": [2.05, 0.88, 0.15] },
       "material": "metal-dark",
-      "explode": {
-        "vector": [
-          1,
-          0.2,
-          0
+      "explode": { "magnitude": 0.9 },
+      "label": { "zh": "配電 / 用電端", "en": "Distribution / Load" },
+      "annotation": { "title": { "zh": "配電 / 用電端", "en": "Distribution / Load" } },
+      "process": {
+        "scale": 0.38,
+        "stations": [
+          {
+            "id": "distribution-feed",
+            "partId": "distribution",
+            "processTime": 0.4,
+            "input": "load-power",
+            "output": "served-load"
+          }
         ],
-        "magnitude": 1.1
-      },
-      "annotation": null,
-      "partOf": "fin-2"
+        "routes": [
+          {
+            "id": "distribution-in",
+            "kind": "main",
+            "material": "chip",
+            "path": [[-0.95, 0.18, 0.18], [-0.45, 0.1, 0.05], [0, 0.05, 0]],
+            "stops": [{ "point": 2, "station": "distribution-feed" }]
+          },
+          {
+            "id": "distribution-out",
+            "kind": "main",
+            "material": "chip",
+            "path": [[0, 0.05, 0], [0.45, 0, 0.1], [0.92, -0.02, 0.28]],
+            "stops": [{ "point": 0, "station": "distribution-feed" }]
+          }
+        ],
+        "tokens": [
+          {
+            "id": "distribution-in-token",
+            "routeId": "distribution-in",
+            "material": "chip",
+            "count": 2,
+            "radius": 0.045,
+            "duration": 3.4
+          },
+          {
+            "id": "distribution-out-token",
+            "routeId": "distribution-out",
+            "material": "chip",
+            "count": 2,
+            "radius": 0.045,
+            "duration": 3.4
+          }
+        ]
+      }
+    },
+    {
+      "id": "distribution-front",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.62, 0.9, 0.035], "bevel": 0.01 },
+      "transform": { "position": [2.05, 0.9, 0.35] },
+      "material": "metal-light",
+      "explode": { "magnitude": 0.7 },
+      "partOf": "distribution",
+      "label": { "zh": "", "en": "" },
+      "annotation": null
+    },
+    {
+      "id": "distribution-meter",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.32, 0.16, 0.035], "bevel": 0.006 },
+      "transform": { "position": [2.05, 1.25, 0.38] },
+      "material": "chip",
+      "explode": { "magnitude": 1.0 },
+      "partOf": "distribution",
+      "label": { "zh": "電表", "en": "Meter" },
+      "annotation": null
+    },
+    {
+      "id": "distribution-main-breaker",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.24, 0.18, 0.05], "bevel": 0.008 },
+      "transform": { "position": [2.05, 1.03, 0.39] },
+      "material": "accent",
+      "explode": { "magnitude": 1.0 },
+      "partOf": "distribution",
+      "label": { "zh": "主斷路器", "en": "Main Breaker" },
+      "annotation": null
+    },
+    {
+      "id": "distribution-breakers-left",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.13, 0.09, 0.04], "bevel": 0.006 },
+      "transform": { "position": [1.9, 0.68, 0.39] },
+      "material": "chip",
+      "explode": { "magnitude": 1.0 },
+      "repeat": { "count": 4, "step": [0, 0.12, 0] },
+      "partOf": "distribution",
+      "label": { "zh": "", "en": "" },
+      "annotation": null
+    },
+    {
+      "id": "distribution-breakers-right",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.13, 0.09, 0.04], "bevel": 0.006 },
+      "transform": { "position": [2.2, 0.68, 0.39] },
+      "material": "chip",
+      "explode": { "magnitude": 1.0 },
+      "repeat": { "count": 4, "step": [0, 0.12, 0] },
+      "partOf": "distribution",
+      "label": { "zh": "", "en": "" },
+      "annotation": null
+    },
+    {
+      "id": "distribution-terminals",
+      "kind": "primitive",
+      "geometry": { "shape": "cylinder", "args": [0.035, 0.035, 0.08, 12] },
+      "transform": { "position": [1.87, 0.43, 0.4], "rotation": [1.5708, 0, 0] },
+      "material": "metal-light",
+      "explode": { "magnitude": 0.9 },
+      "repeat": { "count": 6, "step": [0.07, 0, 0] },
+      "partOf": "distribution",
+      "label": { "zh": "", "en": "" },
+      "annotation": null
+    },
+    {
+      "id": "distribution-load",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.42, 0.74, 0.34], "bevel": 0.025 },
+      "transform": { "position": [2.9, 0.72, 0.34] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 0.8 },
+      "partOf": "distribution",
+      "label": { "zh": "用電負載", "en": "Load" },
+      "annotation": null
+    },
+    {
+      "id": "distribution-load-shelves",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.34, 0.04, 0.28], "bevel": 0.004 },
+      "transform": { "position": [2.9, 0.5, 0.53] },
+      "material": "metal-light",
+      "explode": { "magnitude": 0.8 },
+      "repeat": { "count": 4, "step": [0, 0.15, 0] },
+      "partOf": "distribution",
+      "label": { "zh": "", "en": "" },
+      "annotation": null
+    },
+    {
+      "id": "distribution-feeder-a",
+      "kind": "primitive",
+      "geometry": { "shape": "tube", "path": [[0.28, 0.02, 0.18], [0.55, -0.05, 0.28], [0.85, -0.08, 0.2]], "radius": 0.025 },
+      "transform": { "position": [2.05, 0.88, 0.15] },
+      "material": "chip",
+      "explode": { "magnitude": 0.8 },
+      "partOf": "distribution",
+      "label": { "zh": "", "en": "" },
+      "annotation": null
+    },
+    {
+      "id": "distribution-feeder-b",
+      "kind": "primitive",
+      "geometry": { "shape": "tube", "path": [[0.28, -0.1, 0.1], [0.55, -0.15, 0.02], [0.85, -0.12, 0.0]], "radius": 0.025 },
+      "transform": { "position": [2.05, 0.88, 0.15] },
+      "material": "chip",
+      "explode": { "magnitude": 0.8 },
+      "partOf": "distribution",
+      "label": { "zh": "", "en": "" },
+      "annotation": null
     }
-  ]
+  ],
+  "process": {
+    "stations": [
+      {
+        "id": "gis-station",
+        "partId": "gis",
+        "processTime": 0.4,
+        "input": "high-voltage-ac",
+        "output": "protected-high-voltage-ac"
+      },
+      {
+        "id": "transformer-station",
+        "partId": "transformer",
+        "processTime": 0.8,
+        "input": "protected-high-voltage-ac",
+        "output": "stepped-ac"
+      },
+      {
+        "id": "busbar-station",
+        "partId": "busbar",
+        "processTime": 0.2,
+        "input": "stepped-ac",
+        "output": "load-power"
+      },
+      {
+        "id": "distribution-station",
+        "partId": "distribution",
+        "processTime": 0.5,
+        "input": "load-power",
+        "output": "served-load"
+      },
+      {
+        "id": "control-station",
+        "partId": "control",
+        "processTime": 0.2,
+        "input": "status",
+        "output": "trip-command"
+      }
+    ],
+    "routes": [
+      {
+        "id": "hv-route",
+        "kind": "main",
+        "material": "accent",
+        "path": [[-3.2, 1.15, 0.08], [-2.15, 1.0, 0.04], [-0.8, 1.18, 0.04]],
+        "stops": [
+          { "point": 1, "station": "gis-station" },
+          { "point": 2, "station": "transformer-station" }
+        ]
+      },
+      {
+        "id": "lv-route",
+        "kind": "main",
+        "material": "chip",
+        "path": [[-0.25, 0.9, 0.18], [0.55, 0.86, 0.1], [2.05, 0.95, 0.18], [3.1, 0.82, 0.42]],
+        "stops": [
+          { "point": 0, "station": "transformer-station" },
+          { "point": 1, "station": "busbar-station" },
+          { "point": 2, "station": "distribution-station" }
+        ]
+      },
+      {
+        "id": "control-route",
+        "kind": "side",
+        "material": "metal-light",
+        "path": [[0.1, 1.55, -1.05], [-2.15, 1.25, -0.72], [-0.8, 1.45, -0.72], [2.05, 1.35, -0.72]],
+        "stops": [
+          { "point": 0, "station": "control-station" },
+          { "point": 1, "station": "gis-station" },
+          { "point": 2, "station": "transformer-station" },
+          { "point": 3, "station": "distribution-station" }
+        ]
+      }
+    ],
+    "tokens": [
+      {
+        "id": "hv-token",
+        "routeId": "hv-route",
+        "material": "accent",
+        "count": 2,
+        "radius": 0.06,
+        "duration": 5.0
+      },
+      {
+        "id": "lv-token",
+        "routeId": "lv-route",
+        "material": "chip",
+        "count": 2,
+        "radius": 0.06,
+        "duration": 5.4
+      },
+      {
+        "id": "signal-token",
+        "routeId": "control-route",
+        "material": "metal-light",
+        "count": 2,
+        "radius": 0.04,
+        "duration": 6.0
+      }
+    ]
+  }
 }
