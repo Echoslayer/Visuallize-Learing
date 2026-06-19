@@ -4,6 +4,7 @@ import { Scene } from './engine/Scene'
 import { DevHandle } from './ui/DevHandle'
 import { Controls } from './ui/Controls'
 import { Credits } from './ui/Credits'
+import { Hotkeys } from './ui/Hotkeys'
 import { TopicSwitcher } from './ui/TopicSwitcher'
 import { getTopic } from './content/registry'
 
@@ -22,6 +23,7 @@ export default function App() {
         {import.meta.env.DEV && <DevHandle />}
       </SceneRoot>
       <TopicSwitcher current={content.topic} />
+      <Hotkeys />
       <Controls />
       <Credits content={content} />
       {import.meta.env.DEV && (

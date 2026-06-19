@@ -40,6 +40,7 @@ v.selection.setState({ exploded: true, xray: true })                            
 ```
 
 - 主場景:`/`(左側**題目切換器**可點選 6 個題目);元件畫廊:`/?view=gallery`(供逐一截圖自查)。
+- **快捷鍵**:`E` 拆解、`X` 透視、數字 `1`–`7` 切題目(打字/leva 面板中不攔截)。
 - Python 工具（CadQuery/OpenSCAD，選用）一律用 [`uv`](https://docs.astral.sh/uv/)。
 
 ## 專案結構
