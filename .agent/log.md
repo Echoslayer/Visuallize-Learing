@@ -386,3 +386,11 @@
 - 機台級流(scale 0.4):綠晶片(chip)進 → 整合站(dwell 0.6s)→ 亮灰終端(system/metal-light)出;單向、分色、過站。
 - 驗證:check/typecheck/lint/build 全綠;`p5-ds-n.png` 多終端可辨、綠→灰流動正常(名稱視圖標籤略擠,實景清楚)。
 - **semiconductor 6 台機台(design/wafer/foundry/equip/osat/downstream)全部重做完**;剩 Phase 6 整線接線(材質介面契約對齊:foundry 變色點)。
+
+## 機台重做 Phase 6 — 半導體整線接線 + 全線驗收 ✅
+- **介面契約對齊**:foundry 機台頁 output chip(綠)→ 改 accent(藍)。定論:整線藍→綠變色點在 **osat**(已加工晶圓仍是晶圓=藍;封測切割封裝後才成晶片=綠)。同步 spec 14 + foundry 研究 doc 的待決註記 → 已決。
+- **整線驗收**(`p6-line.png`):單向;wafer→foundry→osat 全藍、osat→downstream 綠;設備/材料側向注入;downstream 多終端 showcase 收尾。foundry 機台頁(`p6-foundry.png`)in/out 皆藍,與整線一致。
+- 導航(機台 link / ← 供應鏈)沿用既有,正常。
+- 無新 ADR(Phase 6 僅契約材質對齊,易反轉;機台級 process 機制已記 ADR-0017)。Pattern 不另寫 playbook(避免與並行作業衝突;ADR-0017 + specs 已涵蓋)。
+- 驗證:check/typecheck/lint/build 全綠。
+- **半導體機台重做計畫(Phase 0–6)全部完成。**

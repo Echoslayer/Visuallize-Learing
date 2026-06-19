@@ -57,6 +57,6 @@
 - 入:`wafer`(空白晶圓,藍/accent)從左進。
 - 側入:`supply`(設備/化學品,灰/metal-light)從後側注入(預示整線設備材料節點)。
 - 站:`foundry-proc` 製程(dwell 最長,~1.2s),錨在 bay。
-- 出:`processed-wafer`(布滿晶粒,綠/chip)從右出 → osat。
+- 出:`processed-wafer`(已加工晶圓,藍/accent)從右出 → osat。
 - in 藍 / out 綠分色清楚表達「空白 → 布滿晶粒」;單向。
-- ⚠️ Phase 6 待決:整線目前在 osat 才藍→綠;機台頁在 foundry 即綠。回供應鏈時決定變色點(見 redo 計畫 Phase 6)。
+- ✅ Phase 6 已決:整線藍→綠變色點在 **osat**(已加工晶圓仍是晶圓=藍;封測切割封裝後才成晶片=綠)。foundry output 改 accent,與整線一致。

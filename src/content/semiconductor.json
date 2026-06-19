@@ -374,7 +374,7 @@
           {
             "id": "foundry-out",
             "kind": "main",
-            "material": "chip",
+            "material": "accent",
             "path": [[0, -0.05, 0], [0.55, -0.1, 0.18], [1.0, 0.05, 0.38]],
             "stops": [{ "point": 0, "station": "foundry-proc" }]
           }
@@ -382,7 +382,7 @@
         "tokens": [
           { "id": "foundry-in-tok", "routeId": "foundry-in", "material": "accent", "count": 2, "radius": 0.06, "duration": 4.2 },
           { "id": "foundry-supply-tok", "routeId": "foundry-supply", "material": "metal-light", "count": 1, "radius": 0.05, "duration": 4.6 },
-          { "id": "foundry-out-tok", "routeId": "foundry-out", "material": "chip", "count": 2, "radius": 0.06, "duration": 4.2 }
+          { "id": "foundry-out-tok", "routeId": "foundry-out", "material": "accent", "count": 2, "radius": 0.06, "duration": 4.2 }
         ]
       }
     },

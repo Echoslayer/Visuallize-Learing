@@ -84,4 +84,4 @@
 - [x] Phase 3 設備 / 材料 `equip` — 待人類確認
 - [x] Phase 4 封裝測試 `osat` — 待人類確認
 - [x] Phase 5 下游應用 `downstream`(spec 26)— 待人類確認
-- [ ] Phase 6 回供應鏈接線 + 全線驗收
+- [x] Phase 6 回供應鏈接線 + 全線驗收 ✅(foundry output 改 accent 對齊;藍→綠變色點定於 osat)

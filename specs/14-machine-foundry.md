@@ -36,10 +36,10 @@
 - station `foundry-proc`: partId `foundry`, processTime 1.2, input `wafer`, output `processed-wafer`。
 - route `foundry-in`(main, accent): `[[-1.0,0.1,0.0],[-0.5,0.0,0.0],[0,-0.05,0.0]]`, stop point 2 → foundry-proc。
 - route `foundry-supply`(side, metal-light): `[[-0.6,0.4,-0.95],[-0.3,0.15,-0.45],[0,-0.05,0]]`, stop point 2 → foundry-proc。
-- route `foundry-out`(main, chip): `[[0,-0.05,0],[0.55,-0.1,0.18],[1.0,0.05,0.38]]`, stop point 0 → foundry-proc。
-- tokens: `foundry-in-tok`(foundry-in, accent, 2, r0.06, dur 4.2)、`foundry-supply-tok`(foundry-supply, metal-light, 1, r0.05, dur 4.6)、`foundry-out-tok`(foundry-out, chip, 2, r0.06, dur 4.2)。
+- route `foundry-out`(main, accent): `[[0,-0.05,0],[0.55,-0.1,0.18],[1.0,0.05,0.38]]`, stop point 0 → foundry-proc。
+- tokens: `foundry-in-tok`(foundry-in, accent, 2, r0.06, dur 4.2)、`foundry-supply-tok`(foundry-supply, metal-light, 1, r0.05, dur 4.6)、`foundry-out-tok`(foundry-out, accent, 2, r0.06, dur 4.2)。
 
-> 介面契約:input accent(=矽晶圓 output);output chip(綠,已加工晶圓)。Phase 6 決定整線變色點。
+> 介面契約:input accent(=矽晶圓 output);output **accent**(已加工晶圓仍是晶圓,藍)。整線藍→綠變色點在 osat(Phase 6 已決)。
 
 ## 5. 互動與 gallery 驗收
 
