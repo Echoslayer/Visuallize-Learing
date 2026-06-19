@@ -79,6 +79,7 @@
         ],
         "magnitude": 0
       },
+      "enclosure": true,
       "annotation": {
         "title": {
           "zh": "油箱本體",

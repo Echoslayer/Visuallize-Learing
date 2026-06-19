@@ -31,6 +31,7 @@
   之後:`kit/`(primitive 積木)。
 - **content 慣例(ADR-0014)**:`explode` 只需 `magnitude`(方向自動;vector 已廢棄)。每個 part 要有名字:
   有意義的給 `label`;形狀小塊給 `partOf`(指向父節點 → 繼承父名 + 點選顯示父卡)。companies 仍走 `companies.csv`。
+  擋住內部的箱體/機殼標 `enclosure: true`(ADR-0015)→「透視」按鈕看穿。
 - `src/ui/` — UI 殼。已建:`Controls.tsx`(拆解/重置/語言)、`TopicSwitcher.tsx`(左側題目切換,`?topic=` 導航)、
   `Credits.tsx`(借用模型 CC-BY 標註)、`Tuning.tsx`(leva 調參,**僅 DEV、僅 App**)。
 - **視覺數值一律走 `engine/config.ts`**,別在元件硬寫;調好 bake 進 `DEFAULT_CONFIG`。

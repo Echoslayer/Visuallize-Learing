@@ -40,10 +40,12 @@ export function Controls() {
   const exploded = useSelection((s) => s.exploded)
   const showAllNames = useSelection((s) => s.showAllNames)
   const showAllCards = useSelection((s) => s.showAllCards)
+  const xray = useSelection((s) => s.xray)
   const lang = useSelection((s) => s.lang)
   const toggleExploded = useSelection((s) => s.toggleExploded)
   const toggleAllNames = useSelection((s) => s.toggleAllNames)
   const toggleAllCards = useSelection((s) => s.toggleAllCards)
+  const toggleXray = useSelection((s) => s.toggleXray)
   const setLang = useSelection((s) => s.setLang)
   const resetView = useSelection((s) => s.resetView)
 
@@ -71,6 +73,9 @@ export function Controls() {
         onClick={toggleAllCards}
       >
         {t('股票', 'Stocks')}
+      </button>
+      <button data-action="xray" style={xray ? btnActive : btn} onClick={toggleXray}>
+        {t('透視', 'X-Ray')}
       </button>
       <button data-action="reset" style={btn} onClick={resetView}>
         {t('重置視角', 'Reset')}

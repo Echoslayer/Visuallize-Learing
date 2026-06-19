@@ -41,6 +41,7 @@ export function GeometryFactory({ part, center }: { part: Part; center: Vec3 }) 
   const exploded = useSelection((s) => s.exploded)
   const showAllNames = useSelection((s) => s.showAllNames)
   const showAllCards = useSelection((s) => s.showAllCards)
+  const xray = useSelection((s) => s.xray)
   const lang = useSelection((s) => s.lang)
   const metalness = useConfig((s) => s.metalness)
   const roughness = useConfig((s) => s.roughness)
@@ -70,20 +71,28 @@ export function GeometryFactory({ part, center }: { part: Part; center: Vec3 }) 
     select(id)
   }
 
+  // 透視:外殼變半透明、不擋點擊(raycast 關閉),讓內部黑箱看得見。
+  const ghost = !!part.enclosure && xray
   const meshProps = {
     name: id,
     userData: { partId: id },
-    castShadow: true,
+    castShadow: !ghost, // 透明殼別再投影遮內部
     receiveShadow: true,
     onClick,
+    ...(ghost ? { raycast: () => null } : {}), // 點擊穿透到內部元件
   }
   const mat = (
+    // key 隨 ghost 換 → 切換透視時重建材質,避開 three「改 transparent 要 needsUpdate」的坑
     <meshStandardMaterial
+      key={ghost ? 'ghost' : 'solid'}
       color={materialColor(part.material)}
       metalness={metalness}
       roughness={roughness}
       emissive={selected ? HIGHLIGHT : '#000000'}
       emissiveIntensity={selected ? 0.55 : 0}
+      transparent={ghost}
+      opacity={ghost ? 0.12 : 1} // ponytail: 殼透明度寫死;要可調再 bake 進 config
+      depthWrite={!ghost}
     />
   )
 
