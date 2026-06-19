@@ -20,6 +20,7 @@
 ## 慣例速查(建內容時遵守)
 
 - **形狀**:`box / cylinder / cone / tube / flow` + `repeat`(陣列)+ `rotation`。有機造型才借 `model`(GLB,CC-BY 要標 attribution,先回報素材)。
+- **機台 pattern**:先看 [`machine-patterns.md`](./machine-patterns.md),選接近的配方再按供應鏈意義增減部位;不要每次從零設計機台。
 - **物件抽象(object-abstraction skill)**:每個節點 = 多個 primitive 組合,**不要單方塊**。
   細節層次 = **供應鏈意義**:鏈上有對應(材料/零件/製程/供應商)的部位就建,只略過無供應鏈意義的造型細節。
 - **拆解**:`explode` 只需 `magnitude`(方向自動從 `camera.target` 放射;`0`=不動)。`vector` 已廢棄。
@@ -37,6 +38,7 @@
 新增/更新題目收尾時跑一次 pattern harvest:若某個做法不是單一題目特例、可被其他供應鏈重用、有實作檔可參照、有驗收方式,就在這裡加一列。
 
 - **產線 / process**:`src/content/semiconductor.json` + `specs/11-schema-process-layer.md`。用 `process.stations/routes/tokens` 表單向、進站停留、物料變形、側向注入。
+- **機台 primitive 配方**:`docs/plan/machine-patterns.md`。先套 Conveyor / Process Tool / Factory Cell / Rack / Tank / Transformer / Piping Skid / Turbine,再依題目調整。
 - **透視外殼**:`src/content/semiconductor.json` 的 `foundry.enclosure`、`src/content/grid.json` 的油箱。用 `enclosure:true` + X-Ray 看內部。
 - **重複陣列**:`src/content/datacenter.json`。用 `repeat` 展開機櫃/滾輪/盤片,別手列。
 - **管線**:`src/content/pipeline.json`。用 `tube` + `path` 表管路,必要時加閥件/法蘭 primitive。

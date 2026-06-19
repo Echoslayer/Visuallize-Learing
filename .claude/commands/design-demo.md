@@ -8,6 +8,7 @@ slug: $1 — 研究文件 slug(對應 `docs/supply-chains/<slug>.md`)。
 
 ## Instructions
 - **先讀** `docs/supply-chains/<slug>.md`(功課)。設計依它的環節/流動/公司,不另外查資料。
+- **先看** `docs/plan/machine-patterns.md`:每個節點先選最接近的機台 pattern,再按供應鏈意義增減部位。
 - **套用 skill `object-abstraction`**:每個元件**先調研真實物件長相**,再用 primitive **把有供應鏈意義的部位都組出來——不論大小,沒有上限**。
   **判準是供應鏈意義,不是視覺擬真**:鏈上有對應(材料/零件/製程/供應商)的部位就建;**只略過沒有供應鏈意義的造型細節**(紋理/油漆/椅墊造型/把板子鎖一起的通用五金)。螺絲螺帽看角色——代表扣件商/關鍵功能件就留,純組裝瑣節才省。
   **抽象 ≠ 簡陋,也 ≠ 只建幾塊**;「抽象」只指 primitive、低多邊形的**風格**,**結構要跟著供應鏈一樣細**。
@@ -43,7 +44,7 @@ slug: $1 — 研究文件 slug(對應 `docs/supply-chains/<slug>.md`)。
 <整體排法、場景尺度、相機 position/target 起手值>
 
 ## 3. 元件設計(每節點是 primitive 組合,非單一形狀)
-| 節點 id | primitive 組合(招牌特徵) | 相對大小 | 位置(概) | 材質 | 代表什麼 |
+| 節點 id | machine pattern | primitive 組合(招牌特徵) | 相對大小 | 位置(概) | 材質 | 代表什麼 |
 |---|---|---|---|---|---|
 <每節點列出它由哪幾個 primitive 組成(套 object-abstraction);核心節點大一點>
 
