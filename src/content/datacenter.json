@@ -1,184 +1,316 @@
 {
   "topic": "datacenter",
   "title": {
-    "zh": "機房 / 伺服器陣列",
-    "en": "Data Center Rack Array"
+    "zh": "機房 / 資料中心基礎設施",
+    "en": "Data Center Infrastructure"
   },
   "camera": {
-    "position": [
-      5.5,
-      4,
-      6.5
-    ],
-    "target": [
-      0,
-      0.8,
-      0
-    ]
+    "position": [5.8, 3.6, 6.8],
+    "target": [0, 0.9, 0]
   },
   "parts": [
     {
       "id": "floor",
       "kind": "primitive",
-      "geometry": {
-        "shape": "box",
-        "args": [
-          5,
-          0.15,
-          4
-        ],
-        "bevel": 0.03
-      },
-      "transform": {
-        "position": [
-          0,
-          0.075,
-          0
-        ]
-      },
+      "geometry": { "shape": "box", "args": [7, 0.12, 4.6], "bevel": 0.03 },
+      "transform": { "position": [0, 0.06, 0] },
       "material": "metal-dark",
-      "explode": {
-        "vector": [
-          0,
-          0,
-          0
-        ],
-        "magnitude": 0
-      },
+      "explode": { "magnitude": 0 },
       "annotation": null,
-      "label": {
-        "zh": "機房地板",
-        "en": "Data Center Floor"
-      }
+      "label": { "zh": "機房地板", "en": "Data Hall Floor" }
     },
     {
-      "id": "row-a",
+      "id": "compute-row",
       "kind": "primitive",
-      "geometry": {
-        "shape": "box",
-        "args": [
-          0.7,
-          1.6,
-          0.9
-        ],
-        "bevel": 0.03
-      },
-      "transform": {
-        "position": [
-          -1.65,
-          0.95,
-          -1.1
-        ]
-      },
-      "material": "metal-light",
-      "explode": {
-        "vector": [
-          0,
-          1,
-          0
-        ],
-        "magnitude": 0.6
-      },
-      "repeat": {
-        "count": 4,
-        "step": [
-          1.1,
-          0,
-          0
-        ]
-      },
-      "annotation": {
-        "title": {
-          "zh": "伺服器機櫃",
-          "en": "Server Rack"
-        }
-      }
+      "geometry": { "shape": "box", "args": [4.8, 0.14, 0.18], "bevel": 0.02 },
+      "transform": { "position": [0, 1.7, -1.0] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 0.7 },
+      "annotation": { "title": { "zh": "運算機櫃列", "en": "Compute Rack Row" } }
     },
     {
-      "id": "row-b",
+      "id": "compute-rack-frame",
       "kind": "primitive",
-      "geometry": {
-        "shape": "box",
-        "args": [
-          0.7,
-          1.6,
-          0.9
-        ],
-        "bevel": 0.03
-      },
-      "transform": {
-        "position": [
-          -1.65,
-          0.95,
-          0
-        ]
-      },
-      "material": "metal-light",
-      "explode": {
-        "vector": [
-          0,
-          1,
-          0
-        ],
-        "magnitude": 0.6
-      },
-      "repeat": {
-        "count": 4,
-        "step": [
-          1.1,
-          0,
-          0
-        ]
-      },
-      "annotation": {
-        "title": {
-          "zh": "伺服器機櫃",
-          "en": "Server Rack"
-        }
-      }
+      "geometry": { "shape": "box", "args": [0.62, 1.6, 0.82], "bevel": 0.03 },
+      "transform": { "position": [-1.8, 0.9, -1.0] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 0.95 },
+      "repeat": { "count": 5, "step": [0.9, 0, 0] },
+      "enclosure": true,
+      "partOf": "compute-row",
+      "label": { "zh": "伺服器機櫃", "en": "Server Rack" },
+      "annotation": null
     },
     {
-      "id": "row-c",
+      "id": "compute-tray-low",
       "kind": "primitive",
-      "geometry": {
-        "shape": "box",
-        "args": [
-          0.7,
-          1.6,
-          0.9
-        ],
-        "bevel": 0.03
-      },
-      "transform": {
-        "position": [
-          -1.65,
-          0.95,
-          1.1
-        ]
-      },
+      "geometry": { "shape": "box", "args": [0.54, 0.06, 0.7], "bevel": 0.008 },
+      "transform": { "position": [-1.8, 0.45, -1.02] },
       "material": "metal-light",
-      "explode": {
-        "vector": [
-          0,
-          1,
-          0
-        ],
-        "magnitude": 0.6
-      },
-      "repeat": {
-        "count": 4,
-        "step": [
-          1.1,
-          0,
-          0
-        ]
-      },
-      "annotation": {
-        "title": {
-          "zh": "伺服器機櫃",
-          "en": "Server Rack"
-        }
-      }
+      "explode": { "magnitude": 1.05 },
+      "repeat": { "count": 5, "step": [0.9, 0, 0] },
+      "partOf": "compute-row",
+      "label": { "zh": "伺服器托盤", "en": "Server Tray" },
+      "annotation": null
+    },
+    {
+      "id": "compute-tray-mid",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.54, 0.06, 0.7], "bevel": 0.008 },
+      "transform": { "position": [-1.8, 0.85, -1.02] },
+      "material": "metal-light",
+      "explode": { "magnitude": 1.05 },
+      "repeat": { "count": 5, "step": [0.9, 0, 0] },
+      "partOf": "compute-row",
+      "label": { "zh": "GPU 節點", "en": "GPU Node" },
+      "annotation": null
+    },
+    {
+      "id": "compute-tray-high",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.54, 0.06, 0.7], "bevel": 0.008 },
+      "transform": { "position": [-1.8, 1.25, -1.02] },
+      "material": "metal-light",
+      "explode": { "magnitude": 1.05 },
+      "repeat": { "count": 5, "step": [0.9, 0, 0] },
+      "partOf": "compute-row",
+      "label": { "zh": "網路 / 儲存托盤", "en": "Network / Storage Tray" },
+      "annotation": null
+    },
+    {
+      "id": "rack-led",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.04, 1.2, 0.025], "bevel": 0.004 },
+      "transform": { "position": [-1.55, 0.92, -1.43] },
+      "material": "chip",
+      "explode": { "magnitude": 1.1 },
+      "repeat": { "count": 5, "step": [0.9, 0, 0] },
+      "partOf": "compute-row",
+      "label": { "zh": "狀態燈條", "en": "Status Strip" },
+      "annotation": null
+    },
+    {
+      "id": "power-room",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [1.15, 1.2, 0.82], "bevel": 0.04 },
+      "transform": { "position": [-2.75, 0.72, 1.1] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 1.15 },
+      "enclosure": true,
+      "annotation": { "title": { "zh": "電力室 / UPS PDU", "en": "Power Room / UPS PDU" } }
+    },
+    {
+      "id": "power-battery",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.24, 0.22, 0.58], "bevel": 0.015 },
+      "transform": { "position": [-3.05, 0.28, 1.04] },
+      "material": "metal-light",
+      "explode": { "magnitude": 1.35 },
+      "repeat": { "count": 3, "step": [0.28, 0, 0] },
+      "partOf": "power-room",
+      "label": { "zh": "電池模組", "en": "Battery Module" },
+      "annotation": null
+    },
+    {
+      "id": "power-busway",
+      "kind": "primitive",
+      "geometry": { "shape": "tube", "path": [[-2.75, 1.45, 1.0], [-1.6, 1.75, 0.3], [0, 1.8, -0.65], [1.75, 1.75, -0.65]], "radius": 0.045 },
+      "transform": { "position": [0, 0, 0] },
+      "material": "accent",
+      "explode": { "magnitude": 0.9 },
+      "partOf": "power-room",
+      "label": { "zh": "母線槽", "en": "Busway" },
+      "annotation": null
+    },
+    {
+      "id": "cooling-loop",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [1.05, 1.15, 0.8], "bevel": 0.04 },
+      "transform": { "position": [2.75, 0.7, 1.1] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 1.15 },
+      "enclosure": true,
+      "annotation": { "title": { "zh": "液冷 / 空調迴路", "en": "Cooling Loop" } }
+    },
+    {
+      "id": "cooling-pump-a",
+      "kind": "primitive",
+      "geometry": { "shape": "cylinder", "args": [0.16, 0.16, 0.36, 16] },
+      "transform": { "position": [2.45, 0.28, 1.0], "rotation": [1.5708, 0, 0] },
+      "material": "metal-light",
+      "explode": { "magnitude": 1.3 },
+      "partOf": "cooling-loop",
+      "label": { "zh": "循環泵", "en": "Circulation Pump" },
+      "annotation": null
+    },
+    {
+      "id": "cooling-pump-b",
+      "kind": "primitive",
+      "geometry": { "shape": "cylinder", "args": [0.16, 0.16, 0.36, 16] },
+      "transform": { "position": [2.95, 0.28, 1.0], "rotation": [1.5708, 0, 0] },
+      "material": "metal-light",
+      "explode": { "magnitude": 1.3 },
+      "partOf": "cooling-loop",
+      "label": { "zh": "備援泵", "en": "Redundant Pump" },
+      "annotation": null
+    },
+    {
+      "id": "cooling-supply-pipe",
+      "kind": "primitive",
+      "geometry": { "shape": "tube", "path": [[2.72, 0.95, 1.05], [2.1, 0.85, 0.1], [1.4, 0.82, -1.28], [0, 0.82, -1.28], [-1.4, 0.82, -1.28]], "radius": 0.04 },
+      "transform": { "position": [0, 0, 0] },
+      "material": "chip",
+      "explode": { "magnitude": 0.95 },
+      "partOf": "cooling-loop",
+      "label": { "zh": "供水管", "en": "Supply Pipe" },
+      "annotation": null
+    },
+    {
+      "id": "cooling-return-pipe",
+      "kind": "primitive",
+      "geometry": { "shape": "tube", "path": [[-1.4, 0.62, -0.72], [0, 0.62, -0.72], [1.4, 0.62, -0.72], [2.2, 0.72, 0.2], [2.72, 0.82, 1.05]], "radius": 0.035 },
+      "transform": { "position": [0, 0, 0] },
+      "material": "heat",
+      "explode": { "magnitude": 0.95 },
+      "partOf": "cooling-loop",
+      "label": { "zh": "回水管", "en": "Return Pipe" },
+      "annotation": null
+    },
+    {
+      "id": "network-fabric",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [1.25, 0.75, 0.62], "bevel": 0.03 },
+      "transform": { "position": [0, 1.18, 1.25] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 1.0 },
+      "annotation": { "title": { "zh": "網路交換 fabric", "en": "Network Fabric" } }
+    },
+    {
+      "id": "network-leaf",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [1.05, 0.08, 0.52], "bevel": 0.01 },
+      "transform": { "position": [0, 0.95, 1.25] },
+      "material": "metal-light",
+      "explode": { "magnitude": 1.15 },
+      "repeat": { "count": 3, "step": [0, 0.16, 0] },
+      "partOf": "network-fabric",
+      "label": { "zh": "Leaf / Spine 交換機", "en": "Leaf / Spine Switch" },
+      "annotation": null
+    },
+    {
+      "id": "network-fiber",
+      "kind": "primitive",
+      "geometry": { "shape": "tube", "path": [[0, 1.25, 0.95], [-0.8, 1.35, 0.25], [-1.4, 1.3, -0.65], [-1.8, 1.25, -1.35]], "radius": 0.025 },
+      "transform": { "position": [0, 0, 0] },
+      "material": "metal-light",
+      "explode": { "magnitude": 0.85 },
+      "partOf": "network-fabric",
+      "label": { "zh": "光纖束", "en": "Fiber Bundle" },
+      "annotation": null
+    },
+    {
+      "id": "monitoring",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [1.15, 0.18, 0.55], "bevel": 0.025 },
+      "transform": { "position": [0, 0.38, 2.02] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 0.85 },
+      "annotation": { "title": { "zh": "監控 / DCIM", "en": "Monitoring / DCIM" } }
+    },
+    {
+      "id": "monitor-screen-a",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.38, 0.34, 0.035], "bevel": 0.01 },
+      "transform": { "position": [-0.28, 0.78, 1.86], "rotation": [0, 0.18, 0] },
+      "material": "metal-light",
+      "explode": { "magnitude": 1.0 },
+      "partOf": "monitoring",
+      "label": { "zh": "電力監控", "en": "Power Monitor" },
+      "annotation": null
+    },
+    {
+      "id": "monitor-screen-b",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.38, 0.34, 0.035], "bevel": 0.01 },
+      "transform": { "position": [0.28, 0.78, 1.86], "rotation": [0, -0.18, 0] },
+      "material": "metal-light",
+      "explode": { "magnitude": 1.0 },
+      "partOf": "monitoring",
+      "label": { "zh": "溫度 / 資產監控", "en": "Thermal / Asset Monitor" },
+      "annotation": null
+    },
+    {
+      "id": "monitor-status",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.08, 0.04, 0.025], "bevel": 0.004 },
+      "transform": { "position": [-0.42, 0.48, 1.73] },
+      "material": "chip",
+      "explode": { "magnitude": 1.05 },
+      "repeat": { "count": 5, "step": [0.21, 0, 0] },
+      "partOf": "monitoring",
+      "label": { "zh": "告警燈", "en": "Status Light" },
+      "annotation": null
     }
-  ]
+  ],
+  "process": {
+    "stations": [
+      { "id": "power", "partId": "power-room", "processTime": 0.6, "input": "utility", "output": "conditioned-power" },
+      { "id": "compute", "partId": "compute-row", "processTime": 0.8, "input": "power-cooling-data", "output": "workload" },
+      { "id": "cooling", "partId": "cooling-loop", "processTime": 0.5, "input": "heat", "output": "coolant" },
+      { "id": "network", "partId": "network-fabric", "processTime": 0.4, "input": "packets", "output": "packets" },
+      { "id": "dcim", "partId": "monitoring", "processTime": 0.4, "input": "telemetry", "output": "alerts" }
+    ],
+    "routes": [
+      {
+        "id": "power-feed",
+        "kind": "main",
+        "material": "accent",
+        "path": [[-3.35, 0.35, 1.55], [-2.75, 1.0, 1.1], [-1.6, 1.75, 0.3], [0, 1.8, -0.65], [1.75, 1.75, -0.65]],
+        "stops": [{ "point": 1, "station": "power" }, { "point": 3, "station": "compute" }]
+      },
+      {
+        "id": "cooling-supply",
+        "kind": "main",
+        "material": "chip",
+        "path": [[2.75, 0.95, 1.1], [2.1, 0.85, 0.1], [1.4, 0.82, -1.28], [0, 0.82, -1.28], [-1.4, 0.82, -1.28]],
+        "stops": [{ "point": 0, "station": "cooling" }, { "point": 3, "station": "compute" }]
+      },
+      {
+        "id": "cooling-return",
+        "kind": "side",
+        "material": "heat",
+        "path": [[-1.4, 0.62, -0.72], [0, 0.62, -0.72], [1.4, 0.62, -0.72], [2.2, 0.72, 0.2], [2.75, 0.82, 1.1]],
+        "stops": [{ "point": 1, "station": "compute" }, { "point": 4, "station": "cooling" }]
+      },
+      {
+        "id": "data-down",
+        "kind": "main",
+        "material": "metal-light",
+        "path": [[0, 1.3, 1.25], [-0.45, 1.35, 0.2], [-0.9, 1.35, -0.75], [-1.4, 1.25, -1.28]],
+        "stops": [{ "point": 0, "station": "network" }, { "point": 3, "station": "compute" }]
+      },
+      {
+        "id": "data-up",
+        "kind": "side",
+        "material": "metal-light",
+        "path": [[1.4, 1.25, -1.28], [0.9, 1.35, -0.75], [0.45, 1.35, 0.2], [0, 1.3, 1.25]],
+        "stops": [{ "point": 0, "station": "compute" }, { "point": 3, "station": "network" }]
+      },
+      {
+        "id": "telemetry",
+        "kind": "side",
+        "material": "metal-light",
+        "path": [[0, 0.75, 1.88], [-0.8, 1.0, 1.3], [-1.6, 1.25, 0.2], [0, 1.25, -0.9], [1.7, 0.95, 0.35]],
+        "stops": [{ "point": 0, "station": "dcim" }, { "point": 3, "station": "compute" }]
+      }
+    ],
+    "tokens": [
+      { "id": "power-token", "routeId": "power-feed", "material": "accent", "count": 3, "radius": 0.07, "duration": 6.5 },
+      { "id": "cool-token", "routeId": "cooling-supply", "material": "chip", "count": 3, "radius": 0.06, "duration": 6 },
+      { "id": "heat-token", "routeId": "cooling-return", "material": "heat", "count": 2, "radius": 0.06, "duration": 5.5 },
+      { "id": "data-down-token", "routeId": "data-down", "material": "metal-light", "count": 3, "radius": 0.045, "duration": 4.5 },
+      { "id": "data-up-token", "routeId": "data-up", "material": "metal-light", "count": 3, "radius": 0.045, "duration": 4.5 },
+      { "id": "telemetry-token", "routeId": "telemetry", "material": "metal-light", "count": 2, "radius": 0.045, "duration": 7 }
+    ]
+  }
 }
