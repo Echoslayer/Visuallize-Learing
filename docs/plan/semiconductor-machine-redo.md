@@ -83,5 +83,5 @@
 - [x] Phase 2 晶圓代工 `foundry` — 待人類確認
 - [x] Phase 3 設備 / 材料 `equip` — 待人類確認
 - [x] Phase 4 封裝測試 `osat` — 待人類確認
-- [ ] Phase 5 下游應用 `downstream`
+- [x] Phase 5 下游應用 `downstream`(spec 26)— 待人類確認
 - [ ] Phase 6 回供應鏈接線 + 全線驗收

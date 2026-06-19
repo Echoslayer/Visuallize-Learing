@@ -379,3 +379,10 @@
 - 驗證:check(companies/flow-dwell/process 全 ok)/typecheck/lint/build 全綠;`d-rack.png` 背板+電源/資料雙層流、`d-gpu-cards.png` GPU 卡顯示 7 公司(含 SK海力士/美光)、rack-sys 入 nav。
 - 已知限制:rack-sys(機櫃框 3.2 高)gallery 聚焦相機過近,構圖偏滿(ADR-0017 記;非阻塞)。
 - **AI 伺服器重做計畫 A→D 全部完成**。剩:人類校對公司、/update-docs、/commit。
+
+## 機台重做 Phase 5 — 下游應用 downstream ✅(待人類確認)
+- `docs/machines/downstream.md` + `specs/26-machine-downstream.md` → 實作。
+- 從「單一伺服器機櫃」重做為終端市場 showcase:市場平台 + 伺服器(4 盤)+ 智慧手機 + 筆電(底+螢幕)+ 車用電子(車身+座艙+輪)。
+- 機台級流(scale 0.4):綠晶片(chip)進 → 整合站(dwell 0.6s)→ 亮灰終端(system/metal-light)出;單向、分色、過站。
+- 驗證:check/typecheck/lint/build 全綠;`p5-ds-n.png` 多終端可辨、綠→灰流動正常(名稱視圖標籤略擠,實景清楚)。
+- **semiconductor 6 台機台(design/wafer/foundry/equip/osat/downstream)全部重做完**;剩 Phase 6 整線接線(材質介面契約對齊:foundry 變色點)。
