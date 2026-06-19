@@ -44,7 +44,33 @@
       "material": "metal-dark",
       "explode": { "magnitude": 0.7 },
       "label": { "zh": "IC 設計", "en": "IC Design" },
-      "annotation": { "title": { "zh": "IC 設計", "en": "IC Design" } }
+      "annotation": { "title": { "zh": "IC 設計", "en": "IC Design" } },
+      "process": {
+        "scale": 0.4,
+        "stations": [
+          { "id": "design-wks", "partId": "design-chip-map", "processTime": 0.6, "input": "spec", "output": "gds" }
+        ],
+        "routes": [
+          {
+            "id": "design-in",
+            "kind": "side",
+            "material": "metal-light",
+            "path": [[-0.95, 0.45, 0.4], [-0.3, 0.34, 0.2], [0.28, 0.3, 0.08]],
+            "stops": [{ "point": 2, "station": "design-wks" }]
+          },
+          {
+            "id": "design-out",
+            "kind": "main",
+            "material": "chip",
+            "path": [[0.28, 0.3, 0.08], [0.65, 0.36, 0.25], [0.98, 0.45, 0.45]],
+            "stops": [{ "point": 0, "station": "design-wks" }]
+          }
+        ],
+        "tokens": [
+          { "id": "design-in-tok", "routeId": "design-in", "material": "metal-light", "count": 2, "radius": 0.06, "duration": 3.6 },
+          { "id": "design-out-tok", "routeId": "design-out", "material": "chip", "count": 2, "radius": 0.06, "duration": 3.6 }
+        ]
+      }
     },
     {
       "id": "design-monitor-code",
@@ -204,20 +230,91 @@
     {
       "id": "wafer",
       "kind": "primitive",
-      "geometry": { "shape": "cylinder", "args": [0.16, 0.16, 0.85, 16] },
+      "geometry": { "shape": "cylinder", "args": [0.24, 0.24, 0.92, 16] },
       "transform": { "position": [-2.0, 1.0, 0] },
       "material": "metal-light",
       "explode": { "magnitude": 1.1 },
-      "annotation": { "title": { "zh": "矽晶圓", "en": "Silicon Wafer" } }
+      "enclosure": true,
+      "annotation": { "title": { "zh": "矽晶圓", "en": "Silicon Wafer" } },
+      "process": {
+        "scale": 0.4,
+        "stations": [
+          { "id": "wafer-grow", "partId": "wafer", "processTime": 0.8, "input": "silicon", "output": "wafer" }
+        ],
+        "routes": [
+          {
+            "id": "wafer-in",
+            "kind": "side",
+            "material": "metal-light",
+            "path": [[-0.95, 0.25, 0.4], [-0.4, 0.05, 0.15], [0, -0.05, 0]],
+            "stops": [{ "point": 2, "station": "wafer-grow" }]
+          },
+          {
+            "id": "wafer-out",
+            "kind": "main",
+            "material": "accent",
+            "path": [[0, -0.05, 0], [0.5, -0.12, 0.18], [1.0, 0.0, 0.36]],
+            "stops": [{ "point": 0, "station": "wafer-grow" }]
+          }
+        ],
+        "tokens": [
+          { "id": "wafer-in-tok", "routeId": "wafer-in", "material": "metal-light", "count": 2, "radius": 0.06, "duration": 3.6 },
+          { "id": "wafer-out-tok", "routeId": "wafer-out", "material": "accent", "count": 2, "radius": 0.06, "duration": 3.6 }
+        ]
+      }
+    },
+    {
+      "id": "wafer-ingot",
+      "kind": "primitive",
+      "geometry": { "shape": "cylinder", "args": [0.1, 0.13, 0.56, 16] },
+      "transform": { "position": [-2.0, 1.0, 0] },
+      "material": "accent",
+      "explode": { "magnitude": 1.3 },
+      "partOf": "wafer",
+      "label": { "zh": "晶棒", "en": "Ingot" },
+      "annotation": null
+    },
+    {
+      "id": "wafer-crucible",
+      "kind": "primitive",
+      "geometry": { "shape": "cylinder", "args": [0.17, 0.13, 0.13, 16] },
+      "transform": { "position": [-2.0, 0.66, 0] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 1.2 },
+      "partOf": "wafer",
+      "label": { "zh": "坩堝", "en": "Crucible" },
+      "annotation": null
+    },
+    {
+      "id": "wafer-seed",
+      "kind": "primitive",
+      "geometry": { "shape": "cylinder", "args": [0.018, 0.018, 0.26, 12] },
+      "transform": { "position": [-2.0, 1.52, 0] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 1.5 },
+      "partOf": "wafer",
+      "label": { "zh": "晶種桿", "en": "Seed" },
+      "annotation": null
+    },
+    {
+      "id": "wafer-saw",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.28, 0.2, 0.28], "bevel": 0.02 },
+      "transform": { "position": [-1.48, 0.68, 0.34] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 1.2 },
+      "partOf": "wafer",
+      "label": { "zh": "線鋸切片", "en": "Wire Saw" },
+      "annotation": null
     },
     {
       "id": "wafer-discs",
       "kind": "primitive",
-      "geometry": { "shape": "cylinder", "args": [0.26, 0.26, 0.03, 20] },
-      "transform": { "position": [-1.65, 0.72, 0] },
-      "material": "metal-light",
-      "explode": { "magnitude": 1.3 },
-      "repeat": { "count": 3, "step": [0, 0.1, 0] },
+      "geometry": { "shape": "cylinder", "args": [0.19, 0.19, 0.018, 20] },
+      "transform": { "position": [-1.58, 0.73, -0.02] },
+      "material": "accent",
+      "explode": { "magnitude": 1.4 },
+      "repeat": { "count": 3, "step": [0, 0.05, 0] },
       "partOf": "wafer",
       "label": { "zh": "晶圓片", "en": "Wafer" },
       "annotation": null
@@ -225,53 +322,86 @@
     {
       "id": "wafer-holder",
       "kind": "primitive",
-      "geometry": { "shape": "box", "args": [0.38, 0.1, 0.38], "bevel": 0.02 },
-      "transform": { "position": [-1.65, 0.64, 0] },
+      "geometry": { "shape": "box", "args": [0.32, 0.1, 0.32], "bevel": 0.02 },
+      "transform": { "position": [-1.58, 0.65, -0.02] },
       "material": "metal-dark",
       "explode": { "magnitude": 1.0 },
       "partOf": "wafer",
-      "label": { "zh": "晶圓卡匣", "en": "Cassette" },
+      "label": { "zh": "卡匣", "en": "Cassette" },
+      "annotation": null
+    },
+    {
+      "id": "wafer-polish",
+      "kind": "primitive",
+      "geometry": { "shape": "cylinder", "args": [0.16, 0.16, 0.04, 20] },
+      "transform": { "position": [-1.46, 0.66, -0.38] },
+      "material": "metal-light",
+      "explode": { "magnitude": 1.2 },
+      "partOf": "wafer",
+      "label": { "zh": "拋光", "en": "CMP" },
       "annotation": null
     },
 
     {
       "id": "foundry",
       "kind": "primitive",
-      "geometry": { "shape": "box", "args": [1.0, 1.1, 0.85], "bevel": 0.05 },
+      "geometry": { "shape": "box", "args": [1.0, 1.1, 0.9], "bevel": 0.05 },
       "transform": { "position": [0, 1.14, 0] },
       "material": "metal-light",
       "explode": { "magnitude": 1.3 },
       "enclosure": true,
-      "annotation": { "title": { "zh": "晶圓代工", "en": "Foundry" } }
+      "annotation": { "title": { "zh": "晶圓代工", "en": "Foundry" } },
+      "process": {
+        "scale": 0.4,
+        "stations": [
+          { "id": "foundry-proc", "partId": "foundry", "processTime": 1.2, "input": "wafer", "output": "processed-wafer" }
+        ],
+        "routes": [
+          {
+            "id": "foundry-in",
+            "kind": "main",
+            "material": "accent",
+            "path": [[-1.0, 0.1, 0.0], [-0.5, 0.0, 0.0], [0, -0.05, 0.0]],
+            "stops": [{ "point": 2, "station": "foundry-proc" }]
+          },
+          {
+            "id": "foundry-supply",
+            "kind": "side",
+            "material": "metal-light",
+            "path": [[-0.6, 0.4, -0.95], [-0.3, 0.15, -0.45], [0, -0.05, 0]],
+            "stops": [{ "point": 2, "station": "foundry-proc" }]
+          },
+          {
+            "id": "foundry-out",
+            "kind": "main",
+            "material": "chip",
+            "path": [[0, -0.05, 0], [0.55, -0.1, 0.18], [1.0, 0.05, 0.38]],
+            "stops": [{ "point": 0, "station": "foundry-proc" }]
+          }
+        ],
+        "tokens": [
+          { "id": "foundry-in-tok", "routeId": "foundry-in", "material": "accent", "count": 2, "radius": 0.06, "duration": 4.2 },
+          { "id": "foundry-supply-tok", "routeId": "foundry-supply", "material": "metal-light", "count": 1, "radius": 0.05, "duration": 4.6 },
+          { "id": "foundry-out-tok", "routeId": "foundry-out", "material": "chip", "count": 2, "radius": 0.06, "duration": 4.2 }
+        ]
+      }
     },
     {
-      "id": "foundry-tools",
+      "id": "foundry-scanner",
       "kind": "primitive",
-      "geometry": { "shape": "box", "args": [0.17, 0.24, 0.17], "bevel": 0.01 },
-      "transform": { "position": [-0.32, 1.82, 0] },
+      "geometry": { "shape": "box", "args": [0.34, 0.5, 0.34], "bevel": 0.02 },
+      "transform": { "position": [-0.26, 1.12, 0.12] },
       "material": "metal-dark",
-      "explode": { "magnitude": 1.7 },
-      "repeat": { "count": 4, "step": [0.22, 0, 0] },
+      "explode": { "magnitude": 1.5 },
       "partOf": "foundry",
-      "label": { "zh": "製程機台", "en": "Process Tool" },
-      "annotation": null
-    },
-    {
-      "id": "foundry-stepper",
-      "kind": "primitive",
-      "geometry": { "shape": "box", "args": [0.3, 0.38, 0.3], "bevel": 0.02 },
-      "transform": { "position": [0, 1.5, 0.32] },
-      "material": "metal-dark",
-      "explode": { "magnitude": 1.4 },
-      "partOf": "foundry",
-      "label": { "zh": "微影機", "en": "Stepper" },
+      "label": { "zh": "微影機", "en": "Litho Scanner" },
       "annotation": null
     },
     {
       "id": "foundry-lens",
       "kind": "primitive",
       "geometry": { "shape": "cone", "args": [0.09, 0.18, 12] },
-      "transform": { "position": [0, 1.25, 0.32], "rotation": [3.1416, 0, 0] },
+      "transform": { "position": [-0.26, 0.8, 0.12], "rotation": [3.1416, 0, 0] },
       "material": "accent",
       "explode": { "magnitude": 1.5 },
       "partOf": "foundry",
@@ -279,10 +409,55 @@
       "annotation": null
     },
     {
+      "id": "foundry-wafer",
+      "kind": "primitive",
+      "geometry": { "shape": "cylinder", "args": [0.16, 0.16, 0.02, 20] },
+      "transform": { "position": [-0.26, 0.68, 0.12] },
+      "material": "accent",
+      "explode": { "magnitude": 1.4 },
+      "partOf": "foundry",
+      "label": { "zh": "製程晶圓", "en": "Wafer" },
+      "annotation": null
+    },
+    {
+      "id": "foundry-etch",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.18, 0.5, 0.18], "bevel": 0.01 },
+      "transform": { "position": [0.24, 1.1, -0.16] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 1.6 },
+      "repeat": { "count": 2, "step": [0, 0, 0.32] },
+      "partOf": "foundry",
+      "label": { "zh": "蝕刻 / 沉積", "en": "Etch & Depo" },
+      "annotation": null
+    },
+    {
+      "id": "foundry-cmp",
+      "kind": "primitive",
+      "geometry": { "shape": "cylinder", "args": [0.14, 0.14, 0.05, 16] },
+      "transform": { "position": [0.2, 0.66, 0.22] },
+      "material": "metal-light",
+      "explode": { "magnitude": 1.4 },
+      "partOf": "foundry",
+      "label": { "zh": "平坦化", "en": "CMP" },
+      "annotation": null
+    },
+    {
+      "id": "foundry-foup",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.16, 0.16, 0.16], "bevel": 0.01 },
+      "transform": { "position": [0, 1.82, 0] },
+      "material": "metal-light",
+      "explode": { "magnitude": 1.7 },
+      "partOf": "foundry",
+      "label": { "zh": "晶圓盒", "en": "FOUP" },
+      "annotation": null
+    },
+    {
       "id": "foundry-rail",
       "kind": "primitive",
-      "geometry": { "shape": "box", "args": [1.15, 0.05, 0.1] },
-      "transform": { "position": [0, 1.96, 0] },
+      "geometry": { "shape": "box", "args": [1.2, 0.05, 0.1] },
+      "transform": { "position": [0, 1.94, 0] },
       "material": "metal-dark",
       "explode": { "magnitude": 1.6 },
       "partOf": "foundry",
@@ -297,7 +472,33 @@
       "transform": { "position": [-0.9, 1.06, -1.3] },
       "material": "metal-dark",
       "explode": { "magnitude": 1.1 },
-      "annotation": { "title": { "zh": "設備 / 材料", "en": "Equipment & Materials" } }
+      "annotation": { "title": { "zh": "設備 / 材料", "en": "Equipment & Materials" } },
+      "process": {
+        "scale": 0.4,
+        "stations": [
+          { "id": "equip-dispense", "partId": "equip", "processTime": 0.4, "output": "supply" }
+        ],
+        "routes": [
+          {
+            "id": "equip-stage",
+            "kind": "side",
+            "material": "metal-dark",
+            "path": [[0.6, -0.05, 0.3], [0.3, 0.0, 0.1], [0, 0, 0]],
+            "stops": [{ "point": 2, "station": "equip-dispense" }]
+          },
+          {
+            "id": "equip-out",
+            "kind": "main",
+            "material": "metal-light",
+            "path": [[0, 0, 0], [0.5, 0.05, 0.5], [1.0, 0.1, 0.95]],
+            "stops": [{ "point": 0, "station": "equip-dispense" }]
+          }
+        ],
+        "tokens": [
+          { "id": "equip-stage-tok", "routeId": "equip-stage", "material": "metal-dark", "count": 2, "radius": 0.05, "duration": 3.0 },
+          { "id": "equip-out-tok", "routeId": "equip-out", "material": "metal-light", "count": 3, "radius": 0.05, "duration": 3.4 }
+        ]
+      }
     },
     {
       "id": "equip-efem",
@@ -325,10 +526,11 @@
     {
       "id": "equip-chamber",
       "kind": "primitive",
-      "geometry": { "shape": "cylinder", "args": [0.2, 0.2, 0.28, 16] },
-      "transform": { "position": [-0.9, 1.7, -1.4] },
+      "geometry": { "shape": "cylinder", "args": [0.18, 0.18, 0.26, 16] },
+      "transform": { "position": [-1.06, 1.66, -1.4] },
       "material": "metal-light",
       "explode": { "magnitude": 1.4 },
+      "repeat": { "count": 2, "step": [0.34, 0, 0] },
       "partOf": "equip",
       "label": { "zh": "製程腔", "en": "Chamber" },
       "annotation": null
@@ -341,7 +543,42 @@
       "material": "metal-dark",
       "explode": { "magnitude": 1.2 },
       "partOf": "equip",
-      "label": { "zh": "排氣管", "en": "Exhaust" },
+      "label": { "zh": "氣體管路", "en": "Gas Line" },
+      "annotation": null
+    },
+    {
+      "id": "equip-gas",
+      "kind": "primitive",
+      "geometry": { "shape": "cylinder", "args": [0.05, 0.05, 0.42, 12] },
+      "transform": { "position": [-0.5, 0.95, -1.45] },
+      "material": "metal-light",
+      "explode": { "magnitude": 1.5 },
+      "repeat": { "count": 3, "step": [0.14, 0, 0] },
+      "partOf": "equip",
+      "label": { "zh": "氣體鋼瓶", "en": "Gas" },
+      "annotation": null
+    },
+    {
+      "id": "equip-drums",
+      "kind": "primitive",
+      "geometry": { "shape": "cylinder", "args": [0.1, 0.1, 0.22, 16] },
+      "transform": { "position": [-0.52, 0.78, -1.05] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 1.4 },
+      "repeat": { "count": 2, "step": [0.26, 0, 0] },
+      "partOf": "equip",
+      "label": { "zh": "化學品", "en": "Chemicals" },
+      "annotation": null
+    },
+    {
+      "id": "equip-mask",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.18, 0.05, 0.18], "bevel": 0.01 },
+      "transform": { "position": [-0.5, 0.95, -1.0] },
+      "material": "accent",
+      "explode": { "magnitude": 1.6 },
+      "partOf": "equip",
+      "label": { "zh": "光罩盒", "en": "Mask" },
       "annotation": null
     },
 
@@ -352,24 +589,61 @@
       "transform": { "position": [2.0, 0.98, 0] },
       "material": "metal-dark",
       "explode": { "magnitude": 1.1 },
-      "annotation": { "title": { "zh": "封裝測試", "en": "Packaging & Test" } }
+      "annotation": { "title": { "zh": "封裝測試", "en": "Packaging & Test" } },
+      "process": {
+        "scale": 0.4,
+        "stations": [
+          { "id": "osat-pkg", "partId": "osat", "processTime": 0.9, "input": "processed-wafer", "output": "chip" }
+        ],
+        "routes": [
+          {
+            "id": "osat-in",
+            "kind": "main",
+            "material": "accent",
+            "path": [[-1.0, 0.1, 0.0], [-0.5, 0.05, 0.0], [0, 0.0, 0.05]],
+            "stops": [{ "point": 2, "station": "osat-pkg" }]
+          },
+          {
+            "id": "osat-out",
+            "kind": "main",
+            "material": "chip",
+            "path": [[0, 0.0, 0.05], [0.5, 0.1, 0.15], [1.0, 0.15, 0.3]],
+            "stops": [{ "point": 0, "station": "osat-pkg" }]
+          }
+        ],
+        "tokens": [
+          { "id": "osat-in-tok", "routeId": "osat-in", "material": "accent", "count": 2, "radius": 0.06, "duration": 3.8 },
+          { "id": "osat-out-tok", "routeId": "osat-out", "material": "chip", "count": 2, "radius": 0.06, "duration": 3.8 }
+        ]
+      }
+    },
+    {
+      "id": "osat-dicing",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.2, 0.12, 0.2], "bevel": 0.01 },
+      "transform": { "position": [1.8, 1.42, 0.14] },
+      "material": "metal-light",
+      "explode": { "magnitude": 1.5 },
+      "partOf": "osat",
+      "label": { "zh": "切割", "en": "Dicing" },
+      "annotation": null
     },
     {
       "id": "osat-substrate",
       "kind": "primitive",
-      "geometry": { "shape": "box", "args": [0.42, 0.04, 0.42], "bevel": 0.01 },
-      "transform": { "position": [2.0, 1.4, 0.12] },
+      "geometry": { "shape": "box", "args": [0.36, 0.04, 0.36], "bevel": 0.01 },
+      "transform": { "position": [2.06, 1.41, 0.04] },
       "material": "accent",
       "explode": { "magnitude": 1.4 },
       "partOf": "osat",
-      "label": { "zh": "ABF 載板", "en": "Substrate" },
+      "label": { "zh": "封裝載板", "en": "Substrate" },
       "annotation": null
     },
     {
       "id": "osat-arm",
       "kind": "primitive",
-      "geometry": { "shape": "cylinder", "args": [0.035, 0.035, 0.28, 8] },
-      "transform": { "position": [2.0, 1.5, 0.12], "rotation": [0.4, 0, 0] },
+      "geometry": { "shape": "cylinder", "args": [0.03, 0.03, 0.26, 8] },
+      "transform": { "position": [2.06, 1.52, 0.04], "rotation": [0.4, 0, 0] },
       "material": "metal-light",
       "explode": { "magnitude": 1.3 },
       "partOf": "osat",
@@ -377,10 +651,21 @@
       "annotation": null
     },
     {
+      "id": "osat-mold",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.3, 0.16, 0.3], "bevel": 0.02 },
+      "transform": { "position": [2.0, 1.62, -0.18] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 1.6 },
+      "partOf": "osat",
+      "label": { "zh": "封膠", "en": "Molding" },
+      "annotation": null
+    },
+    {
       "id": "osat-handler",
       "kind": "primitive",
-      "geometry": { "shape": "box", "args": [0.4, 0.58, 0.4], "bevel": 0.03 },
-      "transform": { "position": [2.38, 0.88, 0] },
+      "geometry": { "shape": "box", "args": [0.4, 0.6, 0.4], "bevel": 0.03 },
+      "transform": { "position": [2.42, 0.9, 0] },
       "material": "metal-dark",
       "explode": { "magnitude": 1.2 },
       "partOf": "osat",
@@ -391,12 +676,23 @@
       "id": "osat-sockets",
       "kind": "primitive",
       "geometry": { "shape": "box", "args": [0.11, 0.07, 0.11], "bevel": 0.005 },
-      "transform": { "position": [2.3, 1.2, 0] },
+      "transform": { "position": [2.34, 1.22, 0] },
       "material": "metal-light",
       "explode": { "magnitude": 1.4 },
       "repeat": { "count": 2, "step": [0.16, 0, 0] },
       "partOf": "osat",
       "label": { "zh": "測試座", "en": "Socket" },
+      "annotation": null
+    },
+    {
+      "id": "osat-tray",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.3, 0.04, 0.2], "bevel": 0.01 },
+      "transform": { "position": [2.42, 1.24, 0.22] },
+      "material": "chip",
+      "explode": { "magnitude": 1.5 },
+      "partOf": "osat",
+      "label": { "zh": "成品盤", "en": "Chip Tray" },
       "annotation": null
     },
 
