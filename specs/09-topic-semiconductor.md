@@ -1,7 +1,8 @@
 # 半導體 demo 設計 v2(topic `semiconductor`)
 
 > 由 /design-demo 依**新版深度研究** `docs/supply-chains/semiconductor.md` 重做。教學用、抽象。
-> **修訂 [07](07-topic-semiconductor.md)**:針對實機截圖診斷出的動線/互動問題重設計。人類確認後 /add-topic 改建。
+> **修訂 [07](07-topic-semiconductor.md)**:針對實機截圖診斷出的動線/互動問題重設計。
+> **已實作(2026-06-19)**:P1~P6 全修;equip→側站、chip 綠色、foundry enclosure 透視均經人類 sign-off。
 - type: topic
 - 研究來源:docs/supply-chains/semiconductor.md(2026-06 深度版)
 

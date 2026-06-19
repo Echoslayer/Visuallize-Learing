@@ -8,6 +8,7 @@ export const MATERIAL_COLORS: Record<string, string> = {
   'metal-light': '#dfe3e8',
   'metal-dark': '#414751',
   accent: '#3b82f6', // 強調色(如流動粒子),讓運動更醒目
+  chip: '#34d399', // 成品晶片流(綠);與 accent 藍的晶圓流對比,表「晶圓→晶片」變形
 }
 
 export function materialColor(id: string): string {
