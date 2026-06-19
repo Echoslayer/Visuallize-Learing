@@ -363,3 +363,19 @@
 - 機台級流(scale 0.6):封包 in(左)→ 交換 → out(右)+ 光模組側出 + 電源 in;單向、分色、過站。
 - 驗證:check/typecheck/lint/build 全綠;`c4-net-n.png` 光模組陣列辨識清楚、流動正常。
 - 下一步:Phase C-5 電源盤(最後一盤)。
+
+## AI 伺服器重做 Phase C-5 — 電源盤 ✅(待人類確認)
+- `specs/24-machine-power-tray.md` → 實作。
+- `tray-power` 從單方塊 → 複合盤:PSU 電源模組×5 + 藍 DC 匯流排(busbar)+ BBU 電池備援。
+- 機台級流(scale 0.6):AC(深灰)進 → 整流 → DC(亮灰)出 + 上行;單向、分色(AC→DC)、過站。
+- 驗證:check/typecheck/lint/build 全綠;`c5-pwr-n.png` PSU 排+藍 busbar 辨識清楚。
+- **6 盤(C-0..C-5)全部重做完**;下一步 Phase D 整機互連 + rack-sys/CDU 節點 + companies.csv。
+
+## AI 伺服器重做 Phase D — 整機互連 + 全機驗收 ✅(待人類校對公司)
+- **rack-sys 節點**:rack-back→rack-sys(機櫃/系統,annotation),partOf 子部位:底座 + NVLink 背板(藍)+ CDU + 冷卻歧管(tube)。
+- **整機兩層 topic process**:電源層(power-route,銀,電源盤→右側上行發散)+ 資料層(data-route,藍,GPU→NVSwitch→網路,左側單向);station 錨 tray-power/tray-nvswitch;非閉環。
+- **companies.csv 充實**:7 節點多對多(GPU 加 SK海力士/美光/欣興/奇鋐;NVSwitch 加 Amphenol/嘉澤/貿聯;網路加 Marvell/Innolight;rack-sys 加 ODM 鴻海/廣達/緯創/緯穎/英業達+散熱);**含國際代號;準確性待人類校對**。
+- **ADR-0017**:機台級 process(Part.process machine-local + ProcessSpec.scale)正式記錄(semiconductor Phase 0 延後的決策,已跨兩題目驗證)。
+- 驗證:check(companies/flow-dwell/process 全 ok)/typecheck/lint/build 全綠;`d-rack.png` 背板+電源/資料雙層流、`d-gpu-cards.png` GPU 卡顯示 7 公司(含 SK海力士/美光)、rack-sys 入 nav。
+- 已知限制:rack-sys(機櫃框 3.2 高)gallery 聚焦相機過近,構圖偏滿(ADR-0017 記;非阻塞)。
+- **AI 伺服器重做計畫 A→D 全部完成**。剩:人類校對公司、/update-docs、/commit。

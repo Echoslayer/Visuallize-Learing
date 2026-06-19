@@ -96,5 +96,5 @@ Phase D  整機互連     接電源+資料 fabric + 全機驗收 + ADR + /update
 - [x] Phase C-2 CPU 運算盤 `tray-cpu`(spec 21)— 待人類確認
 - [x] Phase C-3 NVSwitch 交換盤 `tray-nvswitch`(spec 22)— 待人類確認
 - [x] Phase C-4 網路交換盤 `tray-network`(spec 23)— 待人類確認
-- [ ] Phase C-5 電源盤 `tray-power`
-- [ ] Phase D 整機互連 + 全機驗收
+- [x] Phase C-5 電源盤 `tray-power`(spec 24)— 待人類確認
+- [x] Phase D 整機互連 + 全機驗收(rack-sys 節點 + 兩層 process + companies.csv + ADR-0017)— 待人類校對公司

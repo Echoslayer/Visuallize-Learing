@@ -18,72 +18,58 @@
   },
   "parts": [
     {
-      "id": "rack-back",
+      "id": "rack-sys",
       "kind": "primitive",
-      "geometry": {
-        "shape": "box",
-        "args": [
-          2.3,
-          3.2,
-          0.12
-        ],
-        "bevel": 0.03
-      },
-      "transform": {
-        "position": [
-          0,
-          1.6,
-          -0.78
-        ]
-      },
+      "geometry": { "shape": "box", "args": [2.3, 3.2, 0.12], "bevel": 0.03 },
+      "transform": { "position": [0, 1.6, -0.78] },
       "material": "metal-dark",
-      "explode": {
-        "vector": [
-          0,
-          0,
-          0
-        ],
-        "magnitude": 0
-      },
-      "annotation": null,
-      "label": {
-        "zh": "背板",
-        "en": "Back Panel"
-      }
+      "explode": { "magnitude": 0 },
+      "annotation": { "title": { "zh": "機櫃 / 系統", "en": "Chassis / System" } },
+      "label": { "zh": "機櫃 / 系統", "en": "Chassis / System" }
     },
     {
       "id": "rack-base",
       "kind": "primitive",
-      "geometry": {
-        "shape": "box",
-        "args": [
-          2.3,
-          0.18,
-          1.7
-        ],
-        "bevel": 0.03
-      },
-      "transform": {
-        "position": [
-          0,
-          0.09,
-          0
-        ]
-      },
+      "geometry": { "shape": "box", "args": [2.3, 0.18, 1.7], "bevel": 0.03 },
+      "transform": { "position": [0, 0.09, 0] },
       "material": "metal-dark",
-      "explode": {
-        "vector": [
-          0,
-          0,
-          0
-        ],
-        "magnitude": 0
-      },
-      "annotation": null,
-      "label": {
-        "zh": "底座",
-        "en": "Base"
-      }
+      "explode": { "magnitude": 0 },
+      "partOf": "rack-sys",
+      "label": { "zh": "底座", "en": "Base" },
+      "annotation": null
+    },
+    {
+      "id": "rack-backplane",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [2.0, 2.4, 0.04], "bevel": 0.01 },
+      "transform": { "position": [0, 1.6, -0.7] },
+      "material": "accent",
+      "explode": { "magnitude": 0.2 },
+      "partOf": "rack-sys",
+      "label": { "zh": "NVLink 背板", "en": "Backplane" },
+      "annotation": null
+    },
+    {
+      "id": "rack-cdu",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [1.4, 0.36, 0.4], "bevel": 0.02 },
+      "transform": { "position": [0, 0.32, 0.6] },
+      "material": "metal-light",
+      "explode": { "magnitude": 0.5 },
+      "partOf": "rack-sys",
+      "label": { "zh": "CDU 冷卻分配", "en": "CDU" },
+      "annotation": null
+    },
+    {
+      "id": "rack-manifold",
+      "kind": "primitive",
+      "geometry": { "shape": "tube", "path": [[-1.1, 0.3, 0.5], [-1.1, 1.4, 0.4], [-1.1, 2.5, 0.4]], "radius": 0.05 },
+      "transform": { "position": [0, 0, 0] },
+      "material": "accent",
+      "explode": { "magnitude": 0.4 },
+      "partOf": "rack-sys",
+      "label": { "zh": "冷卻歧管", "en": "Manifold" },
+      "annotation": null
     },
     {
       "id": "tray-gpu-01",
@@ -635,37 +621,105 @@
     {
       "id": "tray-power",
       "kind": "primitive",
-      "geometry": {
-        "shape": "box",
-        "args": [
-          2,
-          0.3,
-          1.4
-        ],
-        "bevel": 0.02
-      },
-      "transform": {
-        "position": [
-          0,
-          0.55,
-          0
-        ]
-      },
+      "geometry": { "shape": "box", "args": [2.0, 0.06, 1.4], "bevel": 0.02 },
+      "transform": { "position": [0, 0.5, 0] },
       "material": "metal-dark",
-      "explode": {
-        "vector": [
-          0,
-          1,
-          0.2
+      "explode": { "magnitude": 0.3 },
+      "annotation": { "title": { "zh": "電源盤", "en": "Power Shelf" } },
+      "process": {
+        "scale": 0.6,
+        "stations": [
+          { "id": "pwr-rectify", "partId": "tray-power", "processTime": 0.4, "input": "AC", "output": "DC" }
         ],
-        "magnitude": 0.3
-      },
-      "annotation": {
-        "title": {
-          "zh": "電源盤",
-          "en": "Power Shelf"
-        }
+        "routes": [
+          {
+            "id": "pwr-ac-in",
+            "kind": "main",
+            "material": "metal-dark",
+            "path": [[-1.5, 0.2, 0], [-0.7, 0.16, 0], [0, 0.14, 0]],
+            "stops": [{ "point": 2, "station": "pwr-rectify" }]
+          },
+          {
+            "id": "pwr-dc-out",
+            "kind": "main",
+            "material": "metal-light",
+            "path": [[0, 0.14, 0], [0.7, 0.16, 0.1], [1.5, 0.2, 0.15]],
+            "stops": [{ "point": 0, "station": "pwr-rectify" }]
+          },
+          {
+            "id": "pwr-dc-up",
+            "kind": "side",
+            "material": "metal-light",
+            "path": [[0, 0.14, 0.1], [0.1, 0.45, 0.35], [0.2, 0.8, 0.55]],
+            "stops": [{ "point": 0, "station": "pwr-rectify" }]
+          }
+        ],
+        "tokens": [
+          { "id": "pwr-ac-in-tok", "routeId": "pwr-ac-in", "material": "metal-dark", "count": 2, "radius": 0.07, "duration": 3.8 },
+          { "id": "pwr-dc-out-tok", "routeId": "pwr-dc-out", "material": "metal-light", "count": 2, "radius": 0.07, "duration": 3.8 },
+          { "id": "pwr-dc-up-tok", "routeId": "pwr-dc-up", "material": "metal-light", "count": 2, "radius": 0.06, "duration": 3.6 }
+        ]
       }
+    },
+    {
+      "id": "tray-power-psu",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.32, 0.22, 0.6], "bevel": 0.015 },
+      "transform": { "position": [-0.78, 0.62, 0.05] },
+      "material": "metal-light",
+      "explode": { "magnitude": 0.5 },
+      "repeat": { "count": 5, "step": [0.39, 0, 0] },
+      "partOf": "tray-power",
+      "label": { "zh": "電源模組", "en": "PSU" },
+      "annotation": null
+    },
+    {
+      "id": "tray-power-busbar",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [1.9, 0.08, 0.12], "bevel": 0.01 },
+      "transform": { "position": [0, 0.6, 0.6] },
+      "material": "accent",
+      "explode": { "magnitude": 0.6 },
+      "partOf": "tray-power",
+      "label": { "zh": "匯流排", "en": "Busbar" },
+      "annotation": null
+    },
+    {
+      "id": "tray-power-bbu",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.6, 0.2, 0.3], "bevel": 0.02 },
+      "transform": { "position": [0, 0.62, -0.55] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 0.55 },
+      "partOf": "tray-power",
+      "label": { "zh": "電池備援", "en": "BBU" },
+      "annotation": null
     }
-  ]
+  ],
+  "process": {
+    "stations": [
+      { "id": "rack-power", "partId": "tray-power", "output": "power" },
+      { "id": "rack-switch", "partId": "tray-nvswitch", "input": "data", "output": "data" }
+    ],
+    "routes": [
+      {
+        "id": "power-route",
+        "kind": "main",
+        "material": "metal-light",
+        "path": [[0.95, 0.5, 0.45], [0.95, 1.0, 0.45], [0.95, 1.4, 0.45], [0.95, 1.8, 0.45], [0.95, 2.2, 0.45], [0.95, 2.6, 0.45]],
+        "stops": [{ "point": 0, "station": "rack-power" }]
+      },
+      {
+        "id": "data-route",
+        "kind": "main",
+        "material": "accent",
+        "path": [[-0.95, 2.6, 0.45], [-0.95, 2.2, 0.45], [-0.95, 1.8, 0.45], [-0.95, 1.4, 0.45], [-0.95, 1.0, 0.45]],
+        "stops": [{ "point": 3, "station": "rack-switch" }]
+      }
+    ],
+    "tokens": [
+      { "id": "power-tok", "routeId": "power-route", "material": "metal-light", "count": 4, "radius": 0.06, "duration": 5.0 },
+      { "id": "data-tok", "routeId": "data-route", "material": "accent", "count": 4, "radius": 0.06, "duration": 4.5 }
+    ]
+  }
 }
