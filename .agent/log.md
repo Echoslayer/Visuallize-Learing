@@ -206,3 +206,160 @@
 - `/add-component` 改成先讀 machine research/spec,再實作到 `content/*.json`;第一台機台不先抽 `engine/kit/`。
 - 同步 `CLAUDE.md`、`PLAN.md`、`topic-playbook.md`、`machine-patterns.md`、`specs/_TEMPLATE.md`。
 - 驗證:文件路徑 `git diff --check` 通過;未跑 build(純文件/command 變更)。
+
+## 重電 / 電網 redo Phase D — Topic-level 電力流接線 ✅
+- 在 `src/content/grid.json` 新增 topic-level `process`: `hv-route`(accent) 高壓進線 → GIS → transformer; `lv-route`(chip) transformer → busbar → distribution → load; `control-route`(metal-light) control → GIS/transformer/distribution。
+- 介面契約對齊:GIS `high-voltage-ac → protected-high-voltage-ac`;transformer `protected-high-voltage-ac → stepped-ac`;busbar `stepped-ac → load-power`;distribution `load-power → served-load`;control `status → trip-command`。
+- 驗證:JSON parse、diff-check、`pnpm check`、typecheck、lint、build 全綠;截圖 `grid-phase-d.png`、`grid-phase-d-exploded.png`、`grid-phase-d-cards.png` 可讀。
+- Ponytail 取捨:暫不新增 ADR / topic-playbook pattern;目前只是既有 `process` schema 的內容實例,等第二個「變電站式 power flow」題目出現再抽 pattern。
+- 下一步:人類校對 companies.csv 的 grid 公司對應,或 commit grid redo 分批變更。
+
+## 重電 / 電網 redo Phase C-4 — Distribution / Load ✅(待人類確認)
+- 三段管線:`docs/machines/distribution-load.md`(研究)→ `specs/25-machine-distribution-load.md`(Rack/Panel pattern)→ `src/content/grid.json` 實作。
+- 新增 `distribution` 主機台:配電櫃、盤面、電表/HMI、主斷路器、分路 breakers、出線端子、出線電纜、用電負載 rack。
+- 機台級流:`load-power`(chip)進 → distribution-feed dwell 0.4s → `served-load`(chip)出;作為 grid demo 終端。
+- companies.csv 先掛 `distribution`:士電、亞力、中興電、台達電;需人類查證。
+- 驗證:JSON parse/diff-check/typecheck/lint/build 全綠;截圖 `grid-distribution-machine.png`、`grid-distribution-machine-names.png`、`grid-gallery-c4.png` 可讀。
+- 下一步:人類確認截圖 → Phase D topic-level 電力流接線 + 全題驗收。
+
+## 重電 / 電網 redo Phase C-3 — Control & Protection Panel ✅(待人類確認)
+- 三段管線:`docs/machines/control-protection.md`(研究)→ `specs/24-machine-control-protection.md`(Rack pattern)→ `src/content/grid.json` 實作。
+- 新增 `control` 主機台:控制櫃、盤面框、保護電驛模組(repeat)、SCADA/HMI 螢幕、單線圖、端子排、通訊處理器、控制電源/UPS。
+- 機台級流:`field-status`(metal-light)進 → control-logic dwell 0.4s → `trip-command`(metal-light)出;不使用主電力顏色。
+- companies.csv 先掛 `control`:中興電、亞力、台達電;需人類查證。
+- 驗證:JSON parse/diff-check/typecheck/lint/build 全綠;截圖 `grid-control-machine.png`、`grid-control-machine-names.png`、`grid-gallery-c3.png` 可讀。
+- 下一步:人類確認截圖 → Phase C-4 Distribution / Load。
+
+## 重電 / 電網 redo Phase C-2 — Busbar / Cable ✅(待人類確認)
+- 三段管線:`docs/machines/busbar-cable.md`(研究)→ `specs/23-machine-busbar-cable.md`(Piping Skid 變體)→ `src/content/grid.json` 實作。
+- 新增 `busbar` 主機台:低矮框架、三相母線、兩排絕緣支柱、電纜終端、三條出線電纜、接地排。
+- 機台級流:`stepped-ac`(chip)左進 → busbar-transfer dwell 0.2s → `load-power`(chip)右出;不做控制訊號。
+- companies.csv 先掛 `busbar`:大亞、華新、中鋼;需人類查證。
+- 驗證:JSON parse/diff-check/typecheck/lint/build 全綠;截圖 `grid-busbar-machine.png`、`grid-busbar-machine-names.png`、`grid-gallery-c2.png` 可讀。
+- 下一步:人類確認截圖 → Phase C-3 Control & Protection Panel。
+
+## 重電 / 電網 redo Phase C-1 — GIS / Breaker ✅(待人類確認)
+- 三段管線:`docs/machines/gis-breaker.md`(研究)→ `specs/20-machine-gis-breaker.md`(Piping Skid + Process Tool pattern)→ `src/content/grid.json` 實作。
+- 新增 `gis` 主機台:GIS tank(enclosure)、三相母線筒、斷路器腔、操作機構、隔離/接地開關、進出線套管、GIL 出線管、狀態監測、底座。
+- 機台級流:高壓 AC(accent)左進 → breaker station dwell 0.5s → 高壓受保護輸出(accent)右出;控制訊號(metal-light)走 side route。
+- companies.csv 先掛 `gis`:中興電、亞力、士電;需人類查證。
+- 驗證:JSON parse/diff-check/typecheck/lint/build 全綠;截圖 `grid-gis-machine.png`、`grid-gis-machine-xray.png`、`grid-gallery-c1.png` 可讀。
+- 下一步:人類確認截圖 → Phase C-2 Busbar / Cable。
+
+## 重電 / 電網 redo Phase C-0 — Power Transformer ✅(待人類確認)
+- 三段管線:`docs/machines/power-transformer.md`(研究)→ `specs/19-machine-power-transformer.md`(Transformer pattern)→ `src/content/grid.json` 實作。
+- 舊 `grid` close-up 破壞式替換為單台油浸式電力變壓器:油箱(enclosure)、頂蓋/底座、三柱鐵芯、繞組、HV/LV 套管、散熱片、油枕、分接開關、保護監測附件。
+- 機台級流:高壓 AC(accent)進 → core station dwell 0.8s → 低壓/step AC(chip)出;控制訊號(metal-light)走 side route,不混主電力流。
+- companies.csv 舊 grid 公司先全部重指到 `transformer`;子部位公司對應仍需人類查證後再細分。
+- 驗證:JSON parse/diff-check/typecheck/lint/build 全綠;截圖 `grid-transformer-machine.png`、`grid-transformer-machine-xray.png` 可讀,重複 label 已收斂。
+- 下一步:人類確認截圖 → Phase C-1 GIS / Breaker。
+
+## IC 設計機台 + 機台頁互動 + 公司卡解耦 ✅
+- **IC 設計機台(spec 12)**:三段管線重建 design 節點 → 三螢幕 EDA 工作站 + floorplan/IP/PDK + signoff 板 + 運算機架(content,partOf 繼承)。
+- **EDA accent 座標修正**:code/waveform/tick 三條原本浮空且未隨螢幕旋轉(斜插、看似在背面、很淡)→ 貼齊各螢幕正面(朝相機 +z 面)並對齊 rotation,改為像印在螢幕上。
+- **機台頁支援拆解/名稱**:`Gallery.tsx` 掛上主場景同一組 `Controls`+`Hotkeys`(皆只接 `useSelection`、與題目無關),機台頁行為與供應鏈頁一致。
+- **公司卡解耦展開**:`GeometryFactory` card 改 `showAllCards ?` only(原 `exploded || showAllCards`)→ 展開不再強制冒卡,「股票」鈕成為唯一開關(展開後也關得掉)。`exploded` 仍用於幾何放射,無 dead code。
+- 驗證:typecheck/lint/build 全綠;截圖機台頁拆解+名稱、拆解無股票時無卡、EDA 條塊貼齊螢幕。
+
+## 機台重做 Phase 0 — 機台級進出流機制 ✅(待人類確認 + ADR)
+- 問題:機台頁(gallery 聚焦)`focusMachine` 直接 `process: undefined`,單機台沒物料進出。
+- 機制(方案 A):schema 加 `Part.process?`(machine-local 座標,root 為原點)+ `ProcessSpec.scale?`(管/箭頭/環尺寸倍率,單機台 ~0.4);`focusMachine` 把 root part 的 process 提升為 `content.process`。
+- `ProcessLayer`/`process-motion` 原樣重用,只加 `scale` 倍率(箭頭/torus/tube 半徑);整線視圖不帶 scale → 預設 1,無回歸。
+- design 試金石:`design-in`(spec/白進)→ 站 design-wks(floorplan,dwell 0.6s)→ `design-out`(GDS/綠出);in/out 分色、單向、箭頭。
+- 驗證:check/typecheck/lint/build 全綠;`phase0-design2.png` 機制成立。
+- 待辦:人類確認機制 → 補 ADR(機台級 process + gallery 渲染 + scale)→ Phase 1 矽晶圓。
+
+## 機台重做 Phase 1 — 矽晶圓 wafer ✅(待人類確認)
+- 三段管線:`docs/machines/wafer.md`(研究,公司標需查證)→ `specs/13-machine-wafer.md`(設計,Crystal-Growth Cell pattern)→ 實作。
+- 從「單晶棒圓柱+疊片+卡匣」重做為長晶爐單元:爐體(enclosure)、晶棒、坩堝、晶種桿、線鋸切片、晶圓疊(藍)、卡匣、CMP 拋光盤。
+- 機台級流:`silicon`(灰)左進 → 站 wafer-grow(dwell 0.8s)→ `wafer`(藍/accent)右出;in/out 分色、單向、scale 0.4。
+- 介面契約:output accent = 整線 wafer-route 材質 = foundry input(Phase 6 接線用)。
+- 微調:右側 saw/stack/cassette/CMP 原本擠在同點 → 沿 z 散開(saw 前、stack+卡匣 中、CMP 後)。
+- 驗證:check/typecheck/lint/build 全綠;`p1-wafer*.png`:剪影像長晶爐、透視見晶棒、流動單向分色、名稱齊。
+- 下一步:Phase 2 晶圓代工 foundry。
+
+## 機台重做 Phase 2 — 晶圓代工 foundry ✅(待人類確認)
+- 三段管線:`docs/machines/foundry.md`(研究,公司需查證)→ `specs/14-machine-foundry.md`(Fab Cleanroom Bay pattern)→ 實作。
+- 從「外殼+屋頂一排機台+軌道」重做為無塵室 bay:外殼(enclosure)內藏微影機+投影鏡頭+製程晶圓(卡盤)+蝕刻/沉積腔體(repeat×2)+CMP;頂部 AMHS 軌道+FOUP。
+- 機台級流(3 路):藍空白晶圓(accent)左進 + 灰設備(metal-light)後側注入 → 站 foundry-proc(dwell 1.2s 最長)→ 綠已加工晶圓(chip)右出。
+- ⚠️ 介面契約待決:機台頁在 foundry 即藍→綠,整線目前 osat 才變;Phase 6 決定變色點(已記 spec/研究/計畫)。
+- 驗證:check/typecheck/lint/build 全綠;`p2-foundry*.png`:剪影像 bay+天車、透視見內部製程模組、3 路流單向分色、名稱齊。
+- 下一步:Phase 3 設備/材料 equip。
+
+## 機台重做 Phase 3 — 設備/材料 equip ✅(待人類確認)
+- 三段管線:`docs/machines/equipment.md`(研究,公司需查證)→ `specs/15-machine-equipment.md`(Supply Hub pattern)→ 實作。
+- 從「單一 cluster tool」補成設備+材料 hub:設備側保留 mainframe+EFEM+裝載埠+製程腔(改 repeat×2)+氣體管路;材料側新增氣體鋼瓶(×3)+化學品桶(×2)+光罩盒(藍)。
+- 機台級流(源頭):深灰原料拉進 → 站 equip-dispense(dwell 0.4s)→ 亮灰 supply 往 fab 出;in/out 分色、單向、scale 0.4。
+- 介面契約:output metal-light = 整線 supply-route 材質 = foundry 側向 input。
+- 驗證:check/typecheck/lint/build 全綠;`p3-equip*.png`:設備+材料兩類可辨、supply 單向出、名稱齊。
+- 小瑕疵(可後續):材料群略被 mainframe 遮、化學桶半藏;不影響辨識。
+- 下一步:Phase 4 封裝測試 osat。
+
+## 機台重做 Phase 4 — 封裝測試 osat ✅(待人類確認)
+- 三段管線:`docs/machines/osat.md`(研究,公司需查證)→ `specs/16-machine-osat.md`(Assembly & Test Line pattern)→ 實作。
+- 補成封裝段(切割/封裝載板/打線臂/封膠)+ 測試段(測試機/測試座×2/成品盤綠);保留 substrate/bonder/tester/sockets,新增 dicing/mold/tray。
+- 機台級流:藍已加工晶圓(accent)左進 → 站 osat-pkg(dwell 0.9s)→ 綠成品晶片(chip)右出;整線藍→綠變色點即此(與 topic 一致)。
+- 介面契約:input accent = foundry 對應;output chip = 整線 chip-route = downstream input。
+- 驗證:check/typecheck/lint/build 全綠;`p4-osat*.png`:封裝+測試兩段可辨、藍→綠單向、名稱齊。
+- 下一步:Phase 5 下游應用 downstream(最後一台)。
+
+## AI 伺服器重做 Phase A — 供應鏈研究 ✅(待人類校對)
+- `/research-supply-chain ai-server` → `docs/supply-chains/ai-server.md`(WebSearch 多源查證,2026-06)。
+- 9 環節:GPU/加速器、HBM、CPU、NVLink/NVSwitch、網路+光收發、電源、液冷、ABF載板/PCB/連接、系統 ODM。
+- ~35 家公司(台股為主+國際),代號交叉比對:ODM(鴻海2317/廣達2382/緯創3231/緯穎6669/英業達2356/技嘉2376)、散熱(奇鋐3017/雙鴻3324)、電源(台達2308/光寶2301)、載板(欣興3037/南電8046/景碩3189)、PCB/CCL(金像電2368/健鼎3044/台光電2383)、連接(嘉澤3533/貿聯3665)、網路(智邦2345)、製造封裝(台積2330/日月光3711);國際 NVDA/AMD/SK Hynix/Micron/Broadcom/Amphenol。
+- 關鍵卡脖子:CoWoS(TSMC)、HBM(SK Hynix ~90% 供 NVIDIA)、ABF 載板。
+- 重點洞察:這是**機櫃互連**(電源發散層 + 資料 fabric 雙向),非輸送帶單向產線 → 影響整機 process 設計。
+- 待人類校對:市占/出貨數字會變動、公司↔盤多對多歸類、國際代號是否納入 demo。
+- 下一步:Phase B `/design-demo ai-server`。
+
+## AI 伺服器重做 Phase B — design demo ✅(待人類拍板)
+- `/design-demo ai-server` → `specs/17-topic-ai-server.md`(讀研究 + machine-patterns,套 object-abstraction)。
+- 精選 7 節點:GPU 運算盤×2、CPU 運算盤、NVSwitch 交換盤、網路交換盤、電源盤、機櫃/系統(rack框+CDU+ODM)。HBM/CoWoS/載板=GPU 盤子部位+掛公司,非獨立盤。
+- 布局:直立 Rack,盤由上而下堆疊;相機斜前看正面+側面。每盤=PCB slab + 晶片 + 散熱 + 連接器(partOf)。
+- 互連(關鍵決策,建議採用):整機兩層 topic-process —— 電源層(電源盤→busbar 上行發散)+ 資料層(GPU→NVSwitch→網路,單向匯入交換);非閉環。機台級流 reuse Part.process+scale0.4。
+- 待人類拍板(§7):①國際代號是否納入 csv(建議納入 NVDA/SK Hynix/Broadcom…)②節點數 7 OK ③整機兩層方案 ④GPU 盤數 2 片 ⑤CDU 獨立與否。
+- 下一步:人類拍板 → Phase C-0 GPU 運算盤試金石。
+
+## AI 伺服器重做 Phase C-0 — GPU 運算盤試金石 ✅(待人類確認)
+- 採 Phase B §7 建議預設(國際代號納入/7節點/兩層互連/2 GPU盤/CDU 子部位)續做。
+- `tray-gpu-01` 從單方塊 → 複合盤:薄盤底 + 綠 PCB + GPU 模組×2 + HBM×6 + 冷板×2(藍)+ NVLink 連接器×9 + VRM(皆 partOf)。
+- **新增 material `heat`(橘 #f97316)**——materials.ts 登錄(非 schema 變更),供散熱 token。
+- 機台級流(reuse Part.process,**scale 0.6**,因盤比半導體機台大):資料 in→out(藍)+ 電源 in(銀,side)+ 廢熱 out(橘,上)；單向、過站、分色。
+- 驗證:check/typecheck/lint/build 全綠;gallery `c0-gpu*.png` 剪影像 GPU 盤+散熱橘箭頭;topic `c0-rack.png` 盤在機櫃中、未壞(其餘 5 盤仍占位白板待 C-1..C-5)。
+- 試金石確立配方:複合盤 + 機台流 scale 0.6 + heat 材質。
+- 下一步:Phase C-1 GPU 運算盤 #2(套同配方)。
+
+## AI 伺服器重做 Phase C-1 — GPU 運算盤 #2 ✅(待人類確認)
+- `tray-gpu-02` 套 C-0 同配方,y 下移 0.4(anchor 2.2);複合盤 + 機台流(scale 0.6,資料/電源/熱)identical 到 #1。
+- 驗證:check/typecheck/lint/build 全綠;`c1-gpu2.png` 與 #1 一致、流動正常。
+- 下一步:Phase C-2 CPU 運算盤(新設計:socket + DIMM)。
+
+## AI 伺服器重做 Phase C-2 — CPU 運算盤 ✅(待人類確認)
+- `specs/21-machine-cpu-tray.md`(design-machine,引研究 §3③ + topic spec 17)→ 實作。
+- `tray-cpu` 從單方塊 → 複合盤:綠 PCB + CPU socket×2 + 散熱器×2 + DIMM 記憶體立條×8(招牌)+ VRM。
+- 機台級流(scale 0.6):資料 in→out(藍)+ 電源 in(銀);無熱(CPU 較少,與 GPU 盤的橘熱羽區隔)。
+- 驗證:check/typecheck/lint/build 全綠;`c2-cpu-n.png` DIMM 立條陣列辨識度高、與 GPU 盤明顯不同、流動正常。
+- 下一步:Phase C-3 NVSwitch 交換盤。
+
+## 機房 / datacenter redo ✅(spec 18)
+- 依 redo plan 把 `datacenter` 從早期 repeat 範例重做為資料中心基礎設施 demo。
+- 新增/同步文件:`docs/plan/datacenter-redo.md`、`docs/supply-chains/datacenter.md`、`specs/18-topic-datacenter.md`。
+- `src/content/datacenter.json`:五個 root 節點——運算機櫃列、電力室/UPS PDU、液冷/空調迴路、網路交換 fabric、監控/DCIM;子部位用 `partOf`,外殼用 `enclosure`,機櫃列/托盤/狀態燈用 `repeat`。
+- topic-level `process`:power-feed(accent)、cooling-supply(chip)、cooling-return(heat)、data up/down(metal-light)、telemetry(metal-light),不新增 engine/schema。
+- `companies.csv` 重指 datacenter root nodes(代表公司需人類校對)。
+- 驗證:check/typecheck/lint/build 全綠;截圖 `datacenter.png`、`datacenter-xray.png`、`regress-aiserver.png` 讀回 OK。一般狀態像機房;X-Ray/名稱可見機櫃托盤與電力/冷卻/資料/監控路徑。X-Ray 名牌略密,不值得為此改 engine。
+
+## AI 伺服器重做 Phase C-3 — NVSwitch 交換盤 ✅(待人類確認)
+- `specs/22-machine-nvswitch-tray.md`(原編 19,因與並行新增的 datacenter/grid/transformer specs 撞號 → 重編 21/22)→ 實作。
+- `tray-nvswitch` 從單方塊 → 複合盤:綠 PCB + 中央 NVSwitch ASIC + 藍散熱蓋 + 高密度連接器×10 + NVLink 銅纜束(藍 tube×5,arcing 往背板)。
+- 機台級流(scale 0.6):switch fabric 多路藍資料 in(左+前)→ 交換 → 多路 out(右+後);全 accent、單向、過站。
+- 命名撞號處理:本輪 ai-server 機台 spec 18/19 與並行作業撞號 → 改 21(cpu)/22(nvswitch);plan/log 已更正。
+- 驗證:check/typecheck/lint/build 全綠;`c3-nvsw-n.png` 中央大 ASIC+銅纜束辨識清楚、多路流動正常。
+- 下一步:Phase C-4 網路交換盤。
+
+## AI 伺服器重做 Phase C-4 — 網路交換盤 ✅(待人類確認)
+- `specs/23-machine-network-tray.md` → 實作。
+- `tray-network` 從單方塊 → 複合盤:綠 PCB + 交換 ASIC + 散熱器 + 光模組籠×12(招牌,前緣一排)。
+- 機台級流(scale 0.6):封包 in(左)→ 交換 → out(右)+ 光模組側出 + 電源 in;單向、分色、過站。
+- 驗證:check/typecheck/lint/build 全綠;`c4-net-n.png` 光模組陣列辨識清楚、流動正常。
+- 下一步:Phase C-5 電源盤(最後一盤)。
