@@ -2,6 +2,13 @@
 
 給在這個 repo 工作的 Claude Code 的指引。**先讀 `docs/plan/CONTEXT.md` 與 `docs/plan/PLAN.md`**（或直接跑 `/prime`）。
 
+## 多 agent 交接
+
+- 本 repo 可能在 Claude Code、Codex 或其他工作 agent 之間切換；不要假設上一輪記憶仍在。
+- 開工先讀本檔、`git status --short`、最近 commit/log，再接續現有變更；不要覆蓋未提交修改。
+- Codex 只是 Claude Code 的助手；跨 agent 規則仍以本檔為唯一來源，`AGENTS.md` 只做重導向。
+- 完成可延續的流程/決策時，同步 `/update-docs` 相關活文件，讓下一個 agent 不必重建脈絡。
+
 ## 這是什麼
 
 一台**與議題無關的資料驅動 3D 解說引擎**。第一份內容是「AI 伺服器供應鏈」：

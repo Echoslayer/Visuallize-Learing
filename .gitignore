@@ -12,7 +12,6 @@ dist/
 
 # Agent run artifacts (regenerated each run; not source)
 .agent/shots/
-.agent/log.md
 
 # Claude Code local-only config (machine-specific permissions)
 .claude/settings.local.json

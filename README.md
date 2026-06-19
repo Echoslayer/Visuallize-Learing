@@ -53,6 +53,7 @@ src/content/     # 題目資料(JSON);換議題只動這裡
 tools/shoot.mjs  # 截圖 harness
 specs/           # 階段二每個工作單元的規格(spec-driven)
 docs/plan/       # CONTEXT / PLAN / SETUP
+docs/machines/   # 單台機台研究;供 design-machine/add-component 使用
 docs/adr/        # 架構決策紀錄
 .claude/         # slash commands + r3f-industrial-component skill + 權限安全網
 ```
@@ -60,7 +61,7 @@ docs/adr/        # 架構決策紀錄
 ## 給 coding agent
 
 這個 repo 設計成可由終端的 Claude Code 自主迭代。從 `/prime` 開始，遵循 `CLAUDE.md`。
-可重用工作流在 `.claude/commands/`：`/prime`、`/verify`、`/commit`、`/add-component`、`/add-topic`。
+可重用工作流在 `.claude/commands/`：`/prime`、`/verify`、`/commit`、`/research-supply-chain`、`/design-demo`、`/add-topic`、`/research-machine`、`/design-machine`、`/add-component`。
 
 ## 狀態
 
@@ -74,6 +75,7 @@ docs/adr/        # 架構決策紀錄
 schema 變更皆走 spec + sign-off(`repeat` 02、`tube` 03、`model` 05、`flow` 06、`label` 08、`flow-dwell` 10、`process` 11)。純函式附 `pnpm check` 斷言(見 [ADR-0010])。
 供應鏈題目走三段管線(見 [ADR-0013](docs/adr/0013-supply-chain-pipeline-abstraction.md)):
 `/research-supply-chain`(事實 → `docs/supply-chains/`)→ `/design-demo`(設計取捨,套 `object-abstraction` skill)→ `/add-topic`(建模)。
+單台機台也走小三段:`/research-machine`(事實 → `docs/machines/`)→ `/design-machine`(取捨 → `specs/<NN>-machine-*.md`)→ `/add-component`(建模到 content)。
 模型細節層次跟著**供應鏈意義**走(鏈上有對應的部位就建,只略過無意義造型細節)。
 建置步驟 + **最終驗收清單**見 [`docs/plan/topic-playbook.md`](docs/plan/topic-playbook.md)。
 
