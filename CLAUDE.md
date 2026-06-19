@@ -15,6 +15,16 @@
    題目資訊只能存在於 `content/*.json`。換議題 = 換一份 JSON，engine 一行不改。
 3. **每個零件有穩定 `id` 與 `name`/`userData.partId`**，拆解與標註靠它定位。
 
+## 工程取捨（Ponytail）
+
+- 先刪再加:能刪舊欄位/舊資產/舊流程,就不要新增抽象。
+- 新依賴預設拒絕:先用 stdlib、browser/native、現有依賴;真需要再回報。
+- schema 變更要有理由:只有既有 schema 做不到、且可跨題目重用時才改 `engine/`。
+- 不為未來預留架構:等第二個真實案例出現再抽象;例外是明確 reusable pattern。
+- 非平凡邏輯要有一個最小 check:用 `node:assert`,不引測試框架。
+- 有已知天花板的捷徑要標 `ponytail:` 註解,寫清楚何時升級。
+- 視覺/互動功能以截圖驗收為準;不要用測試框架假裝驗到畫面。
+
 ## 工具鏈
 
 - Node/React → **`pnpm`**（指令一律 `pnpm`，非 `npm`）。
