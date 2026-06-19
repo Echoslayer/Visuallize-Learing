@@ -27,13 +27,14 @@
 - `src/engine/` — 與題目無關、可重用。**不得出現任何題目字眼。**
   已建:`schema.ts`、`GeometryFactory.tsx`(box/cylinder/cone/tube/flow + model)、`Scene.tsx`、`SceneRoot.tsx`、
   `materials.ts`、`selection.ts`、`explode.ts`(**全域自動放射**,見 ADR-0014)、`Annotation.tsx`(公司卡)、
-  `NameTag.tsx`(元件名牌)、`ModelPart.tsx`、`FlowParticles.tsx`(流動,ADR-0012)、`config.ts`(ADR-0009)。
+  `NameTag.tsx`(元件名牌)、`ModelPart.tsx`、`FlowParticles.tsx`(流動,ADR-0012)、`flow-dwell.ts`(站點停頓純函式,spec 10)、`config.ts`(ADR-0009)。
   之後:`kit/`(primitive 積木)。
 - **content 慣例(ADR-0014)**:`explode` 只需 `magnitude`(方向自動;vector 已廢棄)。每個 part 要有名字:
   有意義的給 `label`;形狀小塊給 `partOf`(指向父節點 → 繼承父名 + 點選顯示父卡)。companies 仍走 `companies.csv`。
   擋住內部的箱體/機殼標 `enclosure: true`(ADR-0015)→「透視」按鈕看穿。
-- `src/ui/` — UI 殼。已建:`Controls.tsx`(拆解/重置/語言)、`TopicSwitcher.tsx`(左側題目切換,`?topic=` 導航)、
-  `Credits.tsx`(借用模型 CC-BY 標註)、`Tuning.tsx`(leva 調參,**僅 DEV、僅 App**)。
+- `src/ui/` — UI 殼。已建:`Controls.tsx`(拆解/名稱/股票/透視/重置/語言)、`TopicSwitcher.tsx`(左側題目切換,`?topic=` 導航)、
+  `Hotkeys.tsx`(E 拆解/X 透視/數字鍵切題目)、`Credits.tsx`(借用模型 CC-BY 標註)、
+  `Tuning.tsx`(leva 調參,**僅 DEV、僅 App**)、`DevHandle.tsx`(**DEV 截圖驅動縫**:`window.__view` = camera/controls/scene/store,延伸 ADR-0008,別當垃圾清掉)。
 - **視覺數值一律走 `engine/config.ts`**,別在元件硬寫;調好 bake 進 `DEFAULT_CONFIG`。
 - `src/gallery/` — 畫廊路由(`/?view=gallery`),每個零件單獨一格供截圖。
 - `src/content/` — 題目資料 JSON(元件結構 + `annotation.title`,**不含公司**);換議題只動這裡。
@@ -57,9 +58,11 @@
 ## 現在該做什麼
 
 - **階段一 C0–C6 全部 ✅ 完成(DoD 達成)** —— 完整垂直切片,engine/content 分離守住。
-- **現在:等人類確認後才開始階段二**(加元件 `/add-component`、加題目 `/add-topic`,先寫 `specs/`)。
+- **階段二進行中**(加元件 `/add-component`、加題目 `/add-topic`,先寫 `specs/`)。
+- **semiconductor 已用三段管線重做為深度範本**:深度研究(36 公司查證)→ design-demo v2(spec 09,修動線/互動)→ 重建;
+  含 enclosure 透視、flow 進站爬升 + 站點停頓 dwell(spec 10)。其他供應鏈照 `topic-playbook.md` 跟進。
 - 採互動式節奏:**每個查核點完成後停下,給人類看截圖再續**(本專案不用 ADW 自動化,見 ADR-0004)。
-- 待辦:annotation 內容查證(人類)、build chunk code-split。
+- 待辦:其他供應鏈題目(research → design-demo → add-topic);annotation 對應人工再校;build chunk code-split。
 
 ## 測試(見 [ADR-0010](docs/adr/0010-no-test-framework.md))
 
