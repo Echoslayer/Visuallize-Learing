@@ -30,6 +30,7 @@ pnpm shoot "?view=gallery" name   # Playwright 截圖到 .agent/shots/(自我驗
 ```
 
 **截圖自查接口(DEV,ADR-0008)**:`?topic=` 切題目、DOM `[data-action]` 按鈕、`?exploded=1&lang=en&part=id`(Gallery)灌初始狀態。
+單機台調試:`?view=gallery&topic=semiconductor&machine=foundry&xray=1&names=1`。
 相機角度/縮放與狀態驅動走 `window.__view`(Canvas 內 DEV 暴露):
 
 ```js

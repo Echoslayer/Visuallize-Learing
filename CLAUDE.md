@@ -49,7 +49,7 @@
   `Hotkeys.tsx`(E 拆解/X 透視/數字鍵切題目)、`Credits.tsx`(借用模型 CC-BY 標註)、
   `Tuning.tsx`(leva 調參,**僅 DEV、僅 App**)、`DevHandle.tsx`(**DEV 截圖驅動縫**:`window.__view` = camera/controls/scene/store,延伸 ADR-0008,別當垃圾清掉)。
 - **視覺數值一律走 `engine/config.ts`**,別在元件硬寫;調好 bake 進 `DEFAULT_CONFIG`。
-- `src/gallery/` — 畫廊路由(`/?view=gallery`),每個零件單獨一格供截圖。
+- `src/gallery/` — 畫廊路由(`/?view=gallery`),可用 `?machine=<partId>` 單獨看一台機台(含 partOf 子部位)供截圖調試。
 - `src/content/` — 題目資料 JSON(元件結構 + `annotation.title`,**不含公司**);換議題只動這裡。
 - `src/content/companies.csv` — **公司↔元件對應的唯一來源**(edge list `topic,part,ticker,name`,多對多,見 ADR-0011)。
   加公司 = 加一列;**別把公司寫回 JSON**。`registry.ts` 在載入時 join 進 `annotation.companies`。欄位不可含逗號。
