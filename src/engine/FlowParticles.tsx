@@ -2,6 +2,7 @@ import { useFrame } from '@react-three/fiber'
 import { useMemo, useRef } from 'react'
 import { CatmullRomCurve3, Vector3, type Mesh } from 'three'
 import { materialColor } from './materials'
+import { flowParam } from './flow-dwell'
 import type { Geometry } from './schema'
 
 /**
@@ -30,11 +31,28 @@ export function FlowParticles({
   const color = materialColor(material)
   const refs = useRef<(Mesh | null)[]>([])
 
+  // dwell:在 stops 點停頓(像進站加工)。換算成曲線參數 + 排序;無 stops/dwell 走原等速路徑。
+  const dwell = geometry.dwell ?? 0
+  const n = (geometry.path ?? []).length
+  const stopParams = useMemo(
+    () => (geometry.stops ?? []).map((i) => i / n).sort((a, b) => a - b),
+    [geometry.stops, n],
+  )
+  const useDwell = stopParams.length > 0 && dwell > 0
+  const travel = 1 / speed // 跑完整條 path 的秒數
+  const cycle = travel + stopParams.length * dwell // 含停頓的一圈秒數
+
   useFrame((state) => {
-    const t = state.clock.elapsedTime * speed
+    const elapsed = state.clock.elapsedTime
     for (let i = 0; i < count; i++) {
-      const u = (((t + i / count) % 1) + 1) % 1
-      const p = curve.getPointAt(u)
+      let p
+      if (useDwell) {
+        const phase = (((elapsed / cycle + i / count) % 1) + 1) % 1
+        p = curve.getPoint(flowParam(phase, stopParams, dwell, travel)) // 參數版:停點正好落在 path 點
+      } else {
+        const u = (((elapsed * speed + i / count) % 1) + 1) % 1
+        p = curve.getPointAt(u) // 等速(arc-length),維持既有行為
+      }
       refs.current[i]?.position.set(p.x, p.y, p.z)
     }
   })

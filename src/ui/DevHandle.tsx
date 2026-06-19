@@ -12,13 +12,15 @@ import { useConfig } from '../engine/config'
 export function DevHandle() {
   const camera = useThree((s) => s.camera)
   const controls = useThree((s) => s.controls)
+  const scene = useThree((s) => s.scene)
   useEffect(() => {
     ;(window as unknown as { __view?: unknown }).__view = {
       camera,
       controls,
+      scene,
       selection: useSelection,
       config: useConfig,
     }
-  }, [camera, controls])
+  }, [camera, controls, scene])
   return null
 }

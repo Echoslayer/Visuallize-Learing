@@ -24,6 +24,8 @@ export interface Geometry {
   radius?: number // tube:管半徑;flow:粒子球半徑(預設 0.1)
   count?: number // flow:粒子數(預設 8)
   speed?: number // flow:每秒跑完路徑的比例(預設 0.2)
+  stops?: number[] // flow:停留的 path 點索引(粒子在這些點頓一下,像進站加工);空=不停
+  dwell?: number // flow:每個 stop 停留秒數(預設 0;需搭 stops 才生效)
 }
 
 export interface Transform {

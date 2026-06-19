@@ -26,7 +26,7 @@
 - **命名(每個 part 都要有名)**:有意義的給 `label`;形狀小塊給 `partOf`(指向父節點 → 繼承父名 + 點選顯示父卡)。
 - **外殼/黑箱**:把擋住內部的箱體/機殼標 `enclosure: true`(ADR-0015)→「透視」按鈕可看穿,內部元件/flow 才看得見。
 - **公司**:不寫進 JSON;寫 `content/companies.csv`(`topic,part,ticker,name`,多對多,keyed 到**節點 part id**)。代號要查證。
-- **動態/物流**:材料在環節間流動用 `shape:"flow"`(晶圓/流體…)。
+- **動態/物流**:材料在環節間流動用 `shape:"flow"`(晶圓/流體…)。要「進站停頓加工」感 → 加 `stops`(停留 path 點索引)+ `dwell`(秒)(spec 10)。
 - **engine/content 分離**:純內容題目**不得動 `engine/`**;要動 = schema 缺口 → 先寫 schema-change spec 報人類 sign-off。
 
 ---
