@@ -5,7 +5,7 @@
 > 開工前先跑 `/prime`。
 
 ## Metadata
-- type: `component` | `topic` | `schema-change`
+- type: `component` | `machine` | `topic` | `schema-change`
 - slug: `<kebab-case>`
 - date: `<YYYY-MM-DD>`
 - backlog item: `<.agent/backlog.md 的哪一項>`
@@ -13,11 +13,11 @@
 ## 目標（一句話）
 <這次要做出什麼，對使用者/場景的價值>
 
-## 形狀判定（僅 component 需要）
-<方正機械 → primitive kit / 精密規律件 → 程式 CAD GLB / 有機 → 借模型不細分；說明選哪條與理由>
+## 形狀判定（component / machine 需要）
+<方正機械 → content primitive 群組 / 精密規律件 → 程式 CAD GLB / 有機 → 借模型不細分；說明選哪條與理由>
 
 ## 子零件與拆解
-| part id | 幾何/來源 | material | explode vector | annotation（zh/en + 公司/代號） |
+| part id | 幾何/來源 | material | explode.magnitude | annotation（zh/en + 公司/代號） |
 |---|---|---|---|---|
 | | | | | |
 
@@ -26,9 +26,9 @@
 - 一律遵守 §2 GUARDRAILS：題目字眼只能進 `content/*.json`，`engine/` 不得出現。
 
 ## Step by Step Tasks（由上到下依序執行）
-### 1. <foundational：kit 積木 / 材質登錄>
-### 2. <實作：參數化元件或 content JSON>
-### 3. <gallery 加一格單獨渲染>
+### 1. <foundational：研究/spec 確認 / 材質登錄>
+### 2. <實作：content JSON primitive 群組>
+### 3. <gallery 單機 URL 檢查>
 ### 4. <串進場景的拆解與標註>
 ### 5. 跑 Validation Commands，零回歸才算完成
 

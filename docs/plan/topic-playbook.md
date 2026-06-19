@@ -15,12 +15,16 @@
 
 人類在每段之間審查、可調:研究錯改研究、設計不滿改設計,再建。
 
+單台機台也走同樣節奏,但更小: `/research-machine <machine>` → `/design-machine <slug>` → `/add-component <slug>`。
+產物分別是 `docs/machines/<slug>.md`、`specs/<NN>-machine-<slug>.md`、content primitive 群組。
+
 ---
 
 ## 慣例速查(建內容時遵守)
 
 - **形狀**:`box / cylinder / cone / tube / flow` + `repeat`(陣列)+ `rotation`。有機造型才借 `model`(GLB,CC-BY 要標 attribution,先回報素材)。
 - **機台 pattern**:先看 [`machine-patterns.md`](./machine-patterns.md),選接近的配方再按供應鏈意義增減部位;不要每次從零設計機台。
+- **單機調試**:新增或改機台時用 `?view=gallery&topic=<slug>&machine=<partId>` 先看單台,再回完整供應鏈。
 - **物件抽象(object-abstraction skill)**:每個節點 = 多個 primitive 組合,**不要單方塊**。
   細節層次 = **供應鏈意義**:鏈上有對應(材料/零件/製程/供應商)的部位就建,只略過無供應鏈意義的造型細節。
 - **拆解**:`explode` 只需 `magnitude`(方向自動從 `camera.target` 放射;`0`=不動)。`vector` 已廢棄。
@@ -39,6 +43,7 @@
 
 - **產線 / process**:`src/content/semiconductor.json` + `specs/11-schema-process-layer.md`。用 `process.stations/routes/tokens` 表單向、進站停留、物料變形、側向注入。
 - **機台 primitive 配方**:`docs/plan/machine-patterns.md`。先套 Conveyor / Process Tool / Factory Cell / Rack / Tank / Transformer / Piping Skid / Turbine,再依題目調整。
+- **機台三段管線**:`docs/machines/README.md` + `.claude/commands/research-machine.md` + `.claude/commands/design-machine.md`。單台機台先研究、再設計、再由 `/add-component` 實作。
 - **透視外殼**:`src/content/semiconductor.json` 的 `foundry.enclosure`、`src/content/grid.json` 的油箱。用 `enclosure:true` + X-Ray 看內部。
 - **重複陣列**:`src/content/datacenter.json`。用 `repeat` 展開機櫃/滾輪/盤片,別手列。
 - **管線**:`src/content/pipeline.json`。用 `tube` + `path` 表管路,必要時加閥件/法蘭 primitive。
@@ -52,6 +57,7 @@
 **內容 / 結構**
 - [ ] `docs/supply-chains/<slug>.md` 研究存在;公司**代號已查證**(或明確標 `待查證`)。
 - [ ] `specs/<NN>-topic-<slug>.md` 設計存在;每節點是 primitive 組合(非單方塊),細節跟供應鏈意義。
+- [ ] 若新增的是單台機台:`docs/machines/<machine>.md` + `specs/<NN>-machine-<machine>.md` 存在。
 - [ ] `content/<slug>.json` 建好 + `registry.ts` 註冊;`companies.csv` 每節點有對應(多家)。
 - [ ] **每個 part 都有名字**:點任一 primitive 都跳得出名稱(label / partOf 繼承 / 節點 title)。
 
@@ -83,4 +89,4 @@
 ## 相關
 - ADR/spec:0001(分離)、0002(幾何即程式)、0010(測試邊界)、0011(公司 CSV)、0012(flow)、0013(三段管線+抽象判準)、0014(放射拆解+名牌+partOf)、spec 11(process layer)。
 - skills:`object-abstraction`(設計 WHAT)、`r3f-industrial-component`(實作 HOW)。
-- 命令:`/research-supply-chain`、`/design-demo`、`/add-topic`、`/verify`、`/update-docs`。
+- 命令:`/research-supply-chain`、`/design-demo`、`/add-topic`、`/research-machine`、`/design-machine`、`/add-component`、`/verify`、`/update-docs`。

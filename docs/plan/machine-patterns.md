@@ -7,6 +7,11 @@
 - 同一 pattern 在 2+ 新題目重複、JSON 變難維護時,再考慮抽 `src/engine/kit/`。
 - 每個節點仍要按供應鏈意義增減部位;不要把 pattern 當固定模型。
 
+機台新增流程:
+- `/research-machine <machine>` → `docs/machines/<slug>.md`:查用途、外觀、輸入輸出、子系統。
+- `/design-machine <slug>` → `specs/<NN>-machine-<slug>.md`:選本檔 pattern,列 primitive 組合。
+- `/add-component <slug>`:依 spec 實作到 content,用 `?view=gallery&topic=<topic>&machine=<partId>` 驗。
+
 ## Conveyor
 
 用途:主線輸送、產線底座。

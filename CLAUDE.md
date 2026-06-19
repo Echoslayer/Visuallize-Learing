@@ -63,6 +63,7 @@
 - `/commit` — 格式化 commit（階段一 `C{n}: ...`；階段二含 spec 檔名）。
 - `/update-docs [scope]` — 同步活文件(README/CLAUDE/log)與按需新增 ADR。
 - **供應鏈題目三段管線**:`/research-supply-chain <產業>`(查證事實 → `docs/supply-chains/`)→ `/design-demo <slug>`(設計取捨:精選/形狀/大小/互動/物流 → `specs/`)→ `/add-topic`(依設計實作)。
+  **單台機台**也走小三段:`/research-machine <machine>`(→ `docs/machines/`)→ `/design-machine <slug>`(→ `specs/<NN>-machine-*.md`)→ `/add-component`(依 spec 實作到 content)。
   **完整建置步驟 + 慣例 + 最終驗收清單見 [`docs/plan/topic-playbook.md`](docs/plan/topic-playbook.md)** —— 每條供應鏈照它跑。
 - `/add-component <name>` / `/add-topic <name>` — 階段二迭代（先有 `specs/` 規格;供應鏈題目的 spec 由 `/design-demo` 產出）。
 - **skills**:`object-abstraction`(設計時:真實物件 → primitive 組合;細節跟供應鏈意義走,**別用單一方塊**)、

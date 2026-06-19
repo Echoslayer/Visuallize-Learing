@@ -215,15 +215,14 @@ docs/
 > [topic-playbook.md](./topic-playbook.md)：**研究 → 設計 → 建模 → `/verify` → commit**。
 
 ### 8.1 新增一個元件 — `/add-component`
-1. **寫 spec**：在 `specs/` 依 `_TEMPLATE.md` 建檔，填形狀判定、子零件、拆解 `magnitude`、標註、Validation Commands。
-2. **判形狀（選型流程）**：方正機械 → primitive 組合（真需要時再評估 `kit/` 或 `three-bvh-csg`）；
+1. **先研究/設計**：單台機台先跑 `/research-machine <machine>` → `/design-machine <slug>`，產出 `docs/machines/` 與 `specs/<NN>-machine-*.md`。
+2. **判形狀（選型流程）**：方正機械 → content primitive 群組（真需要時再評估 `three-bvh-csg`）；
    精密規律件 → 程式 CAD（CadQuery/OpenSCAD，Python 用 `uv`，必要時 Docker）產 GLB 當 `kind:"model"`；
    有機 → 借模型（先回報來源/授權），整隻一個零件不細分。
 3. 若用到新材質，先登錄到 `materials.ts`。
-4. 做成**參數化元件**（`<ServerRack rows={6} />`），不要寫死。
-5. 把零件加進對應 `content/*.json`，設好 `id`、`explode.magnitude`、`label/partOf`、`annotation.title`。
-6. 在 `gallery/` 加一格單獨渲染它，跑 `/verify`（含讀回截圖對照 spec 與 `docs/references/`）。
-7. 過了再串進場景的拆解與標註，commit。
+4. 把零件加進對應 `content/*.json`，設好 `id`、`explode.magnitude`、`label/partOf`、`annotation.title`。
+5. 用 `?view=gallery&topic=<topic>&machine=<partId>` 單機檢查，再跑 `/verify`（含讀回截圖對照 spec）。
+6. 過了再串進場景的拆解與標註，commit。
 
 ### 8.2 新增一個題目/場景 — `/add-topic`
 1. **寫 spec**（同上）。
@@ -239,7 +238,7 @@ docs/
   3. 依 `topic-playbook.md` 新增下一條供應鏈。
 
 ### 8.4 重構守則
-- primitive 拼法重複 ≥2 次 → 抽 `kit/` 元件（程式版 kitbash）。
+- primitive 拼法跨 2+ 題目重複且 JSON 難維護 → 再抽 `kit/` 元件（程式版 kitbash）。
 - `content/*.json` 出現重複結構 → 考慮 schema `repeat`/`template`，但**先回報**再改 schema（先寫 schema spec）。
 
 ---
