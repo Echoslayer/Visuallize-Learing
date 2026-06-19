@@ -29,6 +29,16 @@ pnpm build
 pnpm shoot "?view=gallery" name   # Playwright 截圖到 .agent/shots/(自我驗證用)
 ```
 
+**截圖自查接口(DEV,ADR-0008)**:`?topic=` 切題目、DOM `[data-action]` 按鈕、`?exploded=1&lang=en&part=id`(Gallery)灌初始狀態。
+相機角度/縮放與狀態驅動走 `window.__view`(Canvas 內 DEV 暴露):
+
+```js
+// Playwright page.evaluate 內:
+const v = window.__view
+v.camera.position.set(0, 2, 6); v.controls.target.set(0, 1, 0); v.controls.update() // 轉角度/縮放
+v.selection.setState({ exploded: true, xray: true })                                 // 驅動狀態
+```
+
 - 主場景:`/`(左側**題目切換器**可點選 6 個題目);元件畫廊:`/?view=gallery`(供逐一截圖自查)。
 - Python 工具（CadQuery/OpenSCAD，選用）一律用 [`uv`](https://docs.astral.sh/uv/)。
 

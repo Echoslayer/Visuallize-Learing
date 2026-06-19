@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { SceneRoot } from './engine/SceneRoot'
 import { Scene } from './engine/Scene'
+import { DevHandle } from './ui/DevHandle'
 import { Controls } from './ui/Controls'
 import { Credits } from './ui/Credits'
 import { TopicSwitcher } from './ui/TopicSwitcher'
@@ -18,6 +19,7 @@ export default function App() {
     <div style={{ position: 'fixed', inset: 0, background: '#dadee4' }}>
       <SceneRoot camera={content.camera}>
         <Scene content={content} />
+        {import.meta.env.DEV && <DevHandle />}
       </SceneRoot>
       <TopicSwitcher current={content.topic} />
       <Controls />

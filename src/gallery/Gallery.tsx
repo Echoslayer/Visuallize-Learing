@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { SceneRoot } from '../engine/SceneRoot'
 import { Scene } from '../engine/Scene'
 import { Credits } from '../ui/Credits'
+import { DevHandle } from '../ui/DevHandle'
 import { useSelection } from '../engine/selection'
 import { getTopic } from '../content/registry'
 
@@ -34,6 +35,7 @@ export function Gallery() {
     <div style={{ position: 'fixed', inset: 0, background: '#dadee4' }}>
       <SceneRoot camera={content.camera}>
         <Scene content={content} />
+        {import.meta.env.DEV && <DevHandle />}
       </SceneRoot>
       <Credits content={content} />
     </div>
