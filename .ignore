@@ -1,0 +1,20 @@
+# Claude Code / ripgrep 搜尋排除(.ignore 一律被尊重,且不受 respectGitignore 設定影響)。
+# 目的:讓 agent 的 search/grep/glob 不掃到「生成/沉重/vendored」檔,保持 context 精簡。
+# 注意:這只擋「搜尋」;用絕對路徑明確 Read(如截圖驗證)仍可讀 —— 那是刻意的。
+
+# 依賴 / vendored
+node_modules/
+.pnpm-store/
+.venv/
+__pycache__/
+
+# 建置 / 快取產物
+dist/
+.vite/
+*.tsbuildinfo
+
+# Agent 截圖(每次重生,非原始碼;需要時仍可指定路徑讀)
+.agent/shots/
+
+# 鎖檔 / 大型生成檔(被 git 追蹤但 agent 不需搜尋)
+pnpm-lock.yaml
