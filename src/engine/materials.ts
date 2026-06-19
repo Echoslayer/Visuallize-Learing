@@ -9,6 +9,7 @@ export const MATERIAL_COLORS: Record<string, string> = {
   'metal-dark': '#414751',
   accent: '#3b82f6', // 強調色(如流動粒子),讓運動更醒目
   chip: '#34d399', // 成品晶片流(綠);與 accent 藍的晶圓流對比,表「晶圓→晶片」變形
+  heat: '#f97316', // 廢熱流(橘);AI 伺服器散熱 token 用,與 power/data 區隔
 }
 
 export function materialColor(id: string): string {

@@ -88,177 +88,549 @@
     {
       "id": "tray-gpu-01",
       "kind": "primitive",
-      "geometry": {
-        "shape": "box",
-        "args": [
-          2,
-          0.24,
-          1.4
+      "geometry": { "shape": "box", "args": [2.0, 0.06, 1.4], "bevel": 0.02 },
+      "transform": { "position": [0, 2.6, 0] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 1.9 },
+      "annotation": { "title": { "zh": "GPU 運算盤", "en": "GPU Compute Tray" } },
+      "process": {
+        "scale": 0.6,
+        "stations": [
+          { "id": "gpu-compute", "partId": "tray-gpu-01", "processTime": 0.8, "input": "data", "output": "data" }
         ],
-        "bevel": 0.02
-      },
-      "transform": {
-        "position": [
-          0,
-          2.6,
-          0
+        "routes": [
+          {
+            "id": "gpu-data-in",
+            "kind": "main",
+            "material": "accent",
+            "path": [[-1.5, 0.18, 0.0], [-0.7, 0.14, 0.0], [0, 0.12, 0.0]],
+            "stops": [{ "point": 2, "station": "gpu-compute" }]
+          },
+          {
+            "id": "gpu-data-out",
+            "kind": "main",
+            "material": "accent",
+            "path": [[0, 0.12, 0.0], [0.7, 0.16, 0.1], [1.5, 0.2, 0.15]],
+            "stops": [{ "point": 0, "station": "gpu-compute" }]
+          },
+          {
+            "id": "gpu-power-in",
+            "kind": "side",
+            "material": "metal-light",
+            "path": [[-0.2, -0.15, 0.78], [-0.05, 0.0, 0.4], [0, 0.12, 0.05]],
+            "stops": [{ "point": 2, "station": "gpu-compute" }]
+          },
+          {
+            "id": "gpu-heat-out",
+            "kind": "side",
+            "material": "heat",
+            "path": [[0, 0.12, 0.05], [0.25, 0.45, -0.25], [0.45, 0.8, -0.5]],
+            "stops": [{ "point": 0, "station": "gpu-compute" }]
+          }
+        ],
+        "tokens": [
+          { "id": "gpu-data-in-tok", "routeId": "gpu-data-in", "material": "accent", "count": 2, "radius": 0.07, "duration": 3.6 },
+          { "id": "gpu-data-out-tok", "routeId": "gpu-data-out", "material": "accent", "count": 2, "radius": 0.07, "duration": 3.6 },
+          { "id": "gpu-power-in-tok", "routeId": "gpu-power-in", "material": "metal-light", "count": 2, "radius": 0.06, "duration": 4.0 },
+          { "id": "gpu-heat-out-tok", "routeId": "gpu-heat-out", "material": "heat", "count": 2, "radius": 0.06, "duration": 4.0 }
         ]
-      },
-      "material": "metal-light",
-      "explode": {
-        "vector": [
-          0,
-          1,
-          0.2
-        ],
-        "magnitude": 1.9
-      },
-      "annotation": {
-        "title": {
-          "zh": "GPU 運算盤",
-          "en": "GPU Compute Tray"
-        }
       }
+    },
+    {
+      "id": "tray-gpu-01-pcb",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [1.9, 0.04, 1.3], "bevel": 0.01 },
+      "transform": { "position": [0, 2.65, 0] },
+      "material": "chip",
+      "explode": { "magnitude": 1.9 },
+      "partOf": "tray-gpu-01",
+      "label": { "zh": "電路板", "en": "PCB" },
+      "annotation": null
+    },
+    {
+      "id": "tray-gpu-01-gpu",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.42, 0.13, 0.42], "bevel": 0.02 },
+      "transform": { "position": [-0.4, 2.73, 0.05] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 2.1 },
+      "repeat": { "count": 2, "step": [0.8, 0, 0] },
+      "partOf": "tray-gpu-01",
+      "label": { "zh": "GPU 模組", "en": "GPU Module" },
+      "annotation": null
+    },
+    {
+      "id": "tray-gpu-01-hbm",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.05, 0.08, 0.14], "bevel": 0.005 },
+      "transform": { "position": [-0.62, 2.72, -0.25] },
+      "material": "metal-light",
+      "explode": { "magnitude": 2.2 },
+      "repeat": { "count": 6, "step": [0.2, 0, 0] },
+      "partOf": "tray-gpu-01",
+      "label": { "zh": "HBM 記憶體", "en": "HBM" },
+      "annotation": null
+    },
+    {
+      "id": "tray-gpu-01-coldplate",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.5, 0.06, 0.5], "bevel": 0.01 },
+      "transform": { "position": [-0.4, 2.83, 0.05] },
+      "material": "accent",
+      "explode": { "magnitude": 2.4 },
+      "repeat": { "count": 2, "step": [0.8, 0, 0] },
+      "partOf": "tray-gpu-01",
+      "label": { "zh": "冷板", "en": "Cold Plate" },
+      "annotation": null
+    },
+    {
+      "id": "tray-gpu-01-nvlink",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.08, 0.1, 0.06], "bevel": 0.005 },
+      "transform": { "position": [-0.65, 2.7, 0.6] },
+      "material": "metal-light",
+      "explode": { "magnitude": 2.3 },
+      "repeat": { "count": 9, "step": [0.16, 0, 0] },
+      "partOf": "tray-gpu-01",
+      "label": { "zh": "NVLink 連接器", "en": "NVLink" },
+      "annotation": null
+    },
+    {
+      "id": "tray-gpu-01-vrm",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.6, 0.09, 0.13], "bevel": 0.01 },
+      "transform": { "position": [0, 2.7, -0.55] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 2.0 },
+      "partOf": "tray-gpu-01",
+      "label": { "zh": "供電模組", "en": "VRM" },
+      "annotation": null
     },
     {
       "id": "tray-gpu-02",
       "kind": "primitive",
-      "geometry": {
-        "shape": "box",
-        "args": [
-          2,
-          0.24,
-          1.4
+      "geometry": { "shape": "box", "args": [2.0, 0.06, 1.4], "bevel": 0.02 },
+      "transform": { "position": [0, 2.2, 0] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 1.5 },
+      "annotation": { "title": { "zh": "GPU 運算盤", "en": "GPU Compute Tray" } },
+      "process": {
+        "scale": 0.6,
+        "stations": [
+          { "id": "gpu-compute", "partId": "tray-gpu-02", "processTime": 0.8, "input": "data", "output": "data" }
         ],
-        "bevel": 0.02
-      },
-      "transform": {
-        "position": [
-          0,
-          2.2,
-          0
+        "routes": [
+          {
+            "id": "gpu-data-in",
+            "kind": "main",
+            "material": "accent",
+            "path": [[-1.5, 0.18, 0.0], [-0.7, 0.14, 0.0], [0, 0.12, 0.0]],
+            "stops": [{ "point": 2, "station": "gpu-compute" }]
+          },
+          {
+            "id": "gpu-data-out",
+            "kind": "main",
+            "material": "accent",
+            "path": [[0, 0.12, 0.0], [0.7, 0.16, 0.1], [1.5, 0.2, 0.15]],
+            "stops": [{ "point": 0, "station": "gpu-compute" }]
+          },
+          {
+            "id": "gpu-power-in",
+            "kind": "side",
+            "material": "metal-light",
+            "path": [[-0.2, -0.15, 0.78], [-0.05, 0.0, 0.4], [0, 0.12, 0.05]],
+            "stops": [{ "point": 2, "station": "gpu-compute" }]
+          },
+          {
+            "id": "gpu-heat-out",
+            "kind": "side",
+            "material": "heat",
+            "path": [[0, 0.12, 0.05], [0.25, 0.45, -0.25], [0.45, 0.8, -0.5]],
+            "stops": [{ "point": 0, "station": "gpu-compute" }]
+          }
+        ],
+        "tokens": [
+          { "id": "gpu-data-in-tok", "routeId": "gpu-data-in", "material": "accent", "count": 2, "radius": 0.07, "duration": 3.6 },
+          { "id": "gpu-data-out-tok", "routeId": "gpu-data-out", "material": "accent", "count": 2, "radius": 0.07, "duration": 3.6 },
+          { "id": "gpu-power-in-tok", "routeId": "gpu-power-in", "material": "metal-light", "count": 2, "radius": 0.06, "duration": 4.0 },
+          { "id": "gpu-heat-out-tok", "routeId": "gpu-heat-out", "material": "heat", "count": 2, "radius": 0.06, "duration": 4.0 }
         ]
-      },
-      "material": "metal-light",
-      "explode": {
-        "vector": [
-          0,
-          1,
-          0.2
-        ],
-        "magnitude": 1.5
-      },
-      "annotation": {
-        "title": {
-          "zh": "GPU 運算盤",
-          "en": "GPU Compute Tray"
-        }
       }
+    },
+    {
+      "id": "tray-gpu-02-pcb",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [1.9, 0.04, 1.3], "bevel": 0.01 },
+      "transform": { "position": [0, 2.25, 0] },
+      "material": "chip",
+      "explode": { "magnitude": 1.5 },
+      "partOf": "tray-gpu-02",
+      "label": { "zh": "電路板", "en": "PCB" },
+      "annotation": null
+    },
+    {
+      "id": "tray-gpu-02-gpu",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.42, 0.13, 0.42], "bevel": 0.02 },
+      "transform": { "position": [-0.4, 2.33, 0.05] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 1.7 },
+      "repeat": { "count": 2, "step": [0.8, 0, 0] },
+      "partOf": "tray-gpu-02",
+      "label": { "zh": "GPU 模組", "en": "GPU Module" },
+      "annotation": null
+    },
+    {
+      "id": "tray-gpu-02-hbm",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.05, 0.08, 0.14], "bevel": 0.005 },
+      "transform": { "position": [-0.62, 2.32, -0.25] },
+      "material": "metal-light",
+      "explode": { "magnitude": 1.8 },
+      "repeat": { "count": 6, "step": [0.2, 0, 0] },
+      "partOf": "tray-gpu-02",
+      "label": { "zh": "HBM 記憶體", "en": "HBM" },
+      "annotation": null
+    },
+    {
+      "id": "tray-gpu-02-coldplate",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.5, 0.06, 0.5], "bevel": 0.01 },
+      "transform": { "position": [-0.4, 2.43, 0.05] },
+      "material": "accent",
+      "explode": { "magnitude": 2.0 },
+      "repeat": { "count": 2, "step": [0.8, 0, 0] },
+      "partOf": "tray-gpu-02",
+      "label": { "zh": "冷板", "en": "Cold Plate" },
+      "annotation": null
+    },
+    {
+      "id": "tray-gpu-02-nvlink",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.08, 0.1, 0.06], "bevel": 0.005 },
+      "transform": { "position": [-0.65, 2.3, 0.6] },
+      "material": "metal-light",
+      "explode": { "magnitude": 1.9 },
+      "repeat": { "count": 9, "step": [0.16, 0, 0] },
+      "partOf": "tray-gpu-02",
+      "label": { "zh": "NVLink 連接器", "en": "NVLink" },
+      "annotation": null
+    },
+    {
+      "id": "tray-gpu-02-vrm",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.6, 0.09, 0.13], "bevel": 0.01 },
+      "transform": { "position": [0, 2.3, -0.55] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 1.6 },
+      "partOf": "tray-gpu-02",
+      "label": { "zh": "供電模組", "en": "VRM" },
+      "annotation": null
     },
     {
       "id": "tray-cpu",
       "kind": "primitive",
-      "geometry": {
-        "shape": "box",
-        "args": [
-          2,
-          0.24,
-          1.4
+      "geometry": { "shape": "box", "args": [2.0, 0.06, 1.4], "bevel": 0.02 },
+      "transform": { "position": [0, 1.8, 0] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 1.15 },
+      "annotation": { "title": { "zh": "CPU 運算盤", "en": "CPU Tray" } },
+      "process": {
+        "scale": 0.6,
+        "stations": [
+          { "id": "cpu-proc", "partId": "tray-cpu", "processTime": 0.6, "input": "data", "output": "data" }
         ],
-        "bevel": 0.02
-      },
-      "transform": {
-        "position": [
-          0,
-          1.8,
-          0
+        "routes": [
+          {
+            "id": "cpu-data-in",
+            "kind": "main",
+            "material": "accent",
+            "path": [[-1.5, 0.16, 0], [-0.7, 0.13, 0], [0, 0.12, 0]],
+            "stops": [{ "point": 2, "station": "cpu-proc" }]
+          },
+          {
+            "id": "cpu-data-out",
+            "kind": "main",
+            "material": "accent",
+            "path": [[0, 0.12, 0], [0.7, 0.15, 0.1], [1.5, 0.18, 0.15]],
+            "stops": [{ "point": 0, "station": "cpu-proc" }]
+          },
+          {
+            "id": "cpu-power-in",
+            "kind": "side",
+            "material": "metal-light",
+            "path": [[-0.2, -0.15, 0.78], [-0.05, 0, 0.4], [0, 0.12, 0.05]],
+            "stops": [{ "point": 2, "station": "cpu-proc" }]
+          }
+        ],
+        "tokens": [
+          { "id": "cpu-data-in-tok", "routeId": "cpu-data-in", "material": "accent", "count": 2, "radius": 0.07, "duration": 3.6 },
+          { "id": "cpu-data-out-tok", "routeId": "cpu-data-out", "material": "accent", "count": 2, "radius": 0.07, "duration": 3.6 },
+          { "id": "cpu-power-in-tok", "routeId": "cpu-power-in", "material": "metal-light", "count": 2, "radius": 0.06, "duration": 4.0 }
         ]
-      },
-      "material": "metal-light",
-      "explode": {
-        "vector": [
-          0,
-          1,
-          0.2
-        ],
-        "magnitude": 1.15
-      },
-      "annotation": {
-        "title": {
-          "zh": "CPU 運算盤",
-          "en": "CPU Tray"
-        }
       }
+    },
+    {
+      "id": "tray-cpu-pcb",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [1.9, 0.04, 1.3], "bevel": 0.01 },
+      "transform": { "position": [0, 1.85, 0] },
+      "material": "chip",
+      "explode": { "magnitude": 1.15 },
+      "partOf": "tray-cpu",
+      "label": { "zh": "電路板", "en": "PCB" },
+      "annotation": null
+    },
+    {
+      "id": "tray-cpu-socket",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.45, 0.1, 0.45], "bevel": 0.015 },
+      "transform": { "position": [-0.45, 1.92, 0.05] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 1.3 },
+      "repeat": { "count": 2, "step": [0.9, 0, 0] },
+      "partOf": "tray-cpu",
+      "label": { "zh": "CPU", "en": "Processor" },
+      "annotation": null
+    },
+    {
+      "id": "tray-cpu-heatsink",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.5, 0.05, 0.5], "bevel": 0.01 },
+      "transform": { "position": [-0.45, 2.0, 0.05] },
+      "material": "metal-light",
+      "explode": { "magnitude": 1.4 },
+      "repeat": { "count": 2, "step": [0.9, 0, 0] },
+      "partOf": "tray-cpu",
+      "label": { "zh": "散熱器", "en": "Heatsink" },
+      "annotation": null
+    },
+    {
+      "id": "tray-cpu-dimm",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.04, 0.24, 0.45], "bevel": 0.005 },
+      "transform": { "position": [-0.35, 1.99, -0.5] },
+      "material": "metal-light",
+      "explode": { "magnitude": 1.45 },
+      "repeat": { "count": 8, "step": [0.09, 0, 0] },
+      "partOf": "tray-cpu",
+      "label": { "zh": "記憶體", "en": "DIMM" },
+      "annotation": null
+    },
+    {
+      "id": "tray-cpu-vrm",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.5, 0.08, 0.12], "bevel": 0.01 },
+      "transform": { "position": [0, 1.88, 0.6] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 1.3 },
+      "partOf": "tray-cpu",
+      "label": { "zh": "供電模組", "en": "VRM" },
+      "annotation": null
     },
     {
       "id": "tray-nvswitch",
       "kind": "primitive",
-      "geometry": {
-        "shape": "box",
-        "args": [
-          2,
-          0.24,
-          1.4
+      "geometry": { "shape": "box", "args": [2.0, 0.06, 1.4], "bevel": 0.02 },
+      "transform": { "position": [0, 1.4, 0] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 0.85 },
+      "annotation": { "title": { "zh": "NVSwitch 交換盤", "en": "NVSwitch Tray" } },
+      "process": {
+        "scale": 0.6,
+        "stations": [
+          { "id": "nvsw-switch", "partId": "tray-nvswitch", "processTime": 0.5, "input": "data", "output": "data" }
         ],
-        "bevel": 0.02
-      },
-      "transform": {
-        "position": [
-          0,
-          1.4,
-          0
+        "routes": [
+          {
+            "id": "nvsw-in-1",
+            "kind": "side",
+            "material": "accent",
+            "path": [[-1.5, 0.16, -0.3], [-0.7, 0.13, -0.15], [0, 0.12, 0]],
+            "stops": [{ "point": 2, "station": "nvsw-switch" }]
+          },
+          {
+            "id": "nvsw-in-2",
+            "kind": "side",
+            "material": "accent",
+            "path": [[-0.3, -0.1, 0.8], [-0.1, 0.05, 0.4], [0, 0.12, 0.05]],
+            "stops": [{ "point": 2, "station": "nvsw-switch" }]
+          },
+          {
+            "id": "nvsw-out-1",
+            "kind": "main",
+            "material": "accent",
+            "path": [[0, 0.12, 0], [0.7, 0.15, 0.1], [1.5, 0.18, 0.2]],
+            "stops": [{ "point": 0, "station": "nvsw-switch" }]
+          },
+          {
+            "id": "nvsw-out-2",
+            "kind": "side",
+            "material": "accent",
+            "path": [[0, 0.12, 0.05], [0.2, 0.2, 0.4], [0.4, 0.25, 0.75]],
+            "stops": [{ "point": 0, "station": "nvsw-switch" }]
+          }
+        ],
+        "tokens": [
+          { "id": "nvsw-in-1-tok", "routeId": "nvsw-in-1", "material": "accent", "count": 2, "radius": 0.06, "duration": 3.4 },
+          { "id": "nvsw-in-2-tok", "routeId": "nvsw-in-2", "material": "accent", "count": 1, "radius": 0.06, "duration": 3.8 },
+          { "id": "nvsw-out-1-tok", "routeId": "nvsw-out-1", "material": "accent", "count": 2, "radius": 0.06, "duration": 3.4 },
+          { "id": "nvsw-out-2-tok", "routeId": "nvsw-out-2", "material": "accent", "count": 1, "radius": 0.06, "duration": 3.8 }
         ]
-      },
-      "material": "metal-light",
-      "explode": {
-        "vector": [
-          0,
-          1,
-          0.2
-        ],
-        "magnitude": 0.85
-      },
-      "annotation": {
-        "title": {
-          "zh": "NVSwitch 交換盤",
-          "en": "NVSwitch Tray"
-        }
       }
+    },
+    {
+      "id": "tray-nvswitch-pcb",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [1.9, 0.04, 1.3], "bevel": 0.01 },
+      "transform": { "position": [0, 1.45, 0] },
+      "material": "chip",
+      "explode": { "magnitude": 0.85 },
+      "partOf": "tray-nvswitch",
+      "label": { "zh": "電路板", "en": "PCB" },
+      "annotation": null
+    },
+    {
+      "id": "tray-nvswitch-asic",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.6, 0.12, 0.6], "bevel": 0.02 },
+      "transform": { "position": [0, 1.53, 0] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 1.0 },
+      "partOf": "tray-nvswitch",
+      "label": { "zh": "NVSwitch 晶片", "en": "NVSwitch ASIC" },
+      "annotation": null
+    },
+    {
+      "id": "tray-nvswitch-cover",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.62, 0.05, 0.62], "bevel": 0.01 },
+      "transform": { "position": [0, 1.61, 0] },
+      "material": "accent",
+      "explode": { "magnitude": 1.1 },
+      "partOf": "tray-nvswitch",
+      "label": { "zh": "散熱蓋", "en": "Heat Spreader" },
+      "annotation": null
+    },
+    {
+      "id": "tray-nvswitch-conn",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.12, 0.12, 0.08], "bevel": 0.005 },
+      "transform": { "position": [-0.7, 1.5, 0.62] },
+      "material": "metal-light",
+      "explode": { "magnitude": 1.15 },
+      "repeat": { "count": 10, "step": [0.15, 0, 0] },
+      "partOf": "tray-nvswitch",
+      "label": { "zh": "高密度連接器", "en": "Connector" },
+      "annotation": null
+    },
+    {
+      "id": "tray-nvswitch-cable",
+      "kind": "primitive",
+      "geometry": { "shape": "tube", "path": [[-0.5, 1.55, 0.2], [-0.5, 1.72, 0.45], [-0.5, 1.62, 0.64]], "radius": 0.025 },
+      "transform": { "position": [0, 0, 0] },
+      "material": "accent",
+      "explode": { "magnitude": 1.2 },
+      "repeat": { "count": 5, "step": [0.25, 0, 0] },
+      "partOf": "tray-nvswitch",
+      "label": { "zh": "NVLink 銅纜", "en": "Copper Cable" },
+      "annotation": null
     },
     {
       "id": "tray-network",
       "kind": "primitive",
-      "geometry": {
-        "shape": "box",
-        "args": [
-          2,
-          0.24,
-          1.4
+      "geometry": { "shape": "box", "args": [2.0, 0.06, 1.4], "bevel": 0.02 },
+      "transform": { "position": [0, 1, 0] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 0.55 },
+      "annotation": { "title": { "zh": "網路交換盤", "en": "Networking Tray" } },
+      "process": {
+        "scale": 0.6,
+        "stations": [
+          { "id": "net-switch", "partId": "tray-network", "processTime": 0.5, "input": "data", "output": "data" }
         ],
-        "bevel": 0.02
-      },
-      "transform": {
-        "position": [
-          0,
-          1,
-          0
+        "routes": [
+          {
+            "id": "net-in",
+            "kind": "main",
+            "material": "accent",
+            "path": [[-1.5, 0.16, 0], [-0.7, 0.13, 0], [0, 0.12, 0]],
+            "stops": [{ "point": 2, "station": "net-switch" }]
+          },
+          {
+            "id": "net-out",
+            "kind": "main",
+            "material": "accent",
+            "path": [[0, 0.12, 0], [0.7, 0.15, 0.1], [1.5, 0.18, 0.15]],
+            "stops": [{ "point": 0, "station": "net-switch" }]
+          },
+          {
+            "id": "net-optical-out",
+            "kind": "side",
+            "material": "accent",
+            "path": [[0, 0.12, 0], [0, 0.1, -0.4], [-0.2, 0.08, -0.78]],
+            "stops": [{ "point": 0, "station": "net-switch" }]
+          },
+          {
+            "id": "net-power-in",
+            "kind": "side",
+            "material": "metal-light",
+            "path": [[0.2, -0.15, 0.78], [0.05, 0, 0.4], [0, 0.12, 0.05]],
+            "stops": [{ "point": 2, "station": "net-switch" }]
+          }
+        ],
+        "tokens": [
+          { "id": "net-in-tok", "routeId": "net-in", "material": "accent", "count": 2, "radius": 0.07, "duration": 3.6 },
+          { "id": "net-out-tok", "routeId": "net-out", "material": "accent", "count": 2, "radius": 0.07, "duration": 3.6 },
+          { "id": "net-optical-out-tok", "routeId": "net-optical-out", "material": "accent", "count": 2, "radius": 0.06, "duration": 3.4 },
+          { "id": "net-power-in-tok", "routeId": "net-power-in", "material": "metal-light", "count": 1, "radius": 0.06, "duration": 4.2 }
         ]
-      },
-      "material": "metal-light",
-      "explode": {
-        "vector": [
-          0,
-          1,
-          0.2
-        ],
-        "magnitude": 0.55
-      },
-      "annotation": {
-        "title": {
-          "zh": "網路交換盤",
-          "en": "Networking Tray"
-        }
       }
+    },
+    {
+      "id": "tray-network-pcb",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [1.9, 0.04, 1.3], "bevel": 0.01 },
+      "transform": { "position": [0, 1.05, 0] },
+      "material": "chip",
+      "explode": { "magnitude": 0.55 },
+      "partOf": "tray-network",
+      "label": { "zh": "電路板", "en": "PCB" },
+      "annotation": null
+    },
+    {
+      "id": "tray-network-asic",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.55, 0.1, 0.55], "bevel": 0.02 },
+      "transform": { "position": [0, 1.13, 0] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 0.75 },
+      "partOf": "tray-network",
+      "label": { "zh": "交換晶片", "en": "Switch ASIC" },
+      "annotation": null
+    },
+    {
+      "id": "tray-network-heatsink",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.55, 0.06, 0.55], "bevel": 0.01 },
+      "transform": { "position": [0, 1.2, 0] },
+      "material": "metal-light",
+      "explode": { "magnitude": 0.85 },
+      "partOf": "tray-network",
+      "label": { "zh": "散熱器", "en": "Heatsink" },
+      "annotation": null
+    },
+    {
+      "id": "tray-network-optical",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.12, 0.1, 0.22], "bevel": 0.005 },
+      "transform": { "position": [-0.83, 1.08, -0.58] },
+      "material": "metal-light",
+      "explode": { "magnitude": 0.9 },
+      "repeat": { "count": 12, "step": [0.15, 0, 0] },
+      "partOf": "tray-network",
+      "label": { "zh": "光模組", "en": "Optical Module" },
+      "annotation": null
     },
     {
       "id": "tray-power",
