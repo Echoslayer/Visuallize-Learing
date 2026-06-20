@@ -24,6 +24,7 @@
       "transform": { "position": [0, 1.6, -0.78] },
       "material": "metal-dark",
       "explode": { "magnitude": 0 },
+      "camera": { "position": [3.2, 1.0, 4.38], "target": [0, 0, 0.78] },
       "annotation": { "title": { "zh": "機櫃 / 系統", "en": "Chassis / System" } },
       "label": { "zh": "機櫃 / 系統", "en": "Chassis / System" }
     },
@@ -706,20 +707,20 @@
         "id": "power-route",
         "kind": "main",
         "material": "metal-light",
-        "path": [[0.95, 0.5, 0.45], [0.95, 1.0, 0.45], [0.95, 1.4, 0.45], [0.95, 1.8, 0.45], [0.95, 2.2, 0.45], [0.95, 2.6, 0.45]],
+        "path": [[1.2, 0.5, 0.45], [1.2, 1.0, 0.45], [1.2, 1.4, 0.45], [1.2, 1.8, 0.45], [1.2, 2.2, 0.45], [1.2, 2.6, 0.45]],
         "stops": [{ "point": 0, "station": "rack-power" }]
       },
       {
         "id": "data-route",
         "kind": "main",
         "material": "accent",
-        "path": [[-0.95, 2.6, 0.45], [-0.95, 2.2, 0.45], [-0.95, 1.8, 0.45], [-0.95, 1.4, 0.45], [-0.95, 1.0, 0.45]],
+        "path": [[-1.2, 2.6, 0.45], [-1.2, 2.2, 0.45], [-1.2, 1.8, 0.45], [-1.2, 1.4, 0.45], [-1.2, 1.0, 0.45]],
         "stops": [{ "point": 3, "station": "rack-switch" }]
       }
     ],
     "tokens": [
-      { "id": "power-tok", "routeId": "power-route", "material": "metal-light", "count": 4, "radius": 0.06, "duration": 5.0 },
-      { "id": "data-tok", "routeId": "data-route", "material": "accent", "count": 4, "radius": 0.06, "duration": 4.5 }
+      { "id": "power-tok", "routeId": "power-route", "material": "primary", "count": 6, "radius": 0.08, "duration": 5.0 },
+      { "id": "data-tok", "routeId": "data-route", "material": "accent", "count": 6, "radius": 0.08, "duration": 4.5 }
     ]
   }
 }

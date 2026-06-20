@@ -1,236 +1,548 @@
 {
   "topic": "wind",
   "title": {
-    "zh": "風力發電機供應鏈",
-    "en": "Wind Turbine Supply Chain"
+    "zh": "風場與供應鏈",
+    "en": "Wind Farm Supply Chain"
   },
   "camera": {
-    "position": [
-      4.5,
-      2.6,
-      6
+    "position": [ 0, 20, 90 ],
+    "target": [ 0, 10, 0 ]
+  },
+  "process": {
+    "stations": [
+      { "id": "st-rotor", "partId": "wind-rotor", "processTime": 0.5, "input": "wind", "output": "mechanical" },
+      { "id": "st-nacelle", "partId": "wind-nacelle", "processTime": 0.8, "input": "mechanical", "output": "electrical-lv" },
+      { "id": "st-tower", "partId": "wind-tower", "processTime": 0.5, "input": "electrical-lv", "output": "electrical-lv" },
+      { "id": "st-substation", "partId": "wind-substation", "processTime": 0.8, "input": "electrical-lv", "output": "electrical-hv" },
+      { "id": "st-grid", "partId": "wind-grid", "processTime": 0.5, "input": "electrical-hv", "output": "grid-out" }
     ],
-    "target": [
-      0,
-      2,
-      0
+    "routes": [
+      {
+        "id": "rt-wind",
+        "kind": "main",
+        "material": "metal-light",
+        "path": [[-80, 40, 0], [-62, 40, 0]],
+        "stops": [{ "point": 1, "station": "st-rotor" }]
+      },
+      {
+        "id": "rt-mech",
+        "kind": "main",
+        "material": "metal-dark",
+        "path": [[-62, 40, 0], [-56, 40, 0]],
+        "stops": [{ "point": 0, "station": "st-rotor" }, { "point": 1, "station": "st-nacelle" }]
+      },
+      {
+        "id": "rt-tower",
+        "kind": "main",
+        "material": "primary",
+        "path": [[-56, 40, 0], [-56, 0, 0]],
+        "stops": [{ "point": 0, "station": "st-nacelle" }, { "point": 1, "station": "st-tower" }]
+      },
+      {
+        "id": "rt-array",
+        "kind": "main",
+        "material": "primary",
+        "path": [[-56, 0, 0], [20, 0, 0], [20, 15, 0]],
+        "stops": [{ "point": 0, "station": "st-tower" }, { "point": 2, "station": "st-substation" }]
+      },
+      {
+        "id": "rt-export",
+        "kind": "main",
+        "material": "primary",
+        "path": [[20, 15, 0], [20, 0, 0], [60, 0, 0], [60, 2.5, 0]],
+        "stops": [{ "point": 0, "station": "st-substation" }, { "point": 3, "station": "st-grid" }]
+      }
+    ],
+    "tokens": [
+      { "id": "tk-wind", "routeId": "rt-wind", "material": "metal-light", "count": 5, "duration": 2.0 },
+      { "id": "tk-mech", "routeId": "rt-mech", "material": "metal-dark", "count": 3, "duration": 1.0 },
+      { "id": "tk-tower", "routeId": "rt-tower", "material": "primary", "count": 3, "duration": 2.0 },
+      { "id": "tk-array", "routeId": "rt-array", "material": "primary", "count": 6, "duration": 4.0 },
+      { "id": "tk-export", "routeId": "rt-export", "material": "primary", "count": 6, "radius": 0.15, "duration": 4.0 }
     ]
   },
   "parts": [
     {
-      "id": "tower",
+      "id": "wind-rotor",
       "kind": "primitive",
-      "geometry": {
-        "shape": "cylinder",
-        "args": [
-          0.12,
-          0.2,
-          3,
-          20
-        ]
-      },
-      "transform": {
-        "position": [
-          0,
-          1.5,
-          0
-        ]
+      "geometry": { "shape": "cone", "args": [1.5, 4.0, 16] },
+      "transform": { 
+        "position": [-62.5, 40.0, 0.0],
+        "rotation": [0, 0, -1.5708],
+        "spin": [1.5, 0, 0],
+        "pivot": [-62.5, 40.0, 0.0]
       },
       "material": "metal-light",
-      "explode": {
-        "vector": [
-          0,
-          0,
-          0
+      "explode": { "magnitude": 1.2 },
+      "camera": { "position": [15, 0, 20], "target": [0, 0, 0] },
+      "label": { "zh": "轉子系統", "en": "Rotor System" },
+      "annotation": { "title": { "zh": "轉子系統 (Rotor)", "en": "Rotor System" } },
+      "process": {
+        "scale": 0.4,
+        "stations": [
+          { "id": "rotor-capture", "partId": "wind-rotor", "processTime": 0.5, "input": "wind", "output": "mechanical" }
         ],
-        "magnitude": 0
-      },
-      "annotation": {
-        "title": {
-          "zh": "塔架",
-          "en": "Tower"
-        }
+        "routes": [
+          {
+            "id": "wind-in",
+            "kind": "main",
+            "material": "metal-light",
+            "path": [[0, 10.0, 0], [0, 5.0, 0], [0, 0, 0]],
+            "stops": [{ "point": 2, "station": "rotor-capture" }]
+          },
+          {
+            "id": "mech-out",
+            "kind": "main",
+            "material": "metal-dark",
+            "path": [[0, 0, 0], [0, -2.0, 0], [0, -4.0, 0]],
+            "stops": [{ "point": 0, "station": "rotor-capture" }]
+          }
+        ],
+        "tokens": [
+          { "id": "wind-in-tok", "routeId": "wind-in", "material": "metal-light", "count": 3, "radius": 0.1, "duration": 2.0 },
+          { "id": "mech-out-tok", "routeId": "mech-out", "material": "metal-dark", "count": 3, "radius": 0.1, "duration": 2.0 }
+        ]
       }
     },
     {
-      "id": "nacelle",
+      "id": "pitch-system-1",
       "kind": "primitive",
-      "geometry": {
-        "shape": "box",
-        "args": [
-          0.8,
-          0.4,
-          0.45
-        ],
-        "bevel": 0.04
-      },
-      "transform": {
-        "position": [
-          0,
-          3.15,
-          -0.05
-        ]
+      "geometry": { "shape": "cylinder", "args": [0.6, 0.6, 0.5, 16] },
+      "transform": { 
+        "position": [-61.6, 40.9, 0.0],
+        "spin": [1.5, 0, 0],
+        "pivot": [-62.5, 40.0, 0.0]
       },
       "material": "metal-dark",
-      "explode": {
-        "vector": [
-          0,
-          0.6,
-          -1
-        ],
-        "magnitude": 0.9
-      },
-      "annotation": {
-        "title": {
-          "zh": "機艙 / 齒輪箱",
-          "en": "Nacelle"
-        }
-      }
-    },
-    {
-      "id": "hub",
-      "kind": "primitive",
-      "geometry": {
-        "shape": "cone",
-        "args": [
-          0.17,
-          0.35,
-          16
-        ]
-      },
-      "transform": {
-        "position": [
-          0,
-          3.15,
-          0.38
-        ],
-        "rotation": [
-          1.571,
-          0,
-          0
-        ]
-      },
-      "material": "metal-dark",
-      "explode": {
-        "vector": [
-          0,
-          0,
-          1
-        ],
-        "magnitude": 1.4
-      },
-      "annotation": null,
-      "label": {
-        "zh": "輪轂",
-        "en": "Hub"
-      }
-    },
-    {
-      "id": "blade-0",
-      "kind": "primitive",
-      "geometry": {
-        "shape": "box",
-        "args": [
-          0.13,
-          1.5,
-          0.04
-        ],
-        "bevel": 0.02
-      },
-      "transform": {
-        "position": [
-          0,
-          3.9,
-          0.35
-        ]
-      },
-      "material": "metal-light",
-      "explode": {
-        "vector": [
-          0,
-          1,
-          0.6
-        ],
-        "magnitude": 1
-      },
-      "annotation": {
-        "title": {
-          "zh": "葉片",
-          "en": "Blade"
-        }
-      }
+      "explode": { "magnitude": 1.5 },
+      "partOf": "wind-rotor",
+      "label": { "zh": "變槳系統", "en": "Pitch System" },
+      "annotation": null
     },
     {
       "id": "blade-1",
       "kind": "primitive",
-      "geometry": {
-        "shape": "box",
-        "args": [
-          0.13,
-          1.5,
-          0.04
-        ],
-        "bevel": 0.02
-      },
-      "transform": {
-        "position": [
-          -0.65,
-          2.78,
-          0.35
-        ],
-        "rotation": [
-          0,
-          0,
-          2.094
-        ]
+      "geometry": { "shape": "box", "args": [0.2, 12.0, 1.5] },
+      "transform": { 
+        "position": [-61.6, 46.9, 0.0],
+        "spin": [1.5, 0, 0],
+        "pivot": [-62.5, 40.0, 0.0]
       },
       "material": "metal-light",
-      "explode": {
-        "vector": [
-          -0.866,
-          -0.5,
-          0.6
-        ],
-        "magnitude": 1
+      "explode": { "magnitude": 1.8 },
+      "partOf": "wind-rotor",
+      "label": { "zh": "葉片", "en": "Blade" },
+      "annotation": null
+    },
+    {
+      "id": "pitch-system-2",
+      "kind": "primitive",
+      "geometry": { "shape": "cylinder", "args": [0.6, 0.6, 0.5, 16] },
+      "transform": { 
+        "position": [-61.6, 39.55, -0.779],
+        "rotation": [-2.094, 0, 0],
+        "spin": [1.5, 0, 0],
+        "pivot": [-62.5, 40.0, 0.0]
       },
-      "annotation": null,
-      "partOf": "blade-0"
+      "material": "metal-dark",
+      "explode": { "magnitude": 1.5 },
+      "partOf": "wind-rotor",
+      "label": { "zh": "變槳系統", "en": "Pitch System" },
+      "annotation": null
     },
     {
       "id": "blade-2",
       "kind": "primitive",
-      "geometry": {
-        "shape": "box",
-        "args": [
-          0.13,
-          1.5,
-          0.04
-        ],
-        "bevel": 0.02
-      },
-      "transform": {
-        "position": [
-          0.65,
-          2.78,
-          0.35
-        ],
-        "rotation": [
-          0,
-          0,
-          4.189
-        ]
+      "geometry": { "shape": "box", "args": [0.2, 12.0, 1.5] },
+      "transform": { 
+        "position": [-61.6, 36.55, -5.975],
+        "rotation": [-2.094, 0, 0],
+        "spin": [1.5, 0, 0],
+        "pivot": [-62.5, 40.0, 0.0]
       },
       "material": "metal-light",
-      "explode": {
-        "vector": [
-          0.866,
-          -0.5,
-          0.6
-        ],
-        "magnitude": 1
+      "explode": { "magnitude": 1.8 },
+      "partOf": "wind-rotor",
+      "label": { "zh": "葉片", "en": "Blade" },
+      "annotation": null
+    },
+    {
+      "id": "pitch-system-3",
+      "kind": "primitive",
+      "geometry": { "shape": "cylinder", "args": [0.6, 0.6, 0.5, 16] },
+      "transform": { 
+        "position": [-61.6, 39.55, 0.779],
+        "rotation": [2.094, 0, 0],
+        "spin": [1.5, 0, 0],
+        "pivot": [-62.5, 40.0, 0.0]
       },
-      "annotation": null,
-      "partOf": "blade-0"
+      "material": "metal-dark",
+      "explode": { "magnitude": 1.5 },
+      "partOf": "wind-rotor",
+      "label": { "zh": "變槳系統", "en": "Pitch System" },
+      "annotation": null
+    },
+    {
+      "id": "blade-3",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.2, 12.0, 1.5] },
+      "transform": { 
+        "position": [-61.6, 36.55, 5.975],
+        "rotation": [2.094, 0, 0],
+        "spin": [1.5, 0, 0],
+        "pivot": [-62.5, 40.0, 0.0]
+      },
+      "material": "metal-light",
+      "explode": { "magnitude": 1.8 },
+      "partOf": "wind-rotor",
+      "label": { "zh": "葉片", "en": "Blade" },
+      "annotation": null
+    },
+    {
+      "id": "wind-nacelle",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [12.0, 4.5, 4.5] },
+      "transform": { "position": [-56.0, 40.0, 0.0] },
+      "material": "metal-light",
+      "enclosure": true,
+      "explode": { "magnitude": 1.0 },
+      "camera": { "position": [12, 6, 12], "target": [0, 0, 0] },
+      "label": { "zh": "機艙系統", "en": "Nacelle System" },
+      "annotation": { "title": { "zh": "機艙 (Nacelle)", "en": "Nacelle" } },
+      "process": {
+        "scale": 0.4,
+        "stations": [
+          { "id": "generator-station", "partId": "generator", "processTime": 0.8, "input": "mechanical", "output": "electrical-lv" }
+        ],
+        "routes": [
+          {
+            "id": "mech-in",
+            "kind": "main",
+            "material": "metal-dark",
+            "path": [[-5.4, 0, 0], [-2.0, 0, 0], [1.5, 0, 0]],
+            "stops": [{ "point": 2, "station": "generator-station" }]
+          },
+          {
+            "id": "elec-out",
+            "kind": "main",
+            "material": "primary",
+            "path": [[1.5, 0, 0], [4.0, 0, 0], [4.0, -2.5, 0]],
+            "stops": [{ "point": 0, "station": "generator-station" }]
+          }
+        ],
+        "tokens": [
+          { "id": "mech-in-tok", "routeId": "mech-in", "material": "metal-dark", "count": 3, "radius": 0.1, "duration": 2.0 },
+          { "id": "elec-out-tok", "routeId": "elec-out", "material": "primary", "count": 3, "radius": 0.1, "duration": 2.0 }
+        ]
+      }
+    },
+    {
+      "id": "main-shaft",
+      "kind": "primitive",
+      "geometry": { "shape": "cylinder", "args": [0.3, 0.3, 3.0, 16] },
+      "transform": { 
+        "position": [-60.0, 40.0, 0.0], 
+        "rotation": [0, 0, 1.5708],
+        "spin": [1.5, 0, 0]
+      },
+      "material": "metal-dark",
+      "explode": { "magnitude": 1.2 },
+      "partOf": "wind-nacelle",
+      "label": { "zh": "主軸", "en": "Main Shaft" },
+      "annotation": null
+    },
+    {
+      "id": "main-bearing",
+      "kind": "primitive",
+      "geometry": { "shape": "cylinder", "args": [0.8, 0.8, 1.0, 16] },
+      "transform": { "position": [-59.5, 40.0, 0.0], "rotation": [0, 0, 1.5708] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 1.4 },
+      "partOf": "wind-nacelle",
+      "label": { "zh": "主軸承", "en": "Main Bearing" },
+      "annotation": { "title": { "zh": "主軸承", "en": "Main Bearing" } }
+    },
+    {
+      "id": "gearbox",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [2.5, 3.0, 3.0] },
+      "transform": { "position": [-57.5, 40.0, 0.0] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 1.5 },
+      "partOf": "wind-nacelle",
+      "label": { "zh": "齒輪箱", "en": "Gearbox" },
+      "annotation": { "title": { "zh": "齒輪箱", "en": "Gearbox" } }
+    },
+    {
+      "id": "generator",
+      "kind": "primitive",
+      "geometry": { "shape": "cylinder", "args": [1.5, 1.5, 3.0, 16] },
+      "transform": { "position": [-54.5, 40.0, 0.0], "rotation": [0, 0, 1.5708] },
+      "material": "metal-light",
+      "explode": { "magnitude": 1.6 },
+      "partOf": "wind-nacelle",
+      "label": { "zh": "發電機", "en": "Generator" },
+      "annotation": { "title": { "zh": "發電機", "en": "Generator" } }
+    },
+    {
+      "id": "converter",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [2.0, 3.5, 2.0] },
+      "transform": { "position": [-52.0, 40.0, 0.0] },
+      "material": "primary",
+      "explode": { "magnitude": 1.8 },
+      "partOf": "wind-nacelle",
+      "label": { "zh": "變流器", "en": "Converter" },
+      "annotation": { "title": { "zh": "變流器", "en": "Converter" } }
+    },
+    {
+      "id": "wind-tower",
+      "kind": "primitive",
+      "geometry": { "shape": "cylinder", "args": [1.2, 1.8, 25.0, 16] },
+      "transform": { "position": [-56.0, 25.5, 0.0] },
+      "material": "metal-light",
+      "explode": { "magnitude": 1.0 },
+      "camera": { "position": [0, -10, 40], "target": [0, -10, 0] },
+      "label": { "zh": "塔架與基座", "en": "Tower & Foundation" },
+      "annotation": { "title": { "zh": "塔架與基座", "en": "Tower & Foundation" } },
+      "process": {
+        "scale": 0.4,
+        "stations": [
+          { "id": "tower-base", "partId": "transition-piece", "processTime": 0.5, "input": "electrical-lv", "output": "electrical-lv" }
+        ],
+        "routes": [
+          {
+            "id": "cable-down",
+            "kind": "main",
+            "material": "primary",
+            "path": [[4.0, 12.0, 0], [0.0, 12.0, 0], [0.0, -25.5, 0]],
+            "stops": [{ "point": 2, "station": "tower-base" }]
+          },
+          {
+            "id": "cable-out",
+            "kind": "main",
+            "material": "primary",
+            "path": [[0.0, -25.5, 0], [4.0, -25.5, 0], [6.0, -25.5, 0]],
+            "stops": [{ "point": 0, "station": "tower-base" }]
+          }
+        ],
+        "tokens": [
+          { "id": "tower-down-tok", "routeId": "cable-down", "material": "primary", "count": 2, "radius": 0.1, "duration": 2.0 },
+          { "id": "tower-out-tok", "routeId": "cable-out", "material": "primary", "count": 1, "radius": 0.1, "duration": 1.0 }
+        ]
+      }
+    },
+    {
+      "id": "tower-lower",
+      "kind": "primitive",
+      "geometry": { "shape": "cylinder", "args": [1.8, 2.2, 10.0, 16] },
+      "transform": { "position": [-56.0, 8.0, 0.0] },
+      "material": "metal-light",
+      "explode": { "magnitude": 1.1 },
+      "partOf": "wind-tower",
+      "label": { "zh": "下段塔架", "en": "Lower Tower" },
+      "annotation": null
+    },
+    {
+      "id": "transition-piece",
+      "kind": "primitive",
+      "geometry": { "shape": "cylinder", "args": [2.5, 2.5, 3.0, 16] },
+      "transform": { "position": [-56.0, 1.5, 0.0] },
+      "material": "primary",
+      "explode": { "magnitude": 1.2 },
+      "partOf": "wind-tower",
+      "label": { "zh": "轉接段", "en": "Transition Piece" },
+      "annotation": { "title": { "zh": "轉接段", "en": "Transition Piece" } }
+    },
+    {
+      "id": "monopile",
+      "kind": "primitive",
+      "geometry": { "shape": "cylinder", "args": [2.2, 2.2, 15.0, 16] },
+      "transform": { "position": [-56.0, -7.5, 0.0] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 1.3 },
+      "partOf": "wind-tower",
+      "label": { "zh": "水下單樁", "en": "Monopile" },
+      "annotation": { "title": { "zh": "水下單樁", "en": "Monopile" } }
+    },
+    {
+      "id": "wind-cables",
+      "kind": "primitive",
+      "geometry": { 
+        "shape": "tube", 
+        "radius": 0.3,
+        "path": [[-50.0, 0.0, 0.0], [-15.0, 0.0, 0.0], [20.0, 0.0, 0.0]]
+      },
+      "transform": { "position": [0, 0, 0] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 1.0 },
+      "camera": { "position": [-15, 20, 50], "target": [-15, 0, 0] },
+      "label": { "zh": "陣列電纜", "en": "Array Cables" },
+      "annotation": { "title": { "zh": "海底電纜 (Subsea Cables)", "en": "Subsea Cables" } },
+      "process": {
+        "scale": 0.4,
+        "stations": [
+          { "id": "cable-entry", "partId": "wind-cables", "processTime": 0.2, "input": "electrical-lv", "output": "electrical-lv" },
+          { "id": "cable-exit", "partId": "wind-cables", "processTime": 0.2, "input": "electrical-lv", "output": "electrical-lv" }
+        ],
+        "routes": [
+          {
+            "id": "array-transmission",
+            "kind": "main",
+            "material": "primary",
+            "path": [[-50.0, 0.0, 0.0], [-15.0, 0.0, 0.0], [20.0, 0.0, 0.0]],
+            "stops": [
+              { "point": 0, "station": "cable-entry" },
+              { "point": 2, "station": "cable-exit" }
+            ]
+          }
+        ],
+        "tokens": [
+          { "id": "array-trans-tok", "routeId": "array-transmission", "material": "primary", "count": 5, "radius": 0.1, "duration": 4.0 }
+        ]
+      }
+    },
+    {
+      "id": "wind-substation",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [12.0, 8.0, 10.0] },
+      "transform": { "position": [20.0, 15.0, 0.0] },
+      "material": "primary",
+      "enclosure": true,
+      "explode": { "magnitude": 1.0 },
+      "camera": { "position": [15, 10, 25], "target": [0, -2, 0] },
+      "label": { "zh": "海上升壓站", "en": "Offshore Substation" },
+      "annotation": { "title": { "zh": "海上升壓站 (Offshore Substation)", "en": "Offshore Substation" } },
+      "process": {
+        "scale": 0.4,
+        "stations": [
+          { "id": "hv-transformer", "partId": "offshore-transformer", "processTime": 0.8, "input": "electrical-lv", "output": "electrical-hv" }
+        ],
+        "routes": [
+          {
+            "id": "lv-in",
+            "kind": "main",
+            "material": "primary",
+            "path": [[0, -15.0, 0], [0, 0, 0], [0, 0, -2.0]],
+            "stops": [{ "point": 2, "station": "hv-transformer" }]
+          },
+          {
+            "id": "hv-out",
+            "kind": "main",
+            "material": "primary",
+            "path": [[0, 0, -2.0], [0, 0, 2.5], [4.0, 0, 2.5], [4.0, -15.0, 0]],
+            "stops": [{ "point": 0, "station": "hv-transformer" }]
+          }
+        ],
+        "tokens": [
+          { "id": "lv-in-tok", "routeId": "lv-in", "material": "primary", "count": 3, "radius": 0.1, "duration": 2.0 },
+          { "id": "hv-out-tok", "routeId": "hv-out", "material": "primary", "count": 2, "radius": 0.15, "duration": 1.5 }
+        ]
+      }
+    },
+    {
+      "id": "substation-foundation",
+      "kind": "primitive",
+      "geometry": { "shape": "cylinder", "args": [2.5, 3.5, 15.0, 16] },
+      "transform": { "position": [20.0, 7.5, 0.0] },
+      "material": "primary",
+      "explode": { "magnitude": 1.1 },
+      "partOf": "wind-substation",
+      "label": { "zh": "升壓站基礎", "en": "Substation Foundation" },
+      "annotation": null
+    },
+    {
+      "id": "offshore-transformer",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [4.0, 5.0, 4.0] },
+      "transform": { "position": [20.0, 15.0, -2.0] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 1.5 },
+      "partOf": "wind-substation",
+      "label": { "zh": "主變壓器", "en": "Main Transformer" },
+      "annotation": { "title": { "zh": "主變壓器", "en": "Main Transformer" } }
+    },
+    {
+      "id": "offshore-gis",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [3.0, 3.0, 2.0] },
+      "transform": { "position": [20.0, 15.0, 2.5] },
+      "material": "metal-light",
+      "explode": { "magnitude": 1.3 },
+      "partOf": "wind-substation",
+      "label": { "zh": "高壓開關設備", "en": "HV GIS" },
+      "annotation": { "title": { "zh": "高壓開關", "en": "HV GIS" } }
+    },
+    {
+      "id": "wind-grid",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [10.0, 5.0, 8.0] },
+      "transform": { "position": [60.0, 2.5, 0.0] },
+      "material": "metal-light",
+      "enclosure": true,
+      "explode": { "magnitude": 1.0 },
+      "camera": { "position": [15, 8, 20], "target": [0, 0, 0] },
+      "label": { "zh": "陸上變電站", "en": "Onshore Substation" },
+      "annotation": { "title": { "zh": "陸上併網點 (Grid)", "en": "Grid Connection" } },
+      "process": {
+        "scale": 0.4,
+        "stations": [
+          { "id": "grid-station", "partId": "onshore-transformer", "processTime": 0.5, "input": "electrical-hv", "output": "electrical-hv" }
+        ],
+        "routes": [
+          {
+            "id": "export-in",
+            "kind": "main",
+            "material": "primary",
+            "path": [[-10.0, -2.5, 0], [-5.0, -2.5, 0], [-2.0, -1.0, 0]],
+            "stops": [{ "point": 2, "station": "grid-station" }]
+          },
+          {
+            "id": "grid-out",
+            "kind": "main",
+            "material": "primary",
+            "path": [[-2.0, -1.0, 0], [2.0, -1.5, 0], [8.0, 3.5, -5.0]],
+            "stops": [{ "point": 0, "station": "grid-station" }]
+          }
+        ],
+        "tokens": [
+          { "id": "export-in-tok", "routeId": "export-in", "material": "primary", "count": 2, "radius": 0.15, "duration": 2.0 },
+          { "id": "grid-out-tok", "routeId": "grid-out", "material": "primary", "count": 2, "radius": 0.15, "duration": 2.0 }
+        ]
+      }
+    },
+    {
+      "id": "onshore-transformer",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [3.0, 3.0, 3.0] },
+      "transform": { "position": [58.0, 1.5, 0.0] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 1.2 },
+      "partOf": "wind-grid",
+      "label": { "zh": "陸上變壓器", "en": "Onshore Transformer" },
+      "annotation": { "title": { "zh": "主變壓器", "en": "Main Transformer" } }
+    },
+    {
+      "id": "onshore-gis",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [2.0, 2.0, 4.0] },
+      "transform": { "position": [62.0, 1.0, 0.0] },
+      "material": "metal-light",
+      "explode": { "magnitude": 1.3 },
+      "partOf": "wind-grid",
+      "label": { "zh": "高壓開關", "en": "GIS" },
+      "annotation": { "title": { "zh": "高壓開關", "en": "GIS" } }
+    },
+    {
+      "id": "transmission-tower",
+      "kind": "primitive",
+      "geometry": { "shape": "cone", "args": [0.5, 12.0, 4] },
+      "transform": { "position": [68.0, 6.0, -5.0] },
+      "material": "metal-dark",
+      "explode": { "magnitude": 1.5 },
+      "partOf": "wind-grid",
+      "label": { "zh": "輸電鐵塔", "en": "Transmission Tower" },
+      "annotation": { "title": { "zh": "輸電網絡", "en": "Grid" } }
     }
   ]
 }

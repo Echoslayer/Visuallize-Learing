@@ -78,12 +78,16 @@ pipeline,tank-1,2013,中鋼構
 pipeline,pipe-top,2017,官田鋼
 pipeline,pipe-top,2007,燁興
 pipeline,valve,1590,亞德客-KY
-wind,tower,9958,世紀鋼
-wind,tower,2002,中鋼
-wind,nacelle,3708,上緯投控
-wind,nacelle,1503,士電
-wind,blade-0,1589,永冠-KY
-wind,blade-0,3708,上緯投控
+wind,wind-rotor,VWS.CO,Vestas
+wind,pitch-system-1,MOG.A,Moog
+wind,pitch-system-2,MOG.A,Moog
+wind,pitch-system-3,MOG.A,Moog
+wind,blade-1,TPIC,TPI Composites
+wind,blade-2,TPIC,TPI Composites
+wind,blade-3,TPIC,TPI Composites
+wind,blade-1,002080.SZ,Sinoma
+wind,blade-2,002080.SZ,Sinoma
+wind,blade-3,002080.SZ,Sinoma
 aerospace,airframe,2634,漢翔
 aerospace,airframe,2645,長榮航太
 semiconductor,design,2454,聯發科
@@ -127,3 +131,43 @@ semiconductor,downstream,2317,鴻海
 semiconductor,downstream,2382,廣達
 semiconductor,downstream,3231,緯創
 semiconductor,downstream,6669,緯穎
+semiconductor,wafer,4063,信越化學
+semiconductor,wafer,3436,SUMCO
+semiconductor,wafer,WAF.DE,Siltronic
+semiconductor,equip,ASML,ASML
+semiconductor,equip,AMAT,Applied Materials
+semiconductor,equip,LRCX,Lam Research
+semiconductor,equip,8035,Tokyo Electron
+semiconductor,equip,KLAC,KLA
+semiconductor,equip,3680,家登
+semiconductor,equip,4186,東京應化
+semiconductor,equip,LIN,Linde
+semiconductor,equip,AI.PA,Air Liquide
+semiconductor,foundry,005930,Samsung
+semiconductor,foundry,GFS,GlobalFoundries
+semiconductor,foundry,0981,SMIC
+semiconductor,foundry,INTC,Intel
+semiconductor,osat,3374,精材
+semiconductor,osat,AMKR,Amkor
+semiconductor,osat,600584,長電科技
+semiconductor,osat,002156,通富微電
+semiconductor,downstream,2357,華碩
+semiconductor,downstream,2353,宏碁
+semiconductor,downstream,AAPL,Apple
+wind,wind-nacelle,VWS.CO,Vestas
+wind,main-bearing,SKF-B.ST,SKF
+wind,gearbox,0658.HK,NGC
+wind,generator,ABBN.SW,ABB
+wind,converter,2308,台達電
+wind,wind-tower,112610.KS,CS Wind
+wind,transition-piece,9958,世紀鋼
+wind,monopile,SIFG.AS,Sif Group
+wind,wind-cables,PRY.MI,Prysmian Group
+wind,wind-substation,BLADT,Bladt Industries
+wind,substation-foundation,9958,世紀鋼
+wind,offshore-transformer,ENR.DE,Siemens Energy
+wind,offshore-gis,ABBN.SW,ABB
+wind,wind-grid,1513,中興電
+wind,onshore-transformer,1519,華城
+wind,onshore-gis,1513,中興電
+wind,transmission-tower,1609,大亞

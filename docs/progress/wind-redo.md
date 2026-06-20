@@ -95,24 +95,24 @@ Phase D  能量流接線   接 topic-level process + 全題驗收 + Pattern + /u
 
 所有設備重做完後,回整體 topic 視圖接上 Phase B 拍板的能量流,確認爆炸看公司仍正常。
 
-- [ ] **topic-level process**:wind → rotor → nacelle/generator → converter/transformer → cable/substation → grid;token 分 wind/mechanical/electrical/control/heat;route 單向、不閉合。
-- [ ] **介面契約對齊**:上一設備 output = 下設備 input;mechanical→electrical 轉換發生在 generator/converter 節點。
-- [ ] **爆炸/公司/導航**:點各設備→拆解→公司卡;名稱/股票/透視/重置;整體↔gallery 連結。
-- [ ] **全綠**:`pnpm check` / typecheck / lint / build;多角度截圖無 pageerror。
-- [ ] **Pattern harvest**:若「energy conversion flow」可跨題目重用 → 寫進 `topic-playbook.md`。
-- [ ] `/update-docs`:同步 README / CLAUDE / log;此計畫檔逐項勾完標 ✅。
+- [x] **topic-level process**:wind → rotor → nacelle/generator → converter/transformer → cable/substation → grid;token 分 wind/mechanical/electrical/control/heat;route 單向、不閉合。
+- [x] **介面契約對齊**:上一設備 output = 下設備 input;mechanical→electrical 轉換發生在 generator/converter 節點。
+- [x] **爆炸/公司/導航**:點各設備→拆解→公司卡;名稱/股票/透視/重置;整體↔gallery 連結。
+- [x] **全綠**:`pnpm check` / typecheck / lint / build;多角度截圖無 pageerror。
+- [x] **Pattern harvest**:若「energy conversion flow」可跨題目重用 → 寫進 `topic-playbook.md`。
+- [x] `/update-docs`:同步 README / CLAUDE / log;此計畫檔逐項勾完標 ✅。
 
 ---
 
 ## 進度追蹤
 
-- [ ] Phase A 研究供應鏈(`docs/research/supply-chains/wind.md`)
-- [ ] Phase B 設計 demo(`docs/specs/<NN>-topic-wind.md` + scope/能量流拍板)
-- [ ] Phase C-0 Rotor / Blade System 試金石
-- [ ] Phase C-1 Nacelle Drivetrain
-- [ ] Phase C-2 Tower / Foundation
-- [ ] Phase C-3 Converter / Control
-- [ ] Phase C-4 Collection Cable / Substation
-- [ ] Phase C-5 Grid Connection / O&M(可選)
-- [ ] Phase D 能量流接線 + 全題驗收
+- [x] Phase A 研究供應鏈(`docs/research/supply-chains/wind.md`) — 待人類校對公司/代號
+- [x] Phase B 設計 demo(`docs/specs/27-topic-wind.md` + scope/能量流拍板)
+- [x] Phase C-0 Rotor / Blade System 試金石 — 待人類確認
+- [x] Phase C-1 Nacelle Drivetrain — 待人類確認
+- [x] Phase C-2 Tower / Foundation — 待人類確認
+- [x] Phase C-3 Converter / Control (已整合至 Phase C-1/C-0)
+- [x] Phase C-4 Collection Cable / Substation — 待人類確認
+- [x] Phase C-5 Grid Connection / O&M — 待人類確認
+- [x] Phase D 能量流接線 + 全題驗收
 

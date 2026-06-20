@@ -32,6 +32,8 @@ export interface Transform {
   position: Vec3
   rotation?: Vec3
   scale?: number | Vec3 // 選用;借來的 model 常需縮放(spec 05)。預設 1。
+  spin?: Vec3 // 每秒自轉弧度 [x,y,z] (選用，供旋轉機構如風機轉子使用)
+  pivot?: Vec3 // 旋轉軸心 (選用，全球座標)
 }
 
 export interface Company {
@@ -115,6 +117,7 @@ export interface Part {
   card?: Annotation | null // 載入時解析:點選此 part 顯示的節點卡(自己或 partOf 的)。內容勿手寫
   resolvedLabel?: LocalizedText // 載入時解析:顯示名 = label ?? 父名 ?? annotation.title。內容勿手寫
   process?: ProcessSpec // 機台級內部流(物料進→過站→出);座標 machine-local(root 視為原點)。聚焦單機台時由 gallery 提升為 content.process 渲染;整線視圖忽略。
+  camera?: CameraSpec // 單機台聚焦(Gallery)時的特製相機;未指定時 fallback 到預設
 }
 
 export interface CameraSpec {

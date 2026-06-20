@@ -7,6 +7,7 @@ const FALLBACK = '#9aa3ad'
 export const MATERIAL_COLORS: Record<string, string> = {
   'metal-light': '#dfe3e8',
   'metal-dark': '#414751',
+  primary: '#fbbf24', // 主色(黃色/Amber)，用於離岸風電基礎防撞色及電能 token
   accent: '#3b82f6', // 強調色(如流動粒子),讓運動更醒目
   chip: '#34d399', // 成品晶片流(綠);與 accent 藍的晶圓流對比,表「晶圓→晶片」變形
   heat: '#f97316', // 廢熱流(橘);AI 伺服器散熱 token 用,與 power/data 區隔

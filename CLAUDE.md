@@ -62,7 +62,7 @@
 - `src/content/` — 題目資料 JSON(元件結構 + `annotation.title`,**不含公司**);換議題只動這裡。
 - `src/content/companies.csv` — **公司↔元件對應的唯一來源**(edge list `topic,part,ticker,name`,多對多,見 ADR-0011)。
   加公司 = 加一列;**別把公司寫回 JSON**。`registry.ts` 在載入時 join 進 `annotation.companies`。欄位不可含逗號。
-- `tools/shoot.mjs` — 截圖 harness;`pnpm shoot "?view=gallery" <name>`。
+- `tools/shoot.mjs` — 截圖 harness; 必須帶上 topic 參數才能正確切換題目。用法：`pnpm shoot "?topic=<topic>&view=gallery&machine=<partId>" <name>`。
 - 極簡路由:`src/main.tsx` 用 `?view=gallery` 切換,**不引 react-router**(見 ADR-0006)。
 
 ## 工作流（slash commands）
@@ -71,6 +71,7 @@
 - `/verify [route]` — 跑自我驗證迴圈（typecheck→lint→build→shoot→讀回截圖）。**沒過不准 commit。**
 - `/commit` — 格式化 commit（階段一 `C{n}: ...`；階段二含 spec 檔名）。
 - `/update-docs [scope]` — 同步活文件(README/CLAUDE/log)與按需新增 ADR。
+- `/review <topic>` — **顧客視角驗收**:透過 `SHOOT_FRAMES=2` 擷取多幀截圖審查動態與靜態視覺 → 對照 spec → 產出 `docs/review/<topic>-customer-review.md`。只寫驗收意見,不提實作建議。
 - **供應鏈題目三段管線**:`/research-supply-chain <產業>`(查證事實 → `docs/research/supply-chains/`)→ `/design-demo <slug>`(設計取捨:精選/形狀/大小/互動/物流 → `docs/specs/`)→ `/add-topic`(依設計實作)。
   **單台機台**也走小三段:`/research-machine <machine>`(→ `docs/research/machines/`)→ `/design-machine <slug>`(→ `docs/specs/<NN>-machine-*.md`)→ `/add-component`(依 spec 實作到 content)。
   **完整建置步驟 + 慣例 + 最終驗收清單見 [`docs/topic-playbook.md`](docs/topic-playbook.md)** —— 每條供應鏈照它跑。

@@ -64,10 +64,14 @@ function focusMachine(content: SceneContent, id: string | null): SceneContent {
     ...content,
     // 機台級內部流(machine-local 座標,root 為原點)→ 提升為 content.process 給 ProcessLayer。
     process: rootPart?.process,
-    camera: { position: [1.6, 1.4, 2.8], target: [0, 0.35, 0] },
+    camera: rootPart?.camera ?? { position: [1.6, 1.4, 2.8], target: [0, 0.35, 0] },
     parts: parts.map((p) => ({
       ...p,
-      transform: { ...p.transform, position: sub(p.transform.position, anchor) },
+      transform: { 
+        ...p.transform, 
+        position: sub(p.transform.position, anchor),
+        ...(p.transform.pivot ? { pivot: sub(p.transform.pivot, anchor) } : {})
+      },
     })),
   }
 }
@@ -81,7 +85,7 @@ function href(id: string | null): string {
 
 function MachineList({ content, current }: { content: SceneContent; current: string | null }) {
   const lang = useSelection((s) => s.lang)
-  const machines = content.parts.filter((p) => p.annotation)
+  const machines = content.parts.filter((p) => p.annotation && !p.partOf)
   return (
     <nav style={panel}>
       <a href={`?topic=${content.topic}`} style={back}>

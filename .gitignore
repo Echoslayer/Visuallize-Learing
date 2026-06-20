@@ -26,3 +26,10 @@ __pycache__/
 .idea/
 .vscode/
 references/
+
+# Google Antigravity
+.agy/
+.antigravity/
+*.agy
+*.antigravity
+

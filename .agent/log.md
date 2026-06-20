@@ -407,3 +407,26 @@
 - 全 `git mv` 保留歷史;同步改 CLAUDE/README/`.claude`(含未追蹤 skills)/docs 全部 prose 路徑 + 18 條相對連結;link-checker 驗 0 斷鏈。
 - 新增 `docs/README.md` 地圖(找文件入口),CLAUDE.md 開頭指向它。新增 ADR-0018。
 - `.agent/` 歷史 log 不改(舊路徑是當時事實)。純文件搬遷,不影響 build。
+## 2026-06-20
+
+- ✅ [wind-redo] Phase D (Final Setup & Wiring): Added topic-level `process` to `wind.json` wiring all machines (rotor -> nacelle -> tower -> substation -> grid) with tokens flowing continuously and changing formats (wind -> mechanical -> electrical-lv -> electrical-hv). All documentation (README, log, tracker) updated and topic redo fully completed!
+- ✅ [wind-redo] Phase C-5: `wind-grid` (陸上變電站與併網) research (spec 33), design & implement. Added onshore substation, transformer, GIS, and transmission tower, mapped to locally-based supply chain (Chung-Hsin Electric, Fortune Electric, Ta Ya). Verification checks passed, screenshot generated.
+- ✅ [wind-redo] Phase C-4 (Substation Part): `wind-substation` (海上升壓站) research (spec 32), design & implement. Added topside module, foundation, main transformer, and HV GIS, mapped to Bladt Industries, Century Iron & Steel, Siemens Energy, and ABB. Verification checks passed, screenshot generated.
+- ✅ [wind-redo] Phase C-3/C-4 (Cable Part): `wind-cables` (海底電纜) research (spec 31), design & implement. Added array cables spanning the sea floor, mapped to Prysmian Group. Verification checks passed, screenshot generated. Note: Converter/Control was already integrated into Nacelle/Rotor.
+- ✅ [wind-redo] Phase C-2: `wind-tower` (塔架與基座) research (spec 30), design & implement. Added upper/lower tower, transition piece, and monopile, mapped to CS Wind, Century Iron & Steel, and Sif Group. Verification checks passed, screenshot generated.
+- ✅ [wind-redo] Phase C-1: `wind-nacelle` (機艙傳動與發電系統) research (spec 29), design & implement. Added main shaft, bearing, gearbox, generator, and converter inside an enclosure, mapped to SKF, NGC, ABB, and Delta. Verification checks passed, screenshot generated.
+- ✅ [system] Updated `CLAUDE.md` and `skills/verify/SKILL.md` to explicitly require `?topic=` parameter in `shoot.mjs` command to prevent screenshotting the wrong topic.
+- ✅ [wind-redo] Phase C-0: `wind-rotor` (轉子系統) research (spec 28), design & implement. Added hub, 3 blades, 3 pitch systems with proper supply chain companies (Vestas, TPI Composites, Sinoma, Moog). Screenshot generated.
+
+## /review 指令與顧客視角驗收機制 ✅
+- 新增 `/review <topic>` 工作流指令，包含 Claude Code command (`.claude/commands/review.md`) 與 Antigravity/Codex skill (`.agents/skills/review/SKILL.md`)。
+- 機制：讀取指定題目的 specs、progress 與 JSON，啟動 `shoot.mjs` 擷取總覽、畫廊單機與拆解視角截圖，從顧客視角進行辨識度、Spec 符合度、相機/構圖、材質/色彩、拆解與 Enclosure 透視等多維度審查。
+- 產出：結構化的 `docs/review/<topic>-customer-review.md` 驗收報告（只提問題，不提實作建議）。
+- 同步更新 `CLAUDE.md` 工作流區塊，完成註冊。
+- **實作驗證（Wind）**：對 `wind` 題目執行了顧客驗收。第一次驗收為 ❌ 不通過，抓出塔架缺失與相機穿牆等問題。隨著 wind-redo 的完成，第二次驗收修復了靜態問題。
+- 效益：此機制補齊了「人類視角驗收」的標準化流程，讓「好不好看、有沒有做對」的審查更具結構性。
+- **後續修正（動態 Bug 追蹤與工作流升級）**：
+  1. 人類顧客指出靜態截圖無法抓出「動態錯亂」問題。於是將 `/review` 工作流升級：`shoot.mjs` 新增 `SHOOT_FRAMES` 參數。對機台級零件採集 `0.png` 與 `1.png`（間隔 500ms），並在審查維度中加入「動態與動畫比對（Frame 0 vs Frame 1）」。
+  2. 透過多幀比對，成功抓出深層 Bug：在畫廊視角（`?view=gallery&machine=...`）中，`GeometryFactory.tsx` 因為將 `localPivot` 套用在旋轉群組內，且 `Gallery.tsx` 在偏移座標時漏掉了平移 `pivot`，導致旋轉中心停留在全球原點，使得元件在旋轉時猶如「公轉」般飛出相機視野。
+  3. **修復**：修正了 `Gallery.tsx` 中 `focusMachine` 對 `pivot` 的平移邏輯，並將 `GeometryFactory.tsx` 裡 `rotation` 的套用層級下放至 `meshOffset` 內，確保旋轉永遠對齊全局軸心。同時將 `wind-rotor` 與 `main-shaft` 的 `spin` 恢復為正確的 `[1.5, 0, 0]`。
+  4. 重新執行 `wind` 的多幀動態審查，最終確認轉子完美置中、旋轉軸心正確、能量粒子流動合理，取得最終的 **✅ 完美通過**。

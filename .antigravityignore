@@ -1,0 +1,23 @@
+# Antigravity Context Exclusion List
+# 類似於 .ignore，讓 Antigravity 排除這些不必要的檔案，以節省 token 並維持 context 精簡
+
+# 依賴 / vendored
+node_modules/
+.pnpm-store/
+.venv/
+__pycache__/
+
+# 建置 / 快取產物
+dist/
+.vite/
+*.tsbuildinfo
+
+# Agent 相關 (Claude Code / Codex / Antigravity 產生的快取或截圖)
+.agent/shots/
+.agy/
+.antigravity/
+*.agy
+*.antigravity
+
+# 鎖檔 / 大型生成檔
+pnpm-lock.yaml

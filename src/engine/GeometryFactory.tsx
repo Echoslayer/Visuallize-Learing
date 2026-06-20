@@ -1,8 +1,8 @@
 import { RoundedBox } from '@react-three/drei'
 import { animated, useSpring } from '@react-spring/three'
-import type { ThreeEvent } from '@react-three/fiber'
-import { useMemo } from 'react'
-import { CatmullRomCurve3, Vector3 } from 'three'
+import { useFrame, type ThreeEvent } from '@react-three/fiber'
+import { useMemo, useRef } from 'react'
+import { CatmullRomCurve3, Vector3, type Group } from 'three'
 import { Annotation } from './Annotation'
 import { FlowParticles } from './FlowParticles'
 import { ModelPart } from './ModelPart'
@@ -54,6 +54,20 @@ export function GeometryFactory({ part, center }: { part: Part; center: Vec3 }) 
     ? [base[0] + off[0], base[1] + off[1], base[2] + off[2]]
     : base
   const { pos } = useSpring({ pos: target, config: { tension: 170, friction: 24 } })
+
+  const spinRef = useRef<Group>(null)
+  useFrame((_, delta) => {
+    if (part.transform.spin && spinRef.current && !exploded) {
+      spinRef.current.rotation.x += part.transform.spin[0] * delta
+      spinRef.current.rotation.y += part.transform.spin[1] * delta
+      spinRef.current.rotation.z += part.transform.spin[2] * delta
+    }
+  })
+
+  const p = part.transform.position
+  const pv = part.transform.pivot ?? p
+  const localPivot: Vec3 = [pv[0] - p[0], pv[1] - p[1], pv[2] - p[2]]
+  const meshOffset: Vec3 = [p[0] - pv[0], p[1] - pv[1], p[2] - pv[2]]
 
   // tube 用:把 path 控制點做成平滑曲線(hook 必須無條件呼叫,故在 early return 前算)。
   const tubeCurve = useMemo(
@@ -167,8 +181,12 @@ export function GeometryFactory({ part, center }: { part: Part; center: Vec3 }) 
   const showName = (selected || showAllNames) && !!name
 
   return (
-    <animated.group position={pos} rotation={transform.rotation} scale={transform.scale}>
-      {inner}
+    <animated.group position={pos} scale={transform.scale}>
+      <group position={localPivot} ref={spinRef}>
+        <group position={meshOffset} rotation={transform.rotation}>
+          {inner}
+        </group>
+      </group>
       {card && <Annotation data={card} lang={lang} anchor={cardAnchor} opacity={labelOpacity} />}
       {showName && name && <NameTag text={name} anchor={nameTagAnchor(part)} />}
     </animated.group>
