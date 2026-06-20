@@ -93,8 +93,9 @@
   公司對應需人類校對。
 - **ai-server redo 已完成(A–D)**:三段管線(研究 `docs/research/supply-chains/ai-server.md` → design-demo spec 17 → 逐盤 specs 21–24)重做 6 盤(GPU×2/CPU/NVSwitch/Network/電源)+ `rack-sys`(機櫃/CDU/NVLink 背板);機台級流(ADR-0017)+ 整機兩層 process(電源發散 + 資料 fabric)。見 `docs/progress/ai-server-redo.md`。公司對應需人類校對。
 - **semiconductor 機台已逐台重做(Phase 0–6)**:6 台 research/design/add-component(specs 12–16、26)→ 每台機台級物料流(ADR-0017,scale 0.4)+ 整線藍→綠變色點定於 osat。見 `docs/progress/semiconductor-machine-redo.md`。
+- **pipeline redo 已完成(A–D)**:三段管線重做管線與 Skid demo。實作 pump/valve/heat-exchanger/filter 等獨立設備的 local process，再以 topic-level process 單向貫穿，流體 material 依 raw -> treated -> finished 變換。見 `docs/progress/pipeline-redo.md`。
 - 採互動式節奏:**每個查核點完成後停下,給人類看截圖再續**(本專案不用 ADW 自動化,見 ADR-0004)。
-- 下一步:人工校對 `companies.csv` 的新對應(grid/datacenter/ai-server/semiconductor);build chunk code-split 只有造成問題再做。
+- 下一步:人工校對 `companies.csv` 的新對應(grid/datacenter/ai-server/semiconductor/wind/pipeline);build chunk code-split 只有造成問題再做。
 
 ## 測試(見 [ADR-0010](docs/adr/0010-no-test-framework.md))
 

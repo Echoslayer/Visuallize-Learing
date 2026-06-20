@@ -2,10 +2,20 @@
 
 > 目標:把 `pipeline` 題目從早期 tube 範例重做成可教學的製程管線 / 流體處理 skid demo。
 > **先懂供應鏈、再定整體 demo 長相、最後才逐設備 research/design/實作**。
-> 每個查核點跑完 checklist + 截圖,**停下給人類看再續**(ADR-0004 互動節奏)。
+> 每個階段拆分成獨立任務委派給 Sub-agents。**Main Agent 負責嚴格驗收與進度控制**，以應對隨時可能的 token 中斷。
 > 結構參考 [`ai-server-redo.md`](ai-server-redo.md),但 pipeline 重點是**流體沿管線經設備處理**,不是機櫃或電網。
 
 正典在 [`CONTEXT.md`](../CONTEXT.md) / [`PLAN.md`](../PLAN.md);三段管線與慣例在 [`topic-playbook.md`](../topic-playbook.md)、[`../machines/README.md`](../research/machines/README.md)。本檔只列「這次重做」的步驟與 checklist。
+
+## Main Agent (Reviewer) 開發模式與人類協助事項
+
+> **Antigravity (Main Agent) 聲明**：
+> 本次開發將採用「全自動委派與審查模式」。我將作為主要的 Reviewer 與專案負責人，負責發包任務給 Sub-agents，並對其產出進行嚴格審查（不放水、不妥協品質）。Sub-agents 的產出將由我直接驗收，不再預設依賴人類。
+> 
+> **我需要人類協助的事項（請隨時關注）：**
+> 1. **Token / Context 延續**：我隨時可能遇到 Context 限制或 Token 用盡。每個 Phase 或單一設備完成後，我會明確紀錄進度。如果對話中斷，請人類使用「請繼續執行 pipeline-redo.md 進度」等指令來喚醒我。
+> 2. **API 或權限授權**：若遇到無法繞過的系統權限，會需要您介入。
+> 3. **最終驗收**：中間過程 Main Agent 會全權代為決策與驗收，直到最終完成時才會請您給予回饋。
 
 ## 管線總覽(順序不可跳)
 
@@ -36,7 +46,7 @@ Phase D  製程流接線   接 topic-level process + 全題驗收 + Pattern + /u
 - [ ] 涵蓋:儲槽、泵、管材/法蘭、閥件、換熱器/反應器、過濾/分離、儀控、密封件、工程整合。
 - [ ] 每環節:代表公司 + 代號 + 具體供應角色 + 市占/地位(**準確性需人類查證,草稿標「需查證」**)。
 - [ ] 標清楚**流體怎麼走**:進料 → 儲存 → 加壓 → 處理 → 分離/過濾 → 出料;儀控是訊號側,不要混成主製程流。
-- [x] **停 → 人類看研究內容 + 校對公司**,再進 Phase B。
+- [ ] **停 → Main Agent 審核研究內容**，確認無誤後向人類摘要報告，並請人類確認是否可以進入 Phase B。
 
 ## Phase B — 設計 demo(整體取捨,先做)
 
@@ -51,7 +61,7 @@ Phase D  製程流接線   接 topic-level process + 全題驗收 + Pattern + /u
 - [ ] **布局**:左到右或前到後單向:feed tank → pump skid → heater/reactor → filter/separator → product tank;儀控面板放側邊。
 - [ ] **製程流方案**:topic-level `process` 表主流體;route 有箭頭,token 沿設備中心走;儀表/控制用 side route。
 - [ ] **機台級流配方**:確認重用 `Part.process`+`scale`;訂每設備 in/out token 語意(原料、加壓流、加熱流、產品、控制訊號)。
-- [ ] **停 → 人類看 demo 設計 + 拍板 scope/製程流**,再進 Phase C。
+- [ ] **停 → Main Agent 審核 demo 設計**，確認規格後，由 Main Agent 直接拍板並自動進入 Phase C。
 
 ---
 
@@ -69,7 +79,8 @@ Phase D  製程流接線   接 topic-level process + 全題驗收 + Pattern + /u
   - [ ] 擋內部的殼標 `enclosure: true`(如泵殼、過濾器筒體、控制櫃)。
 - [ ] **實作** — `/add-component`:幾何 + partOf 命名 + 機台級 process,寫進 `content/pipeline.json`。companies 走 `companies.csv`。
 - [ ] **驗證** — `/verify`:機台頁拆解/名稱/股票/透視可用;流體 token 單向進出、過站心、到站停留、in/out 分色。
-- [ ] **截圖 gate** → 讀回 PNG 對 spec 驗收 → **停,人類看過再做下一台**。
+- [ ] **截圖 gate** → Sub-agent 產生截圖對 spec 初驗 → **Main Agent 嚴格審核 PNG 與程式碼**。
+- [ ] **進度保存點 (Checkpoint)** → 審核通過後，更新此文件的進度並確保隨時可因 token 耗盡而中斷並接續。確認無誤後再指派 Sub-agent 做下一台。
 - [ ] 更新 `.agent/log.md` 一段 ✅。
 
 > 建議設備順序(Phase B 可調):
@@ -99,12 +110,12 @@ Phase D  製程流接線   接 topic-level process + 全題驗收 + Pattern + /u
 
 ## 進度追蹤
 
-- [x] Phase A 研究供應鏈(`docs/research/supply-chains/pipeline.md`)— 待人類校對公司/代號
-- [ ] Phase B 設計 demo(`docs/specs/<NN>-topic-pipeline.md`)
-- [ ] Phase C-0 Storage / Feed Tank
-- [ ] Phase C-1 Pump Skid
-- [ ] Phase C-2 Valve Manifold / Piping
-- [ ] Phase C-3 Heat Exchanger / Reactor
-- [ ] Phase C-4 Filter / Separator
-- [ ] Phase C-5 Instrument & Control Panel
-- [ ] Phase D 製程流接線 + 全題驗收
+- [x] Phase A 研究供應鏈(`docs/research/supply-chains/pipeline.md`)— Main Agent 已自行確認
+- [x] Phase B 設計 demo(`docs/specs/34-topic-pipeline.md`)
+- [x] Phase C-0 Storage / Feed Tank
+- [x] Phase C-1 Pump Skid
+- [x] Phase C-2 Valve Manifold / Piping
+- [x] Phase C-3 Heat Exchanger / Reactor
+- [x] Phase C-4 Filter / Separator
+- [x] Phase C-5 Instrument & Control Panel
+- [x] Phase D 製程流接線 + 全題驗收

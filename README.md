@@ -70,7 +70,7 @@ docs/review/      # 一次性審查報告(如 architecture-audit)
 🎉 **階段一完成(C0–C6)** — AI 伺服器機櫃垂直切片:旋轉 / 點選 / 拆解 / 標籤(中英)/ UI 殼,
 全由 JSON 驅動,engine 不含題目字眼。
 
-🎉 **7 題目**:`?topic=ai-server`(預設,**機櫃 6 盤深做 + rack-sys + 電源/資料雙層互連**)、`grid`(**小型變電站,含 GIS→變壓器→母線→配電 + control signal**)、`datacenter`(**資料中心基礎設施,含電力/冷卻/資料/監控 flow**)、`pipeline`(製程管線)、`wind`(**風力發電供應鏈, 風場到併網佈局重做完畢, 含完整機台與能量轉換流程**)、`aerospace`(航太/飛機)、`semiconductor`(**半導體晶圓產線,6 台機台深做 + 單機台物料流 + 整線藍→綠**)。
+🎉 **7 題目**:`?topic=ai-server`(預設,**機櫃 6 盤深做 + rack-sys + 電源/資料雙層互連**)、`grid`(**小型變電站,含 GIS→變壓器→母線→配電 + control signal**)、`datacenter`(**資料中心基礎設施,含電力/冷卻/資料/監控 flow**)、`pipeline`(**製程管線, Skid 機組重做完畢, fluid-raw → fluid-treated → fluid-finished 變色流動**)、`wind`(**風力發電供應鏈, 風場到併網佈局重做完畢, 含完整機台與能量轉換流程**)、`aerospace`(航太/飛機)、`semiconductor`(**半導體晶圓產線,6 台機台深做 + 單機台物料流 + 整線藍→綠**)。
 引擎支援 box/cylinder/cone/tube + repeat + rotation + model(GLB)+ **flow(裝飾/循環流動粒子,可設站點停頓 dwell)**+
 **process layer(產線語意:station/route/token,單向箭頭、停站加工、物料變化)**;
 互動:點選高亮、**元件名牌**(點選/「名稱」按鈕)、**公司卡**(「股票」按鈕)、**放射狀拆解**(全域自中心散開)、**透視**(「透視」按鈕看穿外殼內部,ADR-0015)、中英、**鍵盤快捷**(E/X/數字鍵);engine/content 分離全程守住。

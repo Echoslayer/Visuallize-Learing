@@ -16,7 +16,115 @@
       0
     ]
   },
+  "process": {
+    "scale": 1,
+    "stations": [
+      {
+        "id": "global-pump",
+        "partId": "pump-skid",
+        "processTime": 0.5,
+        "input": "raw-material",
+        "output": "pressurized-flow"
+      },
+      {
+        "id": "global-valve",
+        "partId": "valve-manifold",
+        "processTime": 0.5,
+        "input": "pressurized-flow",
+        "output": "regulated-flow"
+      },
+      {
+        "id": "global-heat",
+        "partId": "heat-exchanger",
+        "processTime": 0.5,
+        "input": "regulated-flow",
+        "output": "heated-flow"
+      },
+      {
+        "id": "global-filter",
+        "partId": "filter-separator",
+        "processTime": 0.5,
+        "input": "heated-flow",
+        "output": "filtered-product"
+      }
+    ],
+    "routes": [
+      {
+        "id": "global-route-raw",
+        "kind": "main",
+        "material": "fluid-raw",
+        "path": [
+          [-1.5, 0.3, 0],
+          [-0.7, 0.25, 0],
+          [0, 0.2, 0],
+          [0.7, 0.25, 0]
+        ],
+        "stops": [
+          { "point": 1, "station": "global-pump" },
+          { "point": 2, "station": "global-valve" }
+        ]
+      },
+      {
+        "id": "global-route-treated",
+        "kind": "main",
+        "material": "fluid-treated",
+        "path": [
+          [0.7, 0.25, 0],
+          [1.4, 0.3, 0]
+        ],
+        "stops": [
+          { "point": 0, "station": "global-heat" }
+        ]
+      },
+      {
+        "id": "global-route-finished",
+        "kind": "main",
+        "material": "fluid-finished",
+        "path": [
+          [1.4, 0.3, 0],
+          [2.1, 0.9, 0]
+        ],
+        "stops": [
+          { "point": 0, "station": "global-filter" }
+        ]
+      }
+    ],
+    "tokens": [
+      {
+        "id": "global-fluid-raw",
+        "routeId": "global-route-raw",
+        "material": "fluid-raw",
+        "count": 3,
+        "radius": 0.08,
+        "duration": 4.5
+      },
+      {
+        "id": "global-fluid-treated",
+        "routeId": "global-route-treated",
+        "material": "fluid-treated",
+        "count": 1,
+        "radius": 0.08,
+        "duration": 1.5
+      },
+      {
+        "id": "global-fluid-finished",
+        "routeId": "global-route-finished",
+        "material": "fluid-finished",
+        "count": 1,
+        "radius": 0.08,
+        "duration": 1.5
+      }
+    ]
+  },
   "parts": [
+    {
+      "id": "pipeline-skid-base",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [4.6, 0.1, 2.0] },
+      "transform": { "position": [0.3, -0.05, 0.3] },
+      "material": "metal-dark",
+      "explode": { "vector": [0, -1, 0], "magnitude": 0.5 }
+    },
     {
       "id": "tank-1",
       "kind": "primitive",
@@ -25,14 +133,14 @@
         "args": [
           0.5,
           0.5,
-          1.8,
+          1.4,
           24
         ]
       },
       "transform": {
         "position": [
           -1.5,
-          0.9,
+          1.2,
           0
         ]
       },
@@ -53,111 +161,170 @@
       }
     },
     {
-      "id": "tank-2",
+      "id": "tank-1-roof",
       "kind": "primitive",
       "geometry": {
-        "shape": "cylinder",
+        "shape": "cone",
         "args": [
           0.5,
-          0.5,
-          1.8,
+          0.4,
           24
         ]
       },
       "transform": {
         "position": [
-          1.5,
-          0.9,
+          -1.5,
+          2.1,
           0
         ]
       },
       "material": "metal-dark",
-      "explode": {
-        "vector": [
-          0.7,
-          0.3,
-          0
-        ],
-        "magnitude": 0.8
-      },
-      "annotation": null,
-      "partOf": "tank-1"
-    },
-    {
-      "id": "pipe-top",
-      "kind": "primitive",
-      "geometry": {
-        "shape": "tube",
-        "path": [
-          [
-            -1.5,
-            1.8,
-            0
-          ],
-          [
-            -1.5,
-            2.45,
-            0
-          ],
-          [
-            1.5,
-            2.45,
-            0
-          ],
-          [
-            1.5,
-            1.8,
-            0
-          ]
-        ],
-        "radius": 0.12
-      },
-      "transform": {
-        "position": [
-          0,
-          0,
-          0
-        ]
-      },
-      "material": "metal-light",
       "explode": {
         "vector": [
           0,
           1,
           0
         ],
-        "magnitude": 1
+        "magnitude": 1.5
       },
-      "annotation": {
-        "title": {
-          "zh": "製程管線",
-          "en": "Process Pipe"
-        }
-      }
+      "partOf": "tank-1"
     },
     {
-      "id": "pipe-bottom",
+      "id": "tank-1-leg-1",
       "kind": "primitive",
       "geometry": {
-        "shape": "tube",
-        "path": [
-          [
-            -1.5,
-            0.4,
-            0.55
-          ],
-          [
-            1.5,
-            0.4,
-            0.55
-          ]
-        ],
-        "radius": 0.1
+        "shape": "cylinder",
+        "args": [
+          0.05,
+          0.05,
+          0.5,
+          8
+        ]
       },
       "transform": {
         "position": [
-          0,
-          0,
+          -1.15,
+          0.25,
+          0.35
+        ]
+      },
+      "material": "metal-dark",
+      "explode": {
+        "vector": [
+          1,
+          -1,
+          1
+        ],
+        "magnitude": 0.5
+      },
+      "partOf": "tank-1"
+    },
+    {
+      "id": "tank-1-leg-2",
+      "kind": "primitive",
+      "geometry": {
+        "shape": "cylinder",
+        "args": [
+          0.05,
+          0.05,
+          0.5,
+          8
+        ]
+      },
+      "transform": {
+        "position": [
+          -1.85,
+          0.25,
+          0.35
+        ]
+      },
+      "material": "metal-dark",
+      "explode": {
+        "vector": [
+          -1,
+          -1,
+          1
+        ],
+        "magnitude": 0.5
+      },
+      "partOf": "tank-1"
+    },
+    {
+      "id": "tank-1-leg-3",
+      "kind": "primitive",
+      "geometry": {
+        "shape": "cylinder",
+        "args": [
+          0.05,
+          0.05,
+          0.5,
+          8
+        ]
+      },
+      "transform": {
+        "position": [
+          -1.15,
+          0.25,
+          -0.35
+        ]
+      },
+      "material": "metal-dark",
+      "explode": {
+        "vector": [
+          1,
+          -1,
+          -1
+        ],
+        "magnitude": 0.5
+      },
+      "partOf": "tank-1"
+    },
+    {
+      "id": "tank-1-leg-4",
+      "kind": "primitive",
+      "geometry": {
+        "shape": "cylinder",
+        "args": [
+          0.05,
+          0.05,
+          0.5,
+          8
+        ]
+      },
+      "transform": {
+        "position": [
+          -1.85,
+          0.25,
+          -0.35
+        ]
+      },
+      "material": "metal-dark",
+      "explode": {
+        "vector": [
+          -1,
+          -1,
+          -1
+        ],
+        "magnitude": 0.5
+      },
+      "partOf": "tank-1"
+    },
+    {
+      "id": "tank-1-outlet",
+      "kind": "primitive",
+      "geometry": {
+        "shape": "cylinder",
+        "args": [
+          0.08,
+          0.08,
+          0.4,
+          12
+        ]
+      },
+      "transform": {
+        "position": [
+          -1.5,
+          0.3,
           0
         ]
       },
@@ -165,48 +332,688 @@
       "explode": {
         "vector": [
           0,
-          0,
-          1
+          -1,
+          0
         ],
         "magnitude": 0.8
       },
-      "annotation": null,
-      "partOf": "pipe-top"
+      "partOf": "tank-1"
     },
     {
-      "id": "valve",
+      "id": "tank-2",
+      "kind": "primitive",
+      "geometry": { "shape": "cylinder", "args": [0.5, 0.5, 1.8, 24] },
+      "transform": { "position": [2.1, 1.4, 0] },
+      "material": "metal-dark",
+      "explode": { "vector": [0.7, 0.3, 0], "magnitude": 0.8 },
+      "annotation": { "title": { "zh": "產品槽", "en": "Product Tank" } }
+    },
+    {
+      "id": "tank-2-roof",
+      "kind": "primitive",
+      "geometry": { "shape": "cone", "args": [0.5, 0.4, 24] },
+      "transform": { "position": [2.1, 2.5, 0] },
+      "material": "metal-dark",
+      "explode": { "vector": [0, 1, 0], "magnitude": 1.5 },
+      "partOf": "tank-2"
+    },
+    {
+      "id": "tank-2-leg-1",
+      "kind": "primitive",
+      "geometry": { "shape": "cylinder", "args": [0.05, 0.05, 0.5, 8] },
+      "transform": { "position": [2.45, 0.25, 0.35] },
+      "material": "metal-dark",
+      "explode": { "vector": [1, -1, 1], "magnitude": 0.5 },
+      "partOf": "tank-2"
+    },
+    {
+      "id": "tank-2-leg-2",
+      "kind": "primitive",
+      "geometry": { "shape": "cylinder", "args": [0.05, 0.05, 0.5, 8] },
+      "transform": { "position": [1.75, 0.25, 0.35] },
+      "material": "metal-dark",
+      "explode": { "vector": [-1, -1, 1], "magnitude": 0.5 },
+      "partOf": "tank-2"
+    },
+    {
+      "id": "tank-2-leg-3",
+      "kind": "primitive",
+      "geometry": { "shape": "cylinder", "args": [0.05, 0.05, 0.5, 8] },
+      "transform": { "position": [2.45, 0.25, -0.35] },
+      "material": "metal-dark",
+      "explode": { "vector": [1, -1, -1], "magnitude": 0.5 },
+      "partOf": "tank-2"
+    },
+    {
+      "id": "tank-2-leg-4",
+      "kind": "primitive",
+      "geometry": { "shape": "cylinder", "args": [0.05, 0.05, 0.5, 8] },
+      "transform": { "position": [1.75, 0.25, -0.35] },
+      "material": "metal-dark",
+      "explode": { "vector": [-1, -1, -1], "magnitude": 0.5 },
+      "partOf": "tank-2"
+    },
+    {
+      "id": "tank-2-inlet",
+      "kind": "primitive",
+      "geometry": { "shape": "cylinder", "args": [0.08, 0.08, 0.4, 12] },
+      "transform": { "position": [2.1, 2.5, 0] },
+      "material": "metal-light",
+      "explode": { "vector": [0, 1, 0], "magnitude": 0.8 },
+      "partOf": "tank-2"
+    },
+    {
+      "id": "valve-manifold",
       "kind": "primitive",
       "geometry": {
         "shape": "cylinder",
-        "args": [
-          0.16,
-          0.16,
-          0.28,
-          16
-        ]
+        "args": [0.15, 0.15, 0.2, 16]
       },
       "transform": {
-        "position": [
-          0,
-          0.4,
-          0.55
-        ]
+        "position": [0, 0.65, 0],
+        "rotation": [0, 0, 1.5708]
       },
       "material": "metal-dark",
       "explode": {
-        "vector": [
-          0,
-          0,
-          1
-        ],
-        "magnitude": 1.3
+        "vector": [0, 0, 1],
+        "magnitude": 0.5
       },
       "annotation": {
         "title": {
-          "zh": "閥件",
-          "en": "Valve"
+          "zh": "閥門管匯",
+          "en": "Valve Manifold / Piping"
         }
+      },
+      "process": {
+        "scale": 0.5,
+        "stations": [
+          {
+            "id": "valve-process",
+            "partId": "valve-manifold-actuator",
+            "processTime": 0.5,
+            "input": "pressurized-flow",
+            "output": "regulated-flow"
+          }
+        ],
+        "routes": [
+          {
+            "id": "valve-route",
+            "kind": "main",
+            "material": "metal-light",
+            "path": [
+              [-0.55, 0, 0],
+              [0, 0, 0],
+              [0.55, 0, 0]
+            ],
+            "stops": [
+              { "point": 1, "station": "valve-process" }
+            ]
+          }
+        ],
+        "tokens": [
+          {
+            "id": "fluid-token-valve",
+            "routeId": "valve-route",
+            "material": "accent",
+            "count": 1,
+            "radius": 0.08,
+            "duration": 2.5
+          }
+        ]
       }
+    },
+    {
+      "id": "valve-manifold-actuator",
+      "kind": "primitive",
+      "geometry": {
+        "shape": "cylinder",
+        "args": [0.1, 0.1, 0.2, 16]
+      },
+      "transform": {
+        "position": [0, 0.2, 0]
+      },
+      "material": "metal-light",
+      "explode": {
+        "vector": [0, 1, 0],
+        "magnitude": 0.5
+      },
+      "partOf": "valve-manifold"
+    },
+    {
+      "id": "valve-manifold-handwheel",
+      "kind": "primitive",
+      "geometry": {
+        "shape": "cylinder",
+        "args": [0.15, 0.15, 0.02, 16]
+      },
+      "transform": {
+        "position": [0, 0.3, 0]
+      },
+      "material": "metal-dark",
+      "explode": {
+        "vector": [0, 1, 0],
+        "magnitude": 0.8
+      },
+      "partOf": "valve-manifold"
+    },
+    {
+      "id": "valve-manifold-pipe-in",
+      "kind": "primitive",
+      "geometry": {
+        "shape": "cylinder",
+        "args": [0.08, 0.08, 0.45, 16]
+      },
+      "transform": {
+        "position": [-0.325, 0, 0],
+        "rotation": [0, 0, 1.5708]
+      },
+      "material": "metal-light",
+      "explode": {
+        "vector": [-1, 0, 0],
+        "magnitude": 0.5
+      },
+      "partOf": "valve-manifold"
+    },
+    {
+      "id": "valve-manifold-pipe-out",
+      "kind": "primitive",
+      "geometry": {
+        "shape": "cylinder",
+        "args": [0.08, 0.08, 0.45, 16]
+      },
+      "transform": {
+        "position": [0.325, 0, 0],
+        "rotation": [0, 0, 1.5708]
+      },
+      "material": "metal-light",
+      "explode": {
+        "vector": [1, 0, 0],
+        "magnitude": 0.5
+      },
+      "partOf": "valve-manifold"
+    },
+    {
+      "id": "valve-manifold-flange-in",
+      "kind": "primitive",
+      "geometry": {
+        "shape": "cylinder",
+        "args": [0.12, 0.12, 0.05, 16]
+      },
+      "transform": {
+        "position": [-0.1, 0, 0],
+        "rotation": [0, 0, 1.5708]
+      },
+      "material": "metal-dark",
+      "explode": {
+        "vector": [-1, 0, 0],
+        "magnitude": 0.2
+      },
+      "partOf": "valve-manifold"
+    },
+    {
+      "id": "valve-manifold-flange-out",
+      "kind": "primitive",
+      "geometry": {
+        "shape": "cylinder",
+        "args": [0.12, 0.12, 0.05, 16]
+      },
+      "transform": {
+        "position": [0.1, 0, 0],
+        "rotation": [0, 0, 1.5708]
+      },
+      "material": "metal-dark",
+      "explode": {
+        "vector": [1, 0, 0],
+        "magnitude": 0.2
+      },
+      "partOf": "valve-manifold"
+    },
+    {
+      "id": "pump-skid",
+      "kind": "primitive",
+      "geometry": {
+        "shape": "box",
+        "args": [0.6, 0.1, 0.4]
+      },
+      "transform": {
+        "position": [-0.7, 0.05, 0]
+      },
+      "material": "metal-dark",
+      "explode": {
+        "vector": [0, -1, 0],
+        "magnitude": 0.5
+      },
+      "annotation": {
+        "title": {
+          "zh": "泵浦機組",
+          "en": "Pump Skid"
+        }
+      },
+      "process": {
+        "scale": 0.5,
+        "stations": [
+          {
+            "id": "pump-process",
+            "partId": "pump-skid-casing",
+            "processTime": 0.5,
+            "input": "raw-material",
+            "output": "pressurized-flow"
+          }
+        ],
+        "routes": [
+          {
+            "id": "pump-route",
+            "kind": "main",
+            "material": "metal-light",
+            "path": [
+              [0.15, 0.2, 0.4],
+              [0.15, 0.2, 0.2],
+              [0.15, 0.2, 0],
+              [0.15, 0.4, 0],
+              [0.15, 0.6, 0]
+            ],
+            "stops": [
+              { "point": 2, "station": "pump-process" }
+            ]
+          }
+        ],
+        "tokens": [
+          {
+            "id": "fluid-token",
+            "routeId": "pump-route",
+            "material": "accent",
+            "count": 1,
+            "radius": 0.08,
+            "duration": 3.0
+          }
+        ]
+      }
+    },
+    {
+      "id": "pump-skid-motor",
+      "kind": "primitive",
+      "geometry": {
+        "shape": "cylinder",
+        "args": [0.15, 0.15, 0.4, 16]
+      },
+      "transform": {
+        "position": [-0.8, 0.25, 0],
+        "rotation": [0, 0, 1.5708]
+      },
+      "material": "metal-dark",
+      "explode": {
+        "vector": [-1, 0, 0],
+        "magnitude": 0.5
+      },
+      "partOf": "pump-skid"
+    },
+    {
+      "id": "pump-skid-casing",
+      "kind": "primitive",
+      "geometry": {
+        "shape": "cylinder",
+        "args": [0.2, 0.2, 0.15, 16]
+      },
+      "transform": {
+        "position": [-0.55, 0.25, 0],
+        "rotation": [0, 0, 1.5708]
+      },
+      "material": "metal-light",
+      "explode": {
+        "vector": [1, 0, 0],
+        "magnitude": 0.5
+      },
+      "partOf": "pump-skid"
+    },
+    {
+      "id": "pump-skid-flange-in",
+      "kind": "primitive",
+      "geometry": {
+        "shape": "cylinder",
+        "args": [0.1, 0.1, 0.05, 16]
+      },
+      "transform": {
+        "position": [-0.55, 0.25, 0.2],
+        "rotation": [1.5708, 0, 0]
+      },
+      "material": "metal-light",
+      "explode": {
+        "vector": [0, 0, 1],
+        "magnitude": 0.3
+      },
+      "partOf": "pump-skid"
+    },
+    {
+      "id": "pump-skid-flange-out",
+      "kind": "primitive",
+      "geometry": {
+        "shape": "cylinder",
+        "args": [0.1, 0.1, 0.05, 16]
+      },
+      "transform": {
+        "position": [-0.55, 0.45, 0]
+      },
+      "material": "metal-light",
+      "explode": {
+        "vector": [0, 1, 0],
+        "magnitude": 0.3
+      },
+      "partOf": "pump-skid"
+    },
+    {
+      "id": "heat-exchanger",
+      "kind": "primitive",
+      "geometry": {
+        "shape": "box",
+        "args": [0.08, 0.4, 0.3]
+      },
+      "transform": {
+        "position": [0.7, 0.25, 0]
+      },
+      "material": "metal-dark",
+      "explode": {
+        "vector": [0, 0, 1],
+        "magnitude": 0.5
+      },
+      "annotation": {
+        "title": {
+          "zh": "熱交換器/反應器",
+          "en": "Heat Exchanger / Reactor"
+        }
+      },
+      "process": {
+        "scale": 0.5,
+        "stations": [
+          {
+            "id": "heat-process",
+            "partId": "heat-exchanger-plates",
+            "processTime": 0.5,
+            "input": "regulated-flow",
+            "output": "heated-flow"
+          }
+        ],
+        "routes": [
+          {
+            "id": "heat-route",
+            "kind": "main",
+            "material": "metal-light",
+            "path": [
+              [-0.15, -0.25, 0],
+              [0.15, 0, 0],
+              [0.45, 0, 0]
+            ],
+            "stops": [
+              { "point": 1, "station": "heat-process" }
+            ]
+          }
+        ],
+        "tokens": [
+          {
+            "id": "fluid-token-heat",
+            "routeId": "heat-route",
+            "material": "accent",
+            "count": 1,
+            "radius": 0.08,
+            "duration": 2.5
+          }
+        ]
+      }
+    },
+    {
+      "id": "heat-exchanger-frame-back",
+      "kind": "primitive",
+      "geometry": {
+        "shape": "box",
+        "args": [0.08, 0.4, 0.3]
+      },
+      "transform": {
+        "position": [1.0, 0.25, 0]
+      },
+      "material": "metal-dark",
+      "explode": {
+        "vector": [0, 0, -1],
+        "magnitude": 0.5
+      },
+      "partOf": "heat-exchanger"
+    },
+    {
+      "id": "heat-exchanger-plates",
+      "kind": "primitive",
+      "geometry": {
+        "shape": "box",
+        "args": [0.02, 0.35, 0.25]
+      },
+      "transform": {
+        "position": [0.76, 0.25, 0]
+      },
+      "repeat": {
+        "count": 6,
+        "step": [0.035, 0, 0]
+      },
+      "material": "metal-light",
+      "explode": {
+        "vector": [1, 0, 0],
+        "magnitude": 1.0
+      },
+      "partOf": "heat-exchanger"
+    },
+    {
+      "id": "heat-exchanger-bar-top",
+      "kind": "primitive",
+      "geometry": {
+        "shape": "cylinder",
+        "args": [0.02, 0.02, 0.4, 16]
+      },
+      "transform": {
+        "position": [0.85, 0.45, 0],
+        "rotation": [0, 0, 1.5708]
+      },
+      "material": "metal-dark",
+      "explode": {
+        "vector": [0, 1, 0],
+        "magnitude": 0.3
+      },
+      "partOf": "heat-exchanger"
+    },
+    {
+      "id": "heat-exchanger-bar-bottom",
+      "kind": "primitive",
+      "geometry": {
+        "shape": "cylinder",
+        "args": [0.02, 0.02, 0.4, 16]
+      },
+      "transform": {
+        "position": [0.85, 0.05, 0],
+        "rotation": [0, 0, 1.5708]
+      },
+      "material": "metal-dark",
+      "explode": {
+        "vector": [0, -1, 0],
+        "magnitude": 0.3
+      },
+      "partOf": "heat-exchanger"
+    },
+    {
+      "id": "filter-separator",
+      "kind": "primitive",
+      "geometry": {
+        "shape": "cylinder",
+        "args": [0.15, 0.15, 0.4, 24]
+      },
+      "transform": {
+        "position": [1.4, 0.3, 0]
+      },
+      "material": "metal-dark",
+      "explode": {
+        "vector": [0, 0, 1],
+        "magnitude": 0.5
+      },
+      "annotation": {
+        "title": {
+          "zh": "過濾器/分離器",
+          "en": "Filter / Separator"
+        }
+      },
+      "process": {
+        "scale": 0.5,
+        "stations": [
+          {
+            "id": "filter-process",
+            "partId": "filter-separator",
+            "processTime": 0.5,
+            "input": "heated-flow",
+            "output": "filtered-product"
+          }
+        ],
+        "routes": [
+          {
+            "id": "filter-route",
+            "kind": "main",
+            "material": "metal-light",
+            "path": [
+              [-0.25, -0.05, 0],
+              [0, -0.05, 0],
+              [0.35, -0.05, 0]
+            ],
+            "stops": [
+              { "point": 1, "station": "filter-process" }
+            ]
+          }
+        ],
+        "tokens": [
+          {
+            "id": "fluid-token-filter",
+            "routeId": "filter-route",
+            "material": "accent",
+            "count": 1,
+            "radius": 0.08,
+            "duration": 2.5
+          }
+        ]
+      }
+    },
+    {
+      "id": "filter-separator-bottom",
+      "kind": "primitive",
+      "geometry": {
+        "shape": "cone",
+        "args": [0.15, 0.1, 24]
+      },
+      "transform": {
+        "position": [1.4, 0.05, 0]
+      },
+      "material": "metal-dark",
+      "explode": {
+        "vector": [0, -1, 0],
+        "magnitude": 0.5
+      },
+      "partOf": "filter-separator"
+    },
+    {
+      "id": "filter-separator-top",
+      "kind": "primitive",
+      "geometry": {
+        "shape": "cylinder",
+        "args": [0.16, 0.16, 0.05, 24]
+      },
+      "transform": {
+        "position": [1.4, 0.525, 0]
+      },
+      "material": "metal-dark",
+      "explode": {
+        "vector": [0, 1, 0],
+        "magnitude": 0.5
+      },
+      "partOf": "filter-separator"
+    },
+    {
+      "id": "filter-separator-inlet",
+      "kind": "primitive",
+      "geometry": {
+        "shape": "cylinder",
+        "args": [0.05, 0.05, 0.15, 16]
+      },
+      "transform": {
+        "position": [1.325, 0.25, 0],
+        "rotation": [0, 0, 1.5708]
+      },
+      "material": "metal-light",
+      "explode": {
+        "vector": [-1, 0, 0],
+        "magnitude": 0.5
+      },
+      "partOf": "filter-separator"
+    },
+    {
+      "id": "filter-separator-outlet",
+      "kind": "primitive",
+      "geometry": {
+        "shape": "cylinder",
+        "args": [0.05, 0.05, 0.15, 16]
+      },
+      "transform": {
+        "position": [1.475, 0.25, 0],
+        "rotation": [0, 0, 1.5708]
+      },
+      "material": "metal-light",
+      "explode": {
+        "vector": [1, 0, 0],
+        "magnitude": 0.5
+      },
+      "partOf": "filter-separator"
+    },
+    {
+      "id": "instrument-panel",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.4, 1.0, 0.3] },
+      "transform": { "position": [0, 0.5, 0.8] },
+      "material": "metal-dark",
+      "explode": { "vector": [0, 0, 1], "magnitude": 0.5 },
+      "annotation": { "title": { "zh": "儀控盤", "en": "Instrument & Control Panel" } },
+      "process": {
+        "scale": 0.5,
+        "stations": [],
+        "routes": [
+          {
+            "id": "control-route",
+            "kind": "control",
+            "material": "accent",
+            "path": [
+              [0, 0.25, -0.8],
+              [0, 0.25, -0.15],
+              [0, 0, -0.15]
+            ]
+          }
+        ],
+        "tokens": [
+          {
+            "id": "signal-token",
+            "routeId": "control-route",
+            "material": "accent",
+            "count": 3,
+            "radius": 0.04,
+            "duration": 1.5
+          }
+        ]
+      }
+    },
+    {
+      "id": "instrument-panel-hmi",
+      "kind": "primitive",
+      "geometry": { "shape": "box", "args": [0.2, 0.15, 0.02] },
+      "transform": { "position": [0, 0.7, 0.96] },
+      "material": "metal-light",
+      "explode": { "vector": [0, 0, 1], "magnitude": 0.8 },
+      "partOf": "instrument-panel"
+    },
+    {
+      "id": "instrument-sensor",
+      "kind": "primitive",
+      "geometry": { "shape": "cylinder", "args": [0.04, 0.04, 0.2, 16] },
+      "transform": { "position": [0, 0.75, 0] },
+      "material": "metal-light",
+      "explode": { "vector": [0, 1, 0], "magnitude": 0.5 },
+      "partOf": "instrument-panel"
     }
   ]
 }

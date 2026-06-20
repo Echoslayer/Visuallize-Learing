@@ -430,3 +430,11 @@
   2. 透過多幀比對，成功抓出深層 Bug：在畫廊視角（`?view=gallery&machine=...`）中，`GeometryFactory.tsx` 因為將 `localPivot` 套用在旋轉群組內，且 `Gallery.tsx` 在偏移座標時漏掉了平移 `pivot`，導致旋轉中心停留在全球原點，使得元件在旋轉時猶如「公轉」般飛出相機視野。
   3. **修復**：修正了 `Gallery.tsx` 中 `focusMachine` 對 `pivot` 的平移邏輯，並將 `GeometryFactory.tsx` 裡 `rotation` 的套用層級下放至 `meshOffset` 內，確保旋轉永遠對齊全局軸心。同時將 `wind-rotor` 與 `main-shaft` 的 `spin` 恢復為正確的 `[1.5, 0, 0]`。
   4. 重新執行 `wind` 的多幀動態審查，最終確認轉子完美置中、旋轉軸心正確、能量粒子流動合理，取得最終的 **✅ 完美通過**。
+
+## 製程管線 / pipeline redo ✅ (全自動委派完成)
+- 首次採用「全自動委派與審查模式」：由主代理負責審查與規劃，派發 Sub-agents 執行 C-0 至 C-5 與 Phase D 的完整工作流。
+- **Phase A / B**: 重新調查了製程管線的供應鏈（中集安瑞科、Flowserve、Emerson 等），並設計出緊湊 Skid Base 加上左至右流動（Feed Tank → Pump → Heat Exchanger → Filter → Product Tank，加上側邊儀控盤）的 `topic-level process` 規格。
+- **Phase C**: 依序建置 `tank-1`, `pump-skid`, `valve-manifold`, `heat-exchanger`, `filter-separator`, `tank-2`, `instrument-panel`。過程中嚴格執行 `verify` 與雙幀 `review`。
+- **Phase D**: 串接全域流體 Token，實現 `fluid-raw` → `fluid-treated` → `fluid-finished` 分色流動。將所有設備組合在一個 `pipeline-skid-base` 上。
+- **修復驗收**: 修正了 `instrument-panel` 單機頁的缺少 `stations: []` 渲染錯誤、補齊 `tank-2` 的支架與入口管、校正換熱器與過濾器的區域流體 Token 相對座標，確保製程流動穿越設備本體。
+- 驗證：`pipeline-customer-review.md` 最終由 🔴 不通過 轉為 ✅ 通過，`pnpm check`/`build` 全綠。

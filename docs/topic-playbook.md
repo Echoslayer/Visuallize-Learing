@@ -13,7 +13,10 @@
 | ② 設計=取捨 | `/design-demo <slug>` | `docs/specs/<NN>-topic-<slug>.md` | 精選節點;套 `object-abstraction`;決定形狀/大小/布局/互動/物流 |
 | ③ 建模=實作 | `/add-topic <slug>` | `content/<slug>.json` + registry + `companies.csv` | 依設計建內容 |
 
-人類在每段之間審查、可調:研究錯改研究、設計不滿改設計,再建。
+**全新開發模式（Agent-Driven & Strict Review）**：
+人類不再介入段落之間的審查。**主 Agent (Antigravity) 作為最高 Reviewer 與唯一責任方**。
+主 Agent 必須調用 sub agents（透過 `invoke_subagent`）來執行 ①研究、②設計、③建模 的粗活。
+Sub agents 不對結果負責，**由主 Agent 承擔最終成敗**。因此，主 Agent 必須對 sub agents 的產出進行**極度嚴格的審查**（包含結構、資料正確性、視覺截圖驗證），若有瑕疵必須打回重做或親自修正，絕不妥協。
 
 單台機台也走同樣節奏,但更小: `/research-machine <machine>` → `/design-machine <slug>` → `/add-component <slug>`。
 產物分別是 `docs/research/machines/<slug>.md`、`docs/specs/<NN>-machine-<slug>.md`、content primitive 群組。
@@ -48,7 +51,7 @@
 - **透視外殼**:`src/content/semiconductor.json` 的 `foundry.enclosure`、`src/content/grid.json` 的油箱。用 `enclosure:true` + X-Ray 看內部。
 - **資料中心基礎設施 / 多流路 topic**:`src/content/datacenter.json` + `docs/specs/18-topic-datacenter.md`。用 `repeat` 展開機櫃列,並用 topic-level `process` 同時表 power/cooling/data/telemetry。
 - **小型變電站 / 電力流 topic**:`src/content/grid.json` + `docs/progress/grid-redo.md` + `docs/specs/18-topic-grid.md`。先逐設備建 machine-local process,最後用 topic-level `process` 接 HV/LV/control 三條單向 route。
-- **管線**:`src/content/pipeline.json`。用 `tube` + `path` 表管路,必要時加閥件/法蘭 primitive。
+- **管線與 Skid (流體製程)**:`src/content/pipeline.json` + `docs/progress/pipeline-redo.md`。使用 Skid（機組化單元，如 pump-skid, heat-exchanger）自帶 machine-local process 處理局部流體/物理變化，再以 topic-level `process` 建立跨 Skid 的單向全域 Route。流體 token 在進入不同階段時改變 material（如 fluid-raw -> fluid-treated -> fluid-finished）。
 - **有機模型**:`src/content/aerospace.json`。GLB 整隻一件,標 attribution,不拆件。
 - **多 primitive 節點 + partOf**:`src/content/semiconductor.json`。主節點有 annotation,小部位用 `partOf` 繼承名牌與公司卡。
 

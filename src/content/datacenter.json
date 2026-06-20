@@ -26,6 +26,7 @@
       "transform": { "position": [0, 1.7, -1.0] },
       "material": "metal-dark",
       "explode": { "magnitude": 0.7 },
+      "camera": { "position": [3.6, 2.2, 4.0], "target": [0, 0.5, 0] },
       "annotation": { "title": { "zh": "運算機櫃列", "en": "Compute Rack Row" } }
     },
     {
@@ -97,6 +98,7 @@
       "material": "metal-dark",
       "explode": { "magnitude": 1.15 },
       "enclosure": true,
+      "camera": { "position": [1.8, 1.5, 2.6], "target": [0, 0, 0] },
       "annotation": { "title": { "zh": "電力室 / UPS PDU", "en": "Power Room / UPS PDU" } }
     },
     {
@@ -130,6 +132,7 @@
       "material": "metal-dark",
       "explode": { "magnitude": 1.15 },
       "enclosure": true,
+      "camera": { "position": [1.8, 1.5, 2.6], "target": [0, 0, 0] },
       "annotation": { "title": { "zh": "液冷 / 空調迴路", "en": "Cooling Loop" } }
     },
     {
@@ -183,6 +186,7 @@
       "transform": { "position": [0, 1.18, 1.25] },
       "material": "metal-dark",
       "explode": { "magnitude": 1.0 },
+      "camera": { "position": [1.8, 1.2, 2.0], "target": [0, 0, 0] },
       "annotation": { "title": { "zh": "網路交換 fabric", "en": "Network Fabric" } }
     },
     {
@@ -215,6 +219,7 @@
       "transform": { "position": [0, 0.38, 2.02] },
       "material": "metal-dark",
       "explode": { "magnitude": 0.85 },
+      "camera": { "position": [1.6, 1.2, 1.8], "target": [0, 0.4, 0] },
       "annotation": { "title": { "zh": "監控 / DCIM", "en": "Monitoring / DCIM" } }
     },
     {

@@ -75,9 +75,12 @@ datacenter,monitoring,VRT,Vertiv
 datacenter,monitoring,ETN,Eaton
 pipeline,tank-1,2002,中鋼
 pipeline,tank-1,2013,中鋼構
-pipeline,pipe-top,2017,官田鋼
-pipeline,pipe-top,2007,燁興
-pipeline,valve,1590,亞德客-KY
+pipeline,tank-1,3899.HK,CIMC Enric
+pipeline,valve-manifold,TS,Tenaris
+pipeline,valve-manifold,EMR,Emerson Electric
+pipeline,valve-manifold,2017,官田鋼
+pipeline,valve-manifold,2007,燁興
+pipeline,valve-manifold,1590,亞德客-KY
 wind,wind-rotor,VWS.CO,Vestas
 wind,pitch-system-1,MOG.A,Moog
 wind,pitch-system-2,MOG.A,Moog
@@ -171,3 +174,10 @@ wind,wind-grid,1513,中興電
 wind,onshore-transformer,1519,華城
 wind,onshore-gis,1513,中興電
 wind,transmission-tower,1609,大亞
+pipeline,pump-skid,FLS,Flowserve
+pipeline,heat-exchanger,ALFA.ST,Alfa Laval
+pipeline,filter-separator,PH,Parker Hannifin
+pipeline,instrument-panel,Private,Endress+Hauser
+pipeline,tank-2,2002,中鋼
+pipeline,tank-2,2013,中鋼構
+pipeline,tank-2,3899.HK,CIMC Enric

@@ -7,7 +7,8 @@
 > [topic-playbook.md](./topic-playbook.md) 為準。
 >
 > 規則：每個工作單元都要通過 §7 的自我驗證迴圈才能 commit；
-> 階段二新增題目走三段管線（研究 → 設計 → 建模）。每個查核點 = 一個 git commit。
+> 階段二新增題目走三段管線（研究 → 設計 → 建模）。**全新自主模式：主 Agent 負責驗收，Sub Agents 負責實作。無須人類介入。主 Agent 必須極度嚴格地把關品質。**
+> 每個查核點 = 一個 git commit。
 >
 > **工具鏈：** Node/React 用 **`pnpm`**（指令一律 `pnpm`，非 `npm`）；若用到 Python（如 CadQuery）用 **`uv`**；需要時可用 Docker。
 
@@ -209,10 +210,11 @@ docs/
 
 ---
 
-## 8. 階段二：迭代流程（現行）
+## 8. 階段二：迭代流程（自主 Subagent 模式）
 
 > 第一輪 backlog 已完成。新增/更新供應鏈題目時走
 > [topic-playbook.md](./topic-playbook.md)：**研究 → 設計 → 建模 → `/verify` → commit**。
+> **主 Agent (Antigravity) 必須負責最高層級的品質把關。調用 Sub agents 完成實作後，主 Agent 要親自進行極其嚴格的 code review 與截圖視覺驗收。若不合格必須強制打回重做或自行修復。人類不再負責段落間的審查與負責。**
 
 ### 8.1 新增一個元件 — `/add-component`
 1. **先研究/設計**：單台機台先跑 `/research-machine <machine>` → `/design-machine <slug>`，產出 `docs/research/machines/` 與 `docs/specs/<NN>-machine-*.md`。

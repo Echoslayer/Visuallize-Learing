@@ -11,6 +11,9 @@ export const MATERIAL_COLORS: Record<string, string> = {
   accent: '#3b82f6', // 強調色(如流動粒子),讓運動更醒目
   chip: '#34d399', // 成品晶片流(綠);與 accent 藍的晶圓流對比,表「晶圓→晶片」變形
   heat: '#f97316', // 廢熱流(橘);AI 伺服器散熱 token 用,與 power/data 區隔
+  'fluid-raw': '#9ca3af', // 原料(灰)
+  'fluid-treated': '#3b82f6', // 處理中(藍)
+  'fluid-finished': '#34d399', // 成品(綠)
 }
 
 export function materialColor(id: string): string {
